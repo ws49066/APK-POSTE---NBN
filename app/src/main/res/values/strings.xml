@@ -1,0 +1,118 @@
+<resources>
+    <string name="app_name">nbnposte</string>
+    <string name="CPF">CPF</string>
+    <string name="password">SENHA</string>
+    <string name="nbntelecom">NBN TELECOM ONLINE</string>
+    <string name="CadastroNovo">NOVO</string>
+    <string name="editar">EDITAR</string>
+    <string name="consultar">CONSULTAR</string>
+    <string name="excluir">excluir</string>
+    <string name="NumeroPoste">N° POSTE</string>
+    <string name="TipoPoste">TIPO POSTE:</string>
+    <string name="EspeciePoste">ESPECIE</string>
+    <string name="PosteRetangula">RETANGULAR</string>
+    <string name="SecaoDupla">SEÇÃO DUPLO T</string>
+    <string name="DimensaoPoste">DIMENSÕES</string>
+    <string name="TipoPinheiro">PINHEIRO</string>
+    <string name="TipoConcreto">CONCRETO</string>
+    <string name="TipoFibra">FIBRA</string>
+    <string name="chave_map" translatable="false">AIzaSyCRRm0hKCj2LdpQ7xkIRuRp6RtCqbzn9kE</string>
+    <string-array name="tipoposte">
+        <item>Aquariquara</item>
+        <item>Pinheiro</item>
+        <item>Cimento</item>
+        <item>Fibra</item>
+        <item>Metal</item>
+    </string-array>
+
+    <string-array name="espposte">
+        <item>Circular</item>
+        <item>Duplo T</item>
+        <item>Quadrado</item>
+        <item>Artesanal</item>
+    </string-array>
+
+    <string-array name="dimposte">
+        <item>9m</item>
+        <item>11m</item>
+        <item>12m</item>
+        <item>13m</item>
+        <item>15m</item>
+        <item>18m</item>
+        <item>20m</item>
+    </string-array>
+
+    <string-array name="areaposte">
+        <item>Urbana</item>
+        <item>Rural</item>
+    </string-array>
+
+    <string-array name="iluminaposte">
+        <item>Sim</item>
+        <item>Não</item>
+    </string-array>
+
+    <string-array name="chaveposte">
+        <item>Não</item>
+        <item>Sim</item>
+    </string-array>
+
+    <string-array name="transposte">
+        <item>Não</item>
+        <item>Monofásico</item>
+        <item>Bifásico</item>
+        <item>Trifásico</item>
+    </string-array>
+
+    <string-array name="suporteposte">
+        <item>Esp. Losango</item>
+        <item>Suporte Horizontal</item>
+        <item>Cruzeta Metálica</item>
+        <item>Cruzeta Madeira</item>
+    </string-array>
+
+    <string-array name="baixaposte">
+        <item>Não</item>
+        <item>Monofásico</item>
+        <item>Bifásico</item>
+        <item>Trifásico</item>
+    </string-array>
+
+    <string-array name="fixposte">
+        <item>NBN</item>
+        <item>OI</item>
+        <item>VIVO</item>
+        <item>EMBRATEL/CLARO</item>
+        <item>TIM</item>
+        <item>AXES</item>
+        <item>LOGIC PRO</item>
+        <item>AMAZONET</item>
+        <item>EYES N WHERE</item>
+    </string-array>
+
+    <string-array name="rackposte">
+        <item>NBN</item>
+        <item>OI</item>
+        <item>VIVO</item>
+        <item>EMBRATEL/CLARO</item>
+        <item>TIM</item>
+        <item>AXES</item>
+        <item>LOGIC PRO</item>
+        <item>AMAZONET</item>
+        <item>EYES N WHERE</item>
+    </string-array>
+
+    <string-array name="reservaposte">
+        <item>NBN</item>
+        <item>OI</item>
+        <item>VIVO</item>
+        <item>EMBRATEL/CLARO</item>
+        <item>TIM</item>
+        <item>AXES</item>
+        <item>LOGIC PRO</item>
+        <item>AMAZONET</item>
+        <item>EYES N WHERE</item>
+    </string-array>
+
+
+</resources>

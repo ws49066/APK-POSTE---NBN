@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colormenu"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".Cadastro_Activity">
+
+    <ScrollView
+        android:layout_width="360dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@color/colormenu"
+        android:scrollbars="none"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colormenu"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="31dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="130dp"
+                android:text="ID: "
+                android:textColor="#FFFFFF" />
+
+            <View
+                android:id="@+id/divider3"
+                android:layout_width="247dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="#FFFFFF" />
+
+            <EditText
+                android:id="@+id/et_numPoste"
+                android:layout_width="213dp"
+                android:layout_height="53dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:hint="@string/NumeroPoste"
+                android:inputType="number"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/texto_tipoPoste"
+                    android:layout_width="133dp"
+                    android:layout_height="33dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="right"
+                    android:text="TIPO POSTE: "
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/tipoposte"
+                    android:layout_width="wrap_content"
+                    android:layout_height="33dp"
+                    android:layout_marginBottom="3dp"
+                    android:backgroundTint="#FFF44336"
+                    android:entries="@array/tipoposte"
+                    android:gravity="center"
+                    android:selectAllOnFocus="true"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/texto_especie"
+                    android:layout_width="133dp"
+                    android:layout_height="33dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="right"
+                    android:text="ESPECIE: "
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/espposte"
+                    android:layout_width="172dp"
+                    android:layout_height="33dp"
+                    android:layout_marginBottom="3dp"
+                    android:backgroundTint="#FFF44336"
+                    android:entries="@array/espposte"
+                    android:gravity="center"
+                    android:textAlignment="center" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="133dp"
+                    android:layout_height="33dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="right"
+                    android:text="DIMENSÃO: "
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/dimposte"
+                    android:layout_width="172dp"
+                    android:layout_height="33dp"
+                    android:layout_marginBottom="3dp"
+                    android:backgroundTint="#FFF44336"
+                    android:entries="@array/dimposte"
+                    android:gravity="center"
+                    android:textAlignment="center" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/textilumina"
+                    android:layout_width="133dp"
+                    android:layout_height="33dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="right"
+                    android:text="ILUMINAÇÃO: "
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/iluminaposte"
+                    android:layout_width="172dp"
+                    android:layout_height="33dp"
+                    android:layout_marginBottom="3dp"
+                    android:backgroundTint="#FFF44336"
+                    android:entries="@array/iluminaposte"
+                    android:gravity="center"
+                    android:textAlignment="center" />
+            </LinearLayout>
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="247dp"
+                android:layout_height="1dp"
+                android:background="#FFFFFF" />
+
+            <TextView
+                android:id="@+id/text_endereco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:inputType="text"
+                android:text="-- ENDEREÇO --"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:layout_width="291dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/labelestado"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:text="ESTADO"
+                    android:textColor="#FFFFFF" />
+
+                <EditText
+                    android:id="@+id/estado"
+                    android:layout_width="213dp"
+                    android:layout_height="53dp"
+                    android:layout_marginBottom="30dp"
+                    android:hint="Digite o Estado"
+                    android:inputType="text"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#3F3F3F" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="290dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/labelcidade"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:text="CIDADE"
+                    android:textColor="#FFFFFF" />
+
+                <EditText
+                    android:id="@+id/municipio"
+                    android:layout_width="213dp"
+                    android:layout_height="53dp"
+                    android:layout_marginBottom="30dp"
+                    android:hint="Digite a Cidade"
+                    android:inputType="text"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#3F3F3F" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="290dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/labelbairro"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:text="BAIRRO"
+                    android:textColor="#FFFFFF" />
+
+                <EditText
+                    android:id="@+id/bairro"
+                    android:layout_width="213dp"
+                    android:layout_height="53dp"
+                    android:layout_marginBottom="30dp"
+                    android:hint="Digite o Bairro"
+                    android:inputType="text"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#3F3F3F" />
+
+            </LinearLayout>
+            <LinearLayout
+            android:layout_width="290dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/labelrua"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:text="RUA"
+                    android:textColor="#FFFFFF" />
+
+                <EditText
+                    android:id="@+id/rua"
+                    android:layout_width="213dp"
+                    android:layout_height="53dp"
+                    android:layout_marginBottom="30dp"
+                    android:hint="Digite a Rua"
+                    android:inputType="text"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#3F3F3F" />
+        </LinearLayout>
+            <LinearLayout
+                android:layout_width="290dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/labelnaprox"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:text="N° APROX."
+                    android:textColor="#FFFFFF" />
+
+                <EditText
+                    android:id="@+id/naproximado"
+                    android:layout_width="213dp"
+                    android:layout_height="53dp"
+                    android:layout_marginBottom="30dp"
+                    android:ems="10"
+                    android:hint="Digite o N° Aprox."
+                    android:inputType="number"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#3F3F3F" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="290dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/labelcep"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:text="CEP"
+                    android:textColor="#FFFFFF" />
+
+                <EditText
+                    android:id="@+id/cep"
+                    android:layout_width="213dp"
+                    android:layout_height="53dp"
+                    android:layout_marginBottom="30dp"
+                    android:hint="Digite o CEP"
+                    android:inputType="number"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#3F3F3F" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="290dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/labelarea"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:text="ÁREA"
+                    android:textColor="#FFFFFF" />
+                <Spinner
+                    android:id="@+id/areaposte"
+                    android:layout_width="213dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FFF44336"
+                    android:entries="@array/areaposte"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="247dp"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <LinearLayout
+                android:layout_width="247dp"
+                android:layout_height="1dp"
+                android:background="#FFFFFF"
+                android:orientation="horizontal"
+                android:layout_marginBottom="30dp">
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textatributo"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginBottom="30dp"
+                android:text="-- ATRIBUTOS --"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="290dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/labelfusivel"
+                    android:layout_width="141dp"
+                    android:layout_height="wrap_content"
+                    android:text="CHAVE FUSÍVEL"
+                    android:textColor="#FFFFFF" />
+
+                <Spinner
+                    android:id="@+id/chaveposte"
+                    android:layout_width="198dp"
+                    android:layout_height="34dp"
+                    android:layout_marginBottom="30dp"
+                    android:backgroundTint="#FFF44336"
+                    android:entries="@array/chaveposte"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="290dp"
+                android:layout_height="35dp"
+                android:layout_marginBottom="30dp">
+
+                <TextView
+                    android:id="@+id/labeltrans"
+                    android:layout_width="141dp"
+                    android:layout_height="wrap_content"
+                    android:text="TRANSFORMADOR"
+                    android:textColor="#FFFFFF" />
+
+                <Spinner
+                    android:id="@+id/transposte"
+                    android:layout_width="198dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FFF44336"
+                    android:entries="@array/transposte"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <LinearLayout
+                android:layout_width="290dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/labelcruzeta"
+                    android:layout_width="141dp"
+                    android:layout_height="wrap_content"
+                    android:text="SUPORTE/CRUZETA"
+                    android:textColor="#FFFFFF" />
+
+                <Spinner
+                    android:id="@+id/suporteposte"
+                    android:layout_width="198dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FFF44336"
+                    android:entries="@array/suporteposte"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="290dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/labelbaixa"
+                    android:layout_width="141dp"
+                    android:layout_height="wrap_content"
+                    android:text="REDE DE BAIXA"
+                    android:textColor="#FFFFFF" />
+
+                <Spinner
+                    android:id="@+id/baixaposte"
+                    android:layout_width="198dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FFF44336"
+                    android:entries="@array/baixaposte"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="290dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/labelfixacao"
+                    android:layout_width="141dp"
+                    android:layout_height="wrap_content"
+                    android:text="PONTO FIXAÇÃO"
+                    android:textColor="#FFFFFF" />
+
+                <Spinner
+                    android:id="@+id/fixposte"
+                    android:layout_width="198dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FFF44336"
+                    android:entries="@array/fixposte"
+                    android:textAlignment="center" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="290dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/labelrack"
+                    android:layout_width="141dp"
+                    android:layout_height="wrap_content"
+                    android:text="RACK"
+                    android:textColor="#FFFFFF" />
+
+                <Spinner
+                    android:id="@+id/rackposte"
+                    android:layout_width="198dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FFF44336"
+                    android:entries="@array/rackposte"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="290dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="20dp">
+
+                <TextView
+                    android:id="@+id/labelreserva"
+                    android:layout_width="141dp"
+                    android:layout_height="wrap_content"
+                    android:text="RES. TÉCNICA"
+                    android:textColor="#FFFFFF" />
+
+                <Spinner
+                    android:id="@+id/reservaposte"
+                    android:layout_width="198dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FFF44336"
+                    android:entries="@array/reservaposte"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/abrirMap"
+                android:layout_width="198dp"
+                android:layout_height="wrap_content"
+                android:text="GPS"
+                android:layout_marginBottom="30dp"/>
+            <LinearLayout
+                android:id="@+id/layoutMap"
+                android:layout_width="match_parent"
+                android:visibility="invisible"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="30dp">
+                <fragment
+                    android:id="@+id/google_map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="298dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>
