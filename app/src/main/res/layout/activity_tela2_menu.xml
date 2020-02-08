@@ -9,60 +9,76 @@
 
 
     <Button
+        android:id="@+id/btn_novo"
+        android:layout_width="135dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:text="@string/CadastroNovo"
+        android:textSize="19dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.457" />
+
+    <Button
         android:id="@+id/btn_excluir"
         android:layout_width="135dp"
         android:layout_height="80dp"
-        android:layout_marginStart="232dp"
-        android:layout_marginLeft="232dp"
-        android:layout_marginTop="480dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
         android:text="@string/excluir"
         android:textSize="19dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.906"
+        app:layout_constraintStart_toEndOf="@+id/btn_consultar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.651" />
 
     <Button
         android:id="@+id/btn_consultar"
         android:layout_width="135dp"
         android:layout_height="80dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginLeft="68dp"
-        android:layout_marginTop="480dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
         android:text="@string/consultar"
         android:textSize="19dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btn_novo"
-        android:layout_width="135dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginLeft="68dp"
-        android:layout_marginTop="348dp"
-        android:text="@string/CadastroNovo"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.651" />
 
     <Button
         android:id="@+id/btn_editar"
         android:layout_width="135dp"
         android:layout_height="80dp"
-        android:layout_marginStart="232dp"
-        android:layout_marginLeft="232dp"
-        android:layout_marginTop="348dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginRight="48dp"
         android:text="@string/editar"
-        android:textSize="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="19dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.897"
+        app:layout_constraintStart_toEndOf="@+id/btn_novo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.457" />
 
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="210dp"
         android:layout_height="161dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/nbnlogoapp" />

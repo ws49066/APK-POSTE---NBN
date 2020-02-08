@@ -9,7 +9,7 @@
     tools:context=".Cadastro_Activity">
 
     <ScrollView
-        android:layout_width="360dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:background="@color/colormenu"
@@ -23,155 +23,433 @@
             android:gravity="center"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:id="@+id/layout_part1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:background="@color/colormenu"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+
+                <TextView
+                    android:id="@+id/idtext"
+                    android:layout_width="384dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="ID: 34234"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20dp" />
+
+
+                <View
+                    android:id="@+id/divider3"
+                    android:layout_width="247dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="#FFFFFF" />
+
+                <EditText
+                    android:id="@+id/et_numPoste"
+                    android:layout_width="213dp"
+                    android:layout_height="53dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:hint="@string/NumeroPoste"
+                    android:inputType="text"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#3F3F3F" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/texto_tipoPoste"
+                        android:layout_width="161dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="TIPO DE POSTE "
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp" />
+
+                    <Spinner
+                        android:id="@+id/tipoposte"
+                        android:layout_width="143dp"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="#FFF44336"
+                        android:entries="@array/tipoposte"
+                        android:gravity="center"
+                        android:selectAllOnFocus="true"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/texto_especie"
+                        android:layout_width="161dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="ESPECIE: "
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp" />
+
+                    <Spinner
+                        android:id="@+id/espposte"
+                        android:layout_width="144dp"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="#FFF44336"
+                        android:entries="@array/espposte"
+                        android:gravity="center"
+                        android:textAlignment="center" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="159dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="DIMENSÃO: "
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp" />
+
+                    <Spinner
+                        android:id="@+id/dimposte"
+                        android:layout_width="149dp"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="#FFF44336"
+                        android:entries="@array/dimposte"
+                        android:gravity="center"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/textilumina"
+                        android:layout_width="158dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="ILUMINAÇÃO"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp" />
+
+                    <Spinner
+                        android:id="@+id/iluminaposte"
+                        android:layout_width="149dp"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="#FFF44336"
+                        android:entries="@array/iluminaposte"
+                        android:gravity="center"
+                        android:textAlignment="center" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/labelbaixa"
+                        android:layout_width="159dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="REDE DE BAIXA"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp" />
+
+                    <Spinner
+                        android:id="@+id/baixaposte"
+                        android:layout_width="151dp"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="#FFF44336"
+                        android:entries="@array/baixaposte"
+                        android:gravity="center"
+                        android:textAlignment="center" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/labelfusivel"
+                        android:layout_width="161dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="CHAVE FUSÍVEL"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp" />
+
+                    <Spinner
+                        android:id="@+id/chaveposte"
+                        android:layout_width="149dp"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="#FFF44336"
+                        android:entries="@array/chaveposte"
+                        android:gravity="center"
+                        android:textAlignment="center" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/labeltrans"
+                        android:layout_width="163dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="TRANSFORMADOR"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp" />
+
+                    <Spinner
+                        android:id="@+id/transposte"
+                        android:layout_width="148dp"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="#FFF44336"
+                        android:entries="@array/transposte"
+                        android:gravity="center"
+                        android:textAlignment="center" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_parte1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SALVAR" />
+
+            </LinearLayout>
+
+            <LinearLayout
+            android:id="@+id/layout_atributos"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            android:background="@color/colormenu"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
             <TextView
-                android:id="@+id/textView2"
-                android:layout_width="31dp"
+                android:id="@+id/text_atributos"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:layout_marginRight="130dp"
-                android:text="ID: "
-                android:textColor="#FFFFFF" />
-
-            <View
-                android:id="@+id/divider3"
-                android:layout_width="247dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="20dp"
-                android:background="#FFFFFF" />
-
-            <EditText
-                android:id="@+id/et_numPoste"
-                android:layout_width="213dp"
-                android:layout_height="53dp"
-                android:layout_marginTop="30dp"
                 android:layout_marginBottom="30dp"
-                android:hint="@string/NumeroPoste"
-                android:inputType="number"
-                android:selectAllOnFocus="true"
-                android:singleLine="true"
+                android:inputType="text"
+                android:text="-- ATRIBUTOS --"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
-                android:textColorHint="#FFFFFF" />
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="center_horizontal">
+        //-------------------SUPORTE CRUZERA LAYOUT ------------------------
+
 
                 <TextView
-                    android:id="@+id/texto_tipoPoste"
-                    android:layout_width="133dp"
-                    android:layout_height="33dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="right"
-                    android:text="TIPO POSTE: "
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp" />
+                        android:id="@+id/labelcruzeta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="SUPORTE/CRUZETA"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp" />
 
-                <Spinner
-                    android:id="@+id/tipoposte"
-                    android:layout_width="wrap_content"
-                    android:layout_height="33dp"
-                    android:layout_marginBottom="3dp"
-                    android:backgroundTint="#FFF44336"
-                    android:entries="@array/tipoposte"
-                    android:gravity="center"
-                    android:selectAllOnFocus="true"
-                    android:textAlignment="center" />
+                    <LinearLayout
+                        android:id="@+id/parent_linear_suporte_cruzeta"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+
+                    <Button
+                        android:id="@+id/add_field_suporte_cruzeta"
+                        android:layout_width="26dp"
+                        android:layout_height="27dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="20dp"
+                        android:background="@android:drawable/ic_input_add"
+                        android:onClick="onAddSuportCruzeta"
+                        android:textColor="#FFF" />
+
+                </LinearLayout>
+
+
+//----------------PONTO DE FIXACAO LAYOUT ------------------------------------------
+
+                <View
+                    android:layout_width="247dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="#FFFFFF" />
+
+
+                <TextView
+                        android:id="@+id/labelfixacao"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="PONTO FIXAÇÃO"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp" />
+
+                    <LinearLayout
+                        android:id="@+id/parent_linear_ponto_fixacao"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/add_field_rack"
+                            android:layout_width="26dp"
+                            android:layout_height="27dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="20dp"
+                            android:background="@android:drawable/ic_input_add"
+                            android:onClick="adicionar_ponto_fixacao"
+                            android:textColor="#FFF" />
+                </LinearLayout>
+
+            ----------------------------Layout Rack -------------------------------------
+                <View
+                    android:layout_width="247dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="#FFFFFF" />
+
+                <TextView
+                    android:id="@+id/labelrack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="RACK"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15dp" />
+
+                <LinearLayout
+                    android:id="@+id/parent_linear_rack"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+
+                    <Button
+                        android:id="@+id/add_field_ponto_fixacao"
+                        android:layout_width="26dp"
+                        android:layout_height="27dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="20dp"
+                        android:background="@android:drawable/ic_input_add"
+                        android:onClick="adicionar_rack" />
+                </LinearLayout>
+
+
+            ------------------------Layout RESERVA TÉCNICA ------------------------------------------------
+
+                <View
+                    android:layout_width="247dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="#FFFFFF" />
+
+                <TextView
+                    android:id="@+id/ReserTecnica"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="RESERVA TÉCNICA"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15dp" />
+
+            <LinearLayout
+                android:id="@+id/parent_linear_reserva"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+
+                <Button
+                    android:id="@+id/add_field_reserva_tecnica"
+                    android:layout_width="26dp"
+                    android:layout_height="27dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:onClick="adicionar_reservatecnica"
+                    android:background="@android:drawable/ic_input_add" />
             </LinearLayout>
 
 
-            <LinearLayout
+
+            <Button
+                android:id="@+id/btn_atributos"
                 android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="center_horizontal">
-
-                <TextView
-                    android:id="@+id/texto_especie"
-                    android:layout_width="133dp"
-                    android:layout_height="33dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="right"
-                    android:text="ESPECIE: "
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp" />
-
-                <Spinner
-                    android:id="@+id/espposte"
-                    android:layout_width="172dp"
-                    android:layout_height="33dp"
-                    android:layout_marginBottom="3dp"
-                    android:backgroundTint="#FFF44336"
-                    android:entries="@array/espposte"
-                    android:gravity="center"
-                    android:textAlignment="center" />
+                android:text="SALVAR"
+                android:layout_height="match_parent"/>
 
 
-            </LinearLayout>
+        </LinearLayout>
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="center_horizontal">
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="133dp"
-                    android:layout_height="33dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="right"
-                    android:text="DIMENSÃO: "
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp" />
-
-                <Spinner
-                    android:id="@+id/dimposte"
-                    android:layout_width="172dp"
-                    android:layout_height="33dp"
-                    android:layout_marginBottom="3dp"
-                    android:backgroundTint="#FFF44336"
-                    android:entries="@array/dimposte"
-                    android:gravity="center"
-                    android:textAlignment="center" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="46dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="center_horizontal">
-
-                <TextView
-                    android:id="@+id/textilumina"
-                    android:layout_width="133dp"
-                    android:layout_height="33dp"
-                    android:layout_marginRight="10dp"
-                    android:gravity="right"
-                    android:text="ILUMINAÇÃO: "
-                    android:textColor="#FFFFFF"
-                    android:textSize="18sp" />
-
-                <Spinner
-                    android:id="@+id/iluminaposte"
-                    android:layout_width="172dp"
-                    android:layout_height="33dp"
-                    android:layout_marginBottom="3dp"
-                    android:backgroundTint="#FFF44336"
-                    android:entries="@array/iluminaposte"
-                    android:gravity="center"
-                    android:textAlignment="center" />
-            </LinearLayout>
-            <View
-                android:id="@+id/divider2"
-                android:layout_width="247dp"
-                android:layout_height="1dp"
-                android:background="#FFFFFF" />
+---------------------- ENDEREÇO LAYOUT ------------------------------------------------------------------------------------
+        <LinearLayout
+            android:id="@+id/layout_endereco"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            android:background="@color/colormenu"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/text_endereco"
+                android:focusable="true"
+                android:selectAllOnFocus="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
@@ -237,6 +515,7 @@
                     android:textColor="#FFFFFF"
                     android:textColorHint="#3F3F3F" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="290dp"
                 android:layout_height="46dp"
@@ -263,10 +542,11 @@
                     android:textColorHint="#3F3F3F" />
 
             </LinearLayout>
+
             <LinearLayout
-            android:layout_width="290dp"
-            android:layout_height="46dp"
-            android:layout_marginBottom="20dp">
+                android:layout_width="290dp"
+                android:layout_height="46dp"
+                android:layout_marginBottom="20dp">
 
                 <TextView
                     android:id="@+id/labelrua"
@@ -287,7 +567,8 @@
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#3F3F3F" />
-        </LinearLayout>
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="290dp"
                 android:layout_height="46dp"
@@ -307,11 +588,12 @@
                     android:layout_marginBottom="30dp"
                     android:ems="10"
                     android:hint="Digite o N° Aprox."
-                    android:inputType="number"
+                    android:inputType="text"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#3F3F3F" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="290dp"
                 android:layout_height="46dp"
@@ -330,234 +612,119 @@
                     android:layout_height="53dp"
                     android:layout_marginBottom="30dp"
                     android:hint="Digite o CEP"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:selectAllOnFocus="true"
                     android:singleLine="true"
                     android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     android:textColorHint="#3F3F3F" />
             </LinearLayout>
+
+
             <LinearLayout
-                android:layout_width="290dp"
+                android:layout_width="360dp"
                 android:layout_height="46dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="20dp"
+                android:gravity="center_horizontal">
 
                 <TextView
                     android:id="@+id/labelarea"
-                    android:layout_width="75dp"
+                    android:layout_width="74dp"
                     android:layout_height="wrap_content"
-                    android:text="ÁREA"
-                    android:textColor="#FFFFFF" />
+                    android:text="ÁREA "
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp" />
+
                 <Spinner
                     android:id="@+id/areaposte"
-                    android:layout_width="213dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="209dp"
+                    android:layout_height="match_parent"
                     android:backgroundTint="#FFF44336"
                     android:entries="@array/areaposte"
+                    android:gravity="center"
                     android:textAlignment="center" />
 
             </LinearLayout>
 
-            <View
-                android:id="@+id/divider"
-                android:layout_width="247dp"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
 
             <LinearLayout
-                android:layout_width="247dp"
-                android:layout_height="1dp"
-                android:background="#FFFFFF"
-                android:orientation="horizontal"
-                android:layout_marginBottom="30dp">
+                android:id="@+id/layoutMap"
+                android:layout_width="329dp"
+                android:layout_height="223dp"
+                android:layout_marginBottom="50dp"
+                android:visibility="invisible">
 
+                <fragment
+                    android:id="@+id/google_map"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="211dp"
+                    android:layout_margin="10dp" />
             </LinearLayout>
 
+            <Button
+                android:id="@+id/btn_endereco"
+                android:layout_width="match_parent"
+                android:text="SALVAR"
+                android:layout_height="match_parent"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_fotos"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            android:background="@color/colormenu"
+            android:gravity="center"
+            android:orientation="vertical">
             <TextView
-                android:id="@+id/textatributo"
+                android:id="@+id/fotosposte"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:layout_marginBottom="30dp"
-                android:text="-- ATRIBUTOS --"
+                android:text="-- FOTOS --"
                 android:textAlignment="center"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <LinearLayout
-                android:layout_width="290dp"
-                android:layout_height="46dp"
-                android:layout_marginBottom="20dp">
-
-                <TextView
-                    android:id="@+id/labelfusivel"
-                    android:layout_width="141dp"
-                    android:layout_height="wrap_content"
-                    android:text="CHAVE FUSÍVEL"
-                    android:textColor="#FFFFFF" />
-
-                <Spinner
-                    android:id="@+id/chaveposte"
-                    android:layout_width="198dp"
-                    android:layout_height="34dp"
-                    android:layout_marginBottom="30dp"
-                    android:backgroundTint="#FFF44336"
-                    android:entries="@array/chaveposte"
-                    android:textAlignment="center" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="290dp"
-                android:layout_height="35dp"
-                android:layout_marginBottom="30dp">
-
-                <TextView
-                    android:id="@+id/labeltrans"
-                    android:layout_width="141dp"
-                    android:layout_height="wrap_content"
-                    android:text="TRANSFORMADOR"
-                    android:textColor="#FFFFFF" />
-
-                <Spinner
-                    android:id="@+id/transposte"
-                    android:layout_width="198dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#FFF44336"
-                    android:entries="@array/transposte"
-                    android:textAlignment="center" />
-
-            </LinearLayout>
-
-            <RadioGroup
+                android:id="@+id/parent_linear_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <LinearLayout
-                android:layout_width="290dp"
-                android:layout_height="46dp"
-                android:layout_marginBottom="20dp">
-
-                <TextView
-                    android:id="@+id/labelcruzeta"
-                    android:layout_width="141dp"
-                    android:layout_height="wrap_content"
-                    android:text="SUPORTE/CRUZETA"
-                    android:textColor="#FFFFFF" />
-
-                <Spinner
-                    android:id="@+id/suporteposte"
-                    android:layout_width="198dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#FFF44336"
-                    android:entries="@array/suporteposte"
-                    android:textAlignment="center" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="290dp"
-                android:layout_height="46dp"
-                android:layout_marginBottom="20dp">
-
-                <TextView
-                    android:id="@+id/labelbaixa"
-                    android:layout_width="141dp"
-                    android:layout_height="wrap_content"
-                    android:text="REDE DE BAIXA"
-                    android:textColor="#FFFFFF" />
-
-                <Spinner
-                    android:id="@+id/baixaposte"
-                    android:layout_width="198dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#FFF44336"
-                    android:entries="@array/baixaposte"
-                    android:textAlignment="center" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="290dp"
-                android:layout_height="46dp"
-                android:layout_marginBottom="20dp">
-
-                <TextView
-                    android:id="@+id/labelfixacao"
-                    android:layout_width="141dp"
-                    android:layout_height="wrap_content"
-                    android:text="PONTO FIXAÇÃO"
-                    android:textColor="#FFFFFF" />
-
-                <Spinner
-                    android:id="@+id/fixposte"
-                    android:layout_width="198dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#FFF44336"
-                    android:entries="@array/fixposte"
-                    android:textAlignment="center" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="290dp"
-                android:layout_height="46dp"
-                android:layout_marginBottom="20dp">
-
-                <TextView
-                    android:id="@+id/labelrack"
-                    android:layout_width="141dp"
-                    android:layout_height="wrap_content"
-                    android:text="RACK"
-                    android:textColor="#FFFFFF" />
-
-                <Spinner
-                    android:id="@+id/rackposte"
-                    android:layout_width="198dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#FFF44336"
-                    android:entries="@array/rackposte"
-                    android:textAlignment="center" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="290dp"
-                android:layout_height="46dp"
-                android:layout_marginBottom="20dp">
-
-                <TextView
-                    android:id="@+id/labelreserva"
-                    android:layout_width="141dp"
-                    android:layout_height="wrap_content"
-                    android:text="RES. TÉCNICA"
-                    android:textColor="#FFFFFF" />
-
-                <Spinner
-                    android:id="@+id/reservaposte"
-                    android:layout_width="198dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#FFF44336"
-                    android:entries="@array/reservaposte"
-                    android:textAlignment="center" />
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/abrirMap"
-                android:layout_width="198dp"
-                android:layout_height="wrap_content"
-                android:text="GPS"
-                android:layout_marginBottom="30dp"/>
-            <LinearLayout
-                android:id="@+id/layoutMap"
-                android:layout_width="match_parent"
-                android:visibility="invisible"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="30dp">
-                <fragment
-                    android:id="@+id/google_map"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/add_field_button"
+                    android:layout_width="43dp"
+                    android:layout_height="38dp"
+                    android:layout_gravity="center"
+                    android:background="@android:drawable/ic_input_add"
+                    android:onClick="onAddField"
+                    android:paddingLeft="5dp"
+                    android:text="+"
+                    android:textColor="#FFF" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="298dp" />
+                    android:layout_height="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:gravity="bottom">
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_fotos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SALVAR" />
+
             </LinearLayout>
         </LinearLayout>
 
+        </LinearLayout>
     </ScrollView>
 
 

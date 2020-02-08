@@ -8,5 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textAllCaps">true</item>
     </style>
+    <style name="dropdown" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+
+        <item name="android:textColor">@color/my_spinner_text_color</item>
+    </style>
 
 </resources>

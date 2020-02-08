@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">nbnposte</string>
-    <string name="CPF">CPF</string>
+    <string name="app_name">PostMap</string>
+    <string name="usuario">USUÁRIO</string>
     <string name="password">SENHA</string>
     <string name="nbntelecom">NBN TELECOM ONLINE</string>
     <string name="CadastroNovo">NOVO</string>
     <string name="editar">EDITAR</string>
     <string name="consultar">CONSULTAR</string>
     <string name="excluir">excluir</string>
-    <string name="NumeroPoste">N° POSTE</string>
+    <string name="NumeroPoste">NUMERO DO POSTE</string>
     <string name="TipoPoste">TIPO POSTE:</string>
     <string name="EspeciePoste">ESPECIE</string>
     <string name="PosteRetangula">RETANGULAR</string>
@@ -65,7 +65,7 @@
     </string-array>
 
     <string-array name="suporteposte">
-        <item>Esp. Losango</item>
+        <item>Espaçador Losango</item>
         <item>Suporte Horizontal</item>
         <item>Cruzeta Metálica</item>
         <item>Cruzeta Madeira</item>

@@ -8,6 +8,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class Tela2Menu_Activity extends AppCompatActivity {
 
     Button btn_novo;
@@ -25,7 +36,30 @@ public class Tela2Menu_Activity extends AppCompatActivity {
         btn_novo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Tela2Menu_Activity.this, Cadastro_Activity.class));
+                StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/cadastro.php",
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                String var_id_poste = (String) response;
+                                Intent intentEnviar = new Intent(Tela2Menu_Activity.this, Cadastro_Activity.class);
+                                intentEnviar.putExtra("var_id_poste",var_id_poste);
+                                startActivity(intentEnviar);
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String,String>  params = new HashMap<>();
+                        return  params;
+                    }
+                };
+                RequestQueue cadastro = Volley.newRequestQueue(Tela2Menu_Activity.this);
+                cadastro.add(request);
+
             }
         });
 
