@@ -74,7 +74,7 @@ public class Tela2Menu_Activity extends AppCompatActivity {
         btn_consultar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Contate o Admin..",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Tela2Menu_Activity.this, ConsultarPoste.class));
             }
         });
         btn_excluir = findViewById(R.id.btn_excluir);

@@ -1,19 +1,25 @@
 package com.nbntelecom.nbnpostemap;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -48,7 +54,11 @@ import com.google.android.gms.tasks.Task;
 import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,29 +74,35 @@ public class Cadastro_Activity extends  FragmentActivity implements OnMapReadyCa
     //Variaveis do formulario
     TextView id_post_text;
 
+    String NomeFotoTirada;
+
+    String mCurrentPhotoPath;
+
     String var_id_poste;
 
     EditText et_numPoste1,estado,municipio,bairro,rua,naproximado,cep;
     Spinner tipoposte,espposte,dimposte,iluminaposte,areaposte,chaveposte,transposte,suporteposte
-            ,baixaposte,fixposte,rackposte,reservaposte;
+            ,baixaposte,fixposte,rackposte,reservaposte,caixaatendimento,cameraposte;
 
 
-    Button btn_fotos,btn_parte1,btn_atributos,btn_endereco,add_field_reserva_tecnica;
+    Button btn_fotos,btn_parte1,btn_atributos,btn_endereco,add_field_reserva_tecnica,btn_caixa_atendimento;
 
 
     Button btn_abrirMap;
     LinearLayout layoutMap,layout_parte1,layout_atributo,layout_endereco,layout_fotos;
 
     BitmapFactory.Options option = new BitmapFactory.Options();
-    Bitmap imagem ;
+
 
     List<String> Reserva_tecnica_list = new ArrayList<String>();
     List<String> Rack_lisy = new ArrayList<String>();
     List<String> Fixacao_poste_list = new ArrayList<String>();
     List<String> Suporte_cruzeta_list = new ArrayList<String>();
-
-    List<Bitmap> bitimagens = new ArrayList<Bitmap>();
-    LinearLayout parentLinearLayout,LinearLayoutSuporte,LinearLayoutPontoF,LinearLayoutRack,LinearLayoutResevaT;
+    List<String> Caixa_atendimento_list = new ArrayList<String>();
+    Bitmap imagem ;
+    List<String> ImagensStringList = new ArrayList<String>();
+    List<Bitmap> BitmapListmg = new ArrayList<Bitmap>();
+    LinearLayout parentLinearLayout,LinearLayoutSuporte,LinearLayoutPontoF,LinearLayoutRack,LinearLayoutResevaT, LinearLayoutCaixaAtendimento;
     int cont=0;
 
 
@@ -107,12 +123,13 @@ public class Cadastro_Activity extends  FragmentActivity implements OnMapReadyCa
         btn_parte1 = findViewById(R.id.btn_parte1);
         btn_atributos = findViewById(R.id.btn_atributos);
         btn_endereco = findViewById(R.id.btn_endereco);
+        btn_caixa_atendimento = findViewById(R.id.btn_caixa_atendimento);
         parentLinearLayout = (LinearLayout) findViewById(R.id.parent_linear_layout);
         LinearLayoutSuporte = (LinearLayout) findViewById(R.id.parent_linear_suporte_cruzeta);
         LinearLayoutPontoF = (LinearLayout) findViewById(R.id.parent_linear_ponto_fixacao);
         LinearLayoutRack = (LinearLayout) findViewById(R.id.parent_linear_rack);
         LinearLayoutResevaT = (LinearLayout) findViewById(R.id.parent_linear_reserva);
-
+        LinearLayoutCaixaAtendimento = (LinearLayout) findViewById(R.id.parent_linear_caixa_atendimento);
         layout_atributo = (LinearLayout) findViewById(R.id.layout_atributos);
         layout_endereco = (LinearLayout) findViewById(R.id.layout_endereco);
         layout_parte1 = (LinearLayout) findViewById(R.id.layout_part1);
@@ -135,8 +152,7 @@ public class Cadastro_Activity extends  FragmentActivity implements OnMapReadyCa
         btn_fotos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Poste cadastrado com sucesso !!",Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(Cadastro_Activity.this, Tela2Menu_Activity.class));
+                adicionar_fotos();
             }
         });
 
@@ -169,11 +185,28 @@ public class Cadastro_Activity extends  FragmentActivity implements OnMapReadyCa
 
 
 
+
+
         layoutMap = (LinearLayout) findViewById(R.id.layoutMap);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
 
     }
+    // Funcao nome foto
+    public File criarImagem() throws IOException{
+        // criar arquivo de imagem
+        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date());
+        NomeFotoTirada = var_id_poste+"_"+timeStamp;
+        File storagedir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(NomeFotoTirada,".jpg",storagedir);
+
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+
+
+
 
         private void fetchLastLocation(){
             if (ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
@@ -218,59 +251,108 @@ public class Cadastro_Activity extends  FragmentActivity implements OnMapReadyCa
                     break;
             }
         }
+
+
     int PositionBit ;
 
     public void tiraFoto(View v){
+
+        File photoFile = null;
         PositionBit = parentLinearLayout.indexOfChild((View) v.getParent());
-        if (bitimagens.get(PositionBit) != null){
-            Toast.makeText(getApplicationContext(), "Já existe imagem capturada" + parentLinearLayout.indexOfChild((View) v.getParent()), Toast.LENGTH_SHORT).show();
+
+        if(BitmapListmg.get(PositionBit)!=null){
+
         }else{
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE );
-            startActivityForResult(intent, parentLinearLayout.indexOfChild((View) v.getParent()));
+            if(intent.resolveActivity(getPackageManager())!= null) {
+
+                try {
+                    photoFile = criarImagem();
+                } catch (IOException ex) {
+                    //Error occurred while creating the file
+                }
+
+                if (photoFile != null) {
+                    Uri photoUri = FileProvider.getUriForFile(this, "com.nbntelecom.nbnpostemap", photoFile);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+                    startActivityForResult(intent, PositionBit);
+
+                }
+            }
+
         }
 
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent){
+        super.onActivityResult(requestCode,resultCode,intent);
+        try{
+            if (resultCode == RESULT_OK){
+                File file = new File(mCurrentPhotoPath);
+                imagem  = MediaStore.Images.Media.getBitmap(getContentResolver(),Uri.fromFile(file));
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        if (resultCode == RESULT_OK){
-            Bundle extras = data.getExtras();
-            imagem  = (Bitmap) extras.get("data");
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            imagem.compress(Bitmap.CompressFormat.JPEG,100,stream);
-            bitimagens.set(PositionBit,imagem);
-            Toast.makeText(getApplicationContext(),"Imagem Salva ",Toast.LENGTH_SHORT).show();
+
+
+
+                if(imagem  != null) {
+                    ImagensStringList.add(PositionBit, NomeFotoTirada);
+                    Toast.makeText(getApplicationContext(), "Imagem salva com sucesso ! ", Toast.LENGTH_SHORT).show();
+                    LinearLayout aux = (LinearLayout) parentLinearLayout.getChildAt(PositionBit);
+                    TextView auxiliar = (TextView) aux.findViewById(R.id.number_edit_text);
+                    auxiliar.setVisibility(View.VISIBLE);
+                    auxiliar.setLayoutParams(new LinearLayout.LayoutParams(550, 150));
+                    auxiliar.setText(NomeFotoTirada);
+                    Button tira_foto = (Button) aux.findViewById(R.id.abrir_cam);
+                    tira_foto.setVisibility(View.INVISIBLE);
+                    tira_foto.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+                    Button VerFoto = (Button) aux.findViewById(R.id.visualizar_img);
+                    Button DeletarFoto = (Button) aux.findViewById(R.id.delete_button);
+                    DeletarFoto.setVisibility(View.VISIBLE);
+                    DeletarFoto.setLayoutParams(new LinearLayout.LayoutParams(100, 100));
+                    VerFoto.setVisibility(View.VISIBLE);
+                    VerFoto.setLayoutParams(new LinearLayout.LayoutParams(100, 100));
+
+                }
+
+            }
+        }catch (Exception error){
+            error.printStackTrace();
         }
 
-        super.onActivityResult(requestCode,resultCode,data);
     }
-
 
     public void onAddField(View v) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final View rowView = inflater.inflate(R.layout.field, null);
         // Add the new row before the add field button.
         parentLinearLayout.addView(rowView, parentLinearLayout.indexOfChild(v));
-        bitimagens.add(null);
+        BitmapListmg.add(null);
         Toast.makeText(getApplicationContext(),"Index: "+(parentLinearLayout.indexOfChild(v)),Toast.LENGTH_SHORT).show();
     }
+
     public void onvisualizar(View v){
-        imagem = (Bitmap) bitimagens.get(parentLinearLayout.indexOfChild((View) v.getParent()));
-        if(imagem == null){
-            Toast.makeText(getApplicationContext(),"Erro: Sem imagem",Toast.LENGTH_SHORT).show();
-        }else{
+
+        imagem = (Bitmap) BitmapListmg.get(parentLinearLayout.indexOfChild((View) v.getParent()));
+        NomeFotoTirada = (String) ImagensStringList.get(parentLinearLayout.indexOfChild((View) v.getParent()));
+
             Intent intentEnviar = new Intent(Cadastro_Activity.this, VisualizarImagem.class);
-            intentEnviar.putExtra("bit_image",imagem);
+
+            //intentEnviar.putExtra("bit_image",imagem);
+            intentEnviar.putExtra("nomeFoto",NomeFotoTirada);
             startActivity(intentEnviar);
-        }
+
+
+
     }
 
     public void onDelete(View v) {
 
 
         Toast.makeText(getApplicationContext(),"REMOVENDO index: "+(parentLinearLayout.indexOfChild((View) v.getParent())+1),Toast.LENGTH_SHORT).show();
-        bitimagens.remove(parentLinearLayout.indexOfChild((View) v.getParent()));
+        BitmapListmg.remove(parentLinearLayout.indexOfChild((View) v.getParent()));
+        ImagensStringList.remove(parentLinearLayout.indexOfChild((View ) v.getParent()));
         parentLinearLayout.removeView((View) v.getParent());
 
     }
@@ -290,6 +372,7 @@ public class Cadastro_Activity extends  FragmentActivity implements OnMapReadyCa
             chaveposte = findViewById(R.id.chaveposte);
             transposte = findViewById(R.id.transposte);
             baixaposte = findViewById(R.id.baixaposte);
+            cameraposte = findViewById(R.id.cameraMonitoramento);
 
 
             // conectando com o banco
@@ -326,6 +409,7 @@ public class Cadastro_Activity extends  FragmentActivity implements OnMapReadyCa
                     params.put("espposte",espposte.getSelectedItem().toString());
                     params.put("numeroposte",et_numPoste1.getText().toString());
                     params.put("tipoposte",tipoposte.getSelectedItem().toString());
+                    params.put("cameraposte",cameraposte.getSelectedItem().toString());
                     return  params;
                 }
             };
@@ -421,6 +505,27 @@ public class Cadastro_Activity extends  FragmentActivity implements OnMapReadyCa
 
     }
 
+    // ---------------------------    ATRIBUTO -> CAIXA ATENDIMENTO ------------------------------------------
+    public  void adicionar_caixa_atendimento(View v){
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        final  View rowView = inflater.inflate(R.layout.caixa_atendimento_layout, null);
+        // Add the new row before the add field button.
+        LinearLayoutCaixaAtendimento.addView(rowView,LinearLayoutCaixaAtendimento.indexOfChild(v));
+
+        //Toast.makeText(getApplicationContext(),"Index: "+(LinearLayoutResevaT.indexOfChild(v)),Toast.LENGTH_SHORT).show();
+    }
+
+    public void delete_caixa_atendimento(View v) {
+
+
+        //Toast.makeText(getApplicationContext(),"REMOVENDO index: "+(LinearLayoutResevaT.indexOfChild((View) v.getParent())+1),Toast.LENGTH_SHORT).show();
+        LinearLayoutCaixaAtendimento.removeView((View)v.getParent());
+
+
+    }
+
 
     public void atributos(View v){
 
@@ -429,6 +534,13 @@ public class Cadastro_Activity extends  FragmentActivity implements OnMapReadyCa
             LinearLayout ReservaLinearLayout = (LinearLayout) LinearLayoutResevaT.getChildAt(contador);
             Spinner Cadastrasr_Reserva = ReservaLinearLayout.findViewById(R.id.reservapostes);
             Reserva_tecnica_list.add(Cadastrasr_Reserva.getSelectedItem().toString());
+            contador++;
+        }
+        contador = 0 ;
+        while (contador<(LinearLayoutCaixaAtendimento.getChildCount()-1)){
+            LinearLayout RackLinearLayout = (LinearLayout) LinearLayoutCaixaAtendimento.getChildAt(contador);
+            Spinner Cadastrar_Rack = RackLinearLayout.findViewById(R.id.caixa_atendimento);
+            Caixa_atendimento_list.add(Cadastrar_Rack.getSelectedItem().toString());
             contador++;
         }
         contador = 0;
@@ -477,6 +589,7 @@ public class Cadastro_Activity extends  FragmentActivity implements OnMapReadyCa
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String>  params = new HashMap<>();
                 params.put("var_id_poste",var_id_poste);
+                params.put("caixaatendimento",Caixa_atendimento_list.toString());
                 params.put("reservaposte",Reserva_tecnica_list.toString());
                 params.put("rackposte",Rack_lisy.toString());
                 params.put("fixposte",Fixacao_poste_list.toString());
@@ -551,26 +664,44 @@ public class Cadastro_Activity extends  FragmentActivity implements OnMapReadyCa
     }
 
 
+    public String imageToString(Bitmap bitmap){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+        byte[] imgBytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imgBytes,Base64.DEFAULT);
+    }
+
     public void adicionar_fotos(){
-        StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/cadastro.php",
+        StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/fotos.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if (response.contains("1")) {
-                            Toast.makeText(getApplicationContext(),"Poste cadastrado com sucesso !",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Cadastro_Activity.this, Tela2Menu_Activity.class));
+                            if (response.contains("1")){
+                                Intent intentEnviar = new Intent(Cadastro_Activity.this, Tela2Menu_Activity.class);
+                                Toast.makeText(getApplicationContext(),"Poste cadastrado com sucesso",Toast.LENGTH_LONG).show();
+                                startActivity(intentEnviar);
+                            }else{
+                                Intent intentEnviar = new Intent(Cadastro_Activity.this, Tela2Menu_Activity.class);
+                                Toast.makeText(getApplicationContext(),"Poste cadastrado com sucesso",Toast.LENGTH_LONG).show();
+                                startActivity(intentEnviar);
+                            }
 
-                        }
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Intent intentEnviar = new Intent(Cadastro_Activity.this, Tela2Menu_Activity.class);
+                Toast.makeText(getApplicationContext(),"Poste cadastrado com sucesso",Toast.LENGTH_LONG).show();
+                startActivity(intentEnviar);
             }
         }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String>  params = new HashMap<>();
+                params.put("var_id_poste",var_id_poste);
+                params.put("imagem",imageToString(imagem));
+                params.put("nomeFoto",ImagensStringList.toString() );
                 return  params;
             }
         };

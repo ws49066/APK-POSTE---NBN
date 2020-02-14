@@ -18,7 +18,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/colormenu"
             android:gravity="center"
             android:orientation="vertical">
@@ -249,6 +249,32 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/labelcameraMonitor"
+                        android:layout_width="163dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="CÂMERA"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp" />
+
+                    <Spinner
+                        android:id="@+id/cameraMonitoramento"
+                        android:layout_width="148dp"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="#FFF44336"
+                        android:entries="@array/cameraposte"
+                        android:gravity="center"
+                        android:textAlignment="center" />
+
+                </LinearLayout>
+
                 <Button
                     android:id="@+id/btn_parte1"
                     android:layout_width="match_parent"
@@ -424,6 +450,45 @@
                     android:onClick="adicionar_reservatecnica"
                     android:background="@android:drawable/ic_input_add" />
             </LinearLayout>
+
+
+                ------------------------Layout CAIXA ATENDIMENTO ------------------------------------------------
+
+                <View
+                    android:layout_width="247dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="#FFFFFF" />
+
+                <TextView
+                    android:id="@+id/CaixaAtendimento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="CAIXA ATENDIMENTO"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15dp" />
+
+                <LinearLayout
+                    android:id="@+id/parent_linear_caixa_atendimento"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+
+                    <Button
+                        android:id="@+id/btn_caixa_atendimento"
+                        android:layout_width="26dp"
+                        android:layout_height="27dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="20dp"
+                        android:onClick="adicionar_caixa_atendimento"
+                        android:background="@android:drawable/ic_input_add" />
+                </LinearLayout>
+
 
 
 
@@ -661,6 +726,7 @@
                     android:layout_height="211dp"
                     android:layout_margin="10dp" />
             </LinearLayout>
+
 
             <Button
                 android:id="@+id/btn_endereco"

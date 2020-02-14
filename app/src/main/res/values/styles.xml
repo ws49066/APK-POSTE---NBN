@@ -4,13 +4,21 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colormenu</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textAllCaps">true</item>
     </style>
-    <style name="dropdown" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
 
+    <style name="dropdown" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
         <item name="android:textColor">@color/my_spinner_text_color</item>
+        <item name="android:textSize">5dp</item>
+    </style>
+    <style name="CadastroStyle">
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colormenu</item>
+         <item name="windowNoTitle">true</item>
+
     </style>
 
 </resources>

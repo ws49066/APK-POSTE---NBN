@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 
 public class VisualizarImagem extends AppCompatActivity {
 
-    ImageView  imagemViewFoto ;
+    TextView  imagemViewFoto ;
     Bitmap imagemEnviada ;
+    String TextoEnviado;
+
 
 
     @Override
@@ -19,12 +22,17 @@ public class VisualizarImagem extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualizar_imagem);
 
-        imagemViewFoto = (ImageView) findViewById(R.id.VisualizarView);
+        imagemViewFoto = (TextView) findViewById(R.id.VisualizarView);
+
+
+
 
         Bundle extras = getIntent().getExtras();
         if(extras != null){
             imagemEnviada= (Bitmap) extras.get("bit_image");
-            imagemViewFoto.setImageBitmap(imagemEnviada);
+            TextoEnviado = (String) extras.get("nomeFoto");
+            imagemViewFoto.setText(TextoEnviado);
+
         }
 
 

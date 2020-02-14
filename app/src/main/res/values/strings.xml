@@ -57,6 +57,11 @@
         <item>Sim</item>
     </string-array>
 
+    <string-array name="cameraposte">
+        <item>Não</item>
+        <item>Sim</item>
+    </string-array>
+
     <string-array name="transposte">
         <item>Não</item>
         <item>Monofásico</item>
@@ -88,6 +93,7 @@
         <item>LOGIC PRO</item>
         <item>AMAZONET</item>
         <item>EYES N WHERE</item>
+        <item>DESCONHECIDO</item>
     </string-array>
 
     <string-array name="rackposte">
@@ -100,6 +106,7 @@
         <item>LOGIC PRO</item>
         <item>AMAZONET</item>
         <item>EYES N WHERE</item>
+        <item>DESCONHECIDO</item>
     </string-array>
 
     <string-array name="reservaposte">
@@ -112,7 +119,20 @@
         <item>LOGIC PRO</item>
         <item>AMAZONET</item>
         <item>EYES N WHERE</item>
-    </string-array>
+        <item>DESCONHECIDO</item>
+</string-array>
 
+    <string-array name="caixaatendimento">
+        <item>NBN</item>
+        <item>OI</item>
+        <item>VIVO</item>
+        <item>EMBRATEL/CLARO</item>
+        <item>TIM</item>
+        <item>AXES</item>
+        <item>LOGIC PRO</item>
+        <item>AMAZONET</item>
+        <item>EYES N WHERE</item>
+        <item>DESCONHECIDO</item>
+    </string-array>
 
 </resources>

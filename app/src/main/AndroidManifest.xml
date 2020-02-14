@@ -3,11 +3,13 @@
     package="com.nbntelecom.nbnpostemap">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <application
         android:allowBackup="true"
@@ -17,30 +19,39 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".VisualizarImagem"></activity>
+        <activity android:name=".Detalhes_poste_consulta"></activity>
+        <activity android:name=".ConsultarPoste" />
+        <activity android:name=".VisualizarImagem" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/chave_map" />
 
-        <activity android:name=".Cadastro_Activity" android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".Cadastro_Activity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".Tela2Menu_Activity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
-
-        </activity>
-        <activity
-            android:name=".Login_Activity" android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".Login_Activity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
 
+        <provider
+            android:authorities="com.nbntelecom.nbnpostemap"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
 
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+
+        </provider>
     </application>
 
 </manifest>
