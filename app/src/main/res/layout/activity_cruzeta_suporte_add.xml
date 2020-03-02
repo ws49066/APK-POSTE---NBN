@@ -4,15 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    tools:context=".VisualizarImagem">
+    tools:context=".cruzeta_suporte_add">
 
-    <TextView
-        android:id="@+id/VisualizarView"
-        android:textAlignment="center"
-        android:layout_width="match_parent"
-        android:text="Manaus"
-        android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="141dp"
-        tools:layout_editor_absoluteY="236dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

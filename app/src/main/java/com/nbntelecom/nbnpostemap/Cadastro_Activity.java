@@ -50,12 +50,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.nbntelecom.nbnpostemap.POJO.Address;
+import com.nbntelecom.nbnpostemap.POJO.Util;
+import com.nbntelecom.nbnpostemap.POJO.ZipCodeListener;
 
 import org.w3c.dom.Text;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,9 +84,9 @@ public class Cadastro_Activity extends  FragmentActivity implements OnMapReadyCa
 
     String var_id_poste;
 
-    EditText et_numPoste1,estado,municipio,bairro,rua,naproximado,cep;
+    EditText et_numPoste1,municipio,bairro,rua,naproximado,cep;
     Spinner tipoposte,espposte,dimposte,iluminaposte,areaposte,chaveposte,transposte,suporteposte
-            ,baixaposte,fixposte,rackposte,reservaposte,caixaatendimento,cameraposte;
+            ,baixaposte,fixposte,rackposte,reservaposte,caixaatendimento,cameraposte,estado;
 
 
     Button btn_fotos,btn_parte1,btn_atributos,btn_endereco,add_field_reserva_tecnica,btn_caixa_atendimento;
@@ -110,11 +114,22 @@ public class Cadastro_Activity extends  FragmentActivity implements OnMapReadyCa
     FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 101;
 
+    private  EditText etZipCode;
+    private Util util;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
+
+        etZipCode = (EditText) findViewById(R.id.et_zip_code);
+        etZipCode.addTextChangedListener( new ZipCodeListener(this));
+        util = new Util(this,R.id.et_zip_code,R.id.et_street,R.id.et_complement,R.id.et_neighbor
+        ,R.id.et_city,R.id.sp_state,R.id.et_number,R.id.tv_zip_code_search);
+
+        Spinner spStates = (Spinner) findViewById(R.id.sp_state);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.states,android.R.layout.simple_spinner_item);
+        spStates.setAdapter(adapter);
 
 
         id_post_text = findViewById(R.id.idtext);
@@ -192,6 +207,9 @@ public class Cadastro_Activity extends  FragmentActivity implements OnMapReadyCa
 
 
     }
+
+
+
     // Funcao nome foto
     public File criarImagem() throws IOException{
         // criar arquivo de imagem
@@ -288,14 +306,15 @@ public class Cadastro_Activity extends  FragmentActivity implements OnMapReadyCa
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent){
         super.onActivityResult(requestCode,resultCode,intent);
+        if( requestCode == Address.RESQUEST_ZIP_CODE_CODE
+                && resultCode == RESULT_OK ){
+            etZipCode.setText( intent.getStringExtra( Address.ZIP_CODE_KEY ) );
+        }
+
         try{
             if (resultCode == RESULT_OK){
                 File file = new File(mCurrentPhotoPath);
                 imagem  = MediaStore.Images.Media.getBitmap(getContentResolver(),Uri.fromFile(file));
-
-
-
-
                 if(imagem  != null) {
                     ImagensStringList.add(PositionBit, NomeFotoTirada);
                     Toast.makeText(getApplicationContext(), "Imagem salva com sucesso ! ", Toast.LENGTH_SHORT).show();
@@ -605,15 +624,17 @@ public class Cadastro_Activity extends  FragmentActivity implements OnMapReadyCa
     }
 
     public void endereco(){
-        estado = findViewById(R.id.estado);
-        municipio = findViewById(R.id.municipio);
-        bairro = findViewById(R.id.bairro);
-        rua = findViewById(R.id.rua);
-        naproximado =  findViewById(R.id.naproximado);
-        cep = findViewById(R.id.cep);
+        estado = findViewById(R.id.sp_state);
+        municipio = findViewById(R.id.et_city);
+        bairro = findViewById(R.id.et_neighbor);
+        rua = findViewById(R.id.et_street);
+        naproximado =  findViewById(R.id.et_number);
+        cep = findViewById(R.id.et_zip_code);
+
+
         areaposte = findViewById(R.id.areaposte);
 
-        if(estado.getText().length() == 0 || municipio.getText().length()==0 || bairro.getText().length() == 0 ||
+        if(municipio.getText().length()==0 || bairro.getText().length() == 0 ||
                 rua.getText().length() == 0 || naproximado.getText().length() == 0 || cep.getText().length() == 0){
 
             Toast.makeText(getApplicationContext(),"Preencha todos os campos",Toast.LENGTH_SHORT).show();
@@ -648,7 +669,7 @@ public class Cadastro_Activity extends  FragmentActivity implements OnMapReadyCa
                     params.put("areaposte",areaposte.getSelectedItem().toString());
                     params.put("localizacao",(localizacaoAtual.getLatitude()+""+ localizacaoAtual.getLongitude()).toString());
                     params.put("numeroposte",et_numPoste1.getText().toString());
-                    params.put("estado",estado.getText().toString());
+                    params.put("estado",estado.getSelectedItem().toString());
                     params.put("municipio",municipio.getText().toString());
                     params.put("bairro",bairro.getText().toString());
                     params.put("rua",rua.getText().toString());
@@ -707,5 +728,43 @@ public class Cadastro_Activity extends  FragmentActivity implements OnMapReadyCa
         };
         RequestQueue cadastro = Volley.newRequestQueue(this);
         cadastro.add(request);
+    }
+
+    public  String getUriZipCode(){
+        return "https://viacep.com.br/ws/"+etZipCode.getText()+"/json/";
+
+    }
+    public  void lockFields(boolean isToLock){
+        util.lockFields(isToLock);
+    }
+
+    public void setDataViews(Address address){
+        setField(R.id.et_street , address.getLogradouro());
+        setField(R.id.et_complement , address.getComplemento());
+        setField(R.id.et_neighbor , address.getBairro());
+        setField(R.id.et_city , address.getLocalidade());
+        setSpinner(R.id.sp_state, R.array.states, address.getUf());
+
+    }
+    private  void setField(int id, String data){
+        ((EditText) findViewById((id))).setText(data);
+    }
+
+    private  void setSpinner(int id, int arrayId, String data){
+        String[] itens = getResources().getStringArray(arrayId);
+
+        for(int i =0; i<itens.length; i++){
+            if(itens[i].endsWith("("+data+")")){
+                ((Spinner) findViewById(id)).setSelection(i);
+                return;
+            }
+        }
+        ((Spinner) findViewById(id)).setSelection(0);
+
+    }
+
+    public void searchZipCode(View view){
+        Intent intent = new Intent(this, ZipCodeSearchActivity.class);
+        startActivityForResult( intent, Address.RESQUEST_ZIP_CODE_CODE );
     }
 }
