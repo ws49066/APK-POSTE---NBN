@@ -1,9 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".cruzeta_suporte_add">
+    android:background="@color/colormenu"
+    android:layout_gravity="center"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@color/colormenu"
+        android:scrollbars="none"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colormenu"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_atributos"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="100dp"
+                android:inputType="text"
+                android:text="-- CRUZETA --"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+
+            <LinearLayout
+                android:layout_width="359dp"
+                android:layout_height="369dp"
+                android:layout_gravity="center"
+                android:background="@drawable/border"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/texto_tipoPoste"
+                        android:layout_width="131dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="TIPO DE CRUZETA "
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+                <Spinner
+                    android:id="@+id/tipocruzeta"
+                    android:layout_width="174dp"
+                    android:layout_height="54dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="40dp"
+                    android:backgroundTint="#FFF44336"
+                    android:entries="@array/tipoposte"
+                    android:selectAllOnFocus="true"
+                    android:textAlignment="center" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/textTipo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="AÉREA TIPO "
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp" />
+                </LinearLayout>
+
+                <Spinner
+                    android:id="@+id/aereatipo"
+                    android:layout_width="172dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="40dp"
+                    android:backgroundTint="#FFF44336"
+                    android:entries="@array/espposte"
+                    android:textAlignment="center" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="REDE MÉDIA"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp" />
+                </LinearLayout>
+
+                <Spinner
+                    android:id="@+id/redemedia"
+                    android:layout_width="172dp"
+                    android:layout_height="43dp"
+                    android:layout_gravity="center"
+                    android:backgroundTint="#FFF44336"
+                    android:entries="@array/dimposte"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="382dp"
+                android:layout_height="85dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="100dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_cadastrar_cruzeta"
+                    android:layout_width="172dp"
+                    android:layout_height="69dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/borderconfirmar"
+                    android:text="CADASTRAR"
+                    android:textColor="#00b034"
+                    android:textSize="7pt" />
+
+                <Button
+                    android:id="@+id/btn_cancelar_cruzeta"
+                    android:layout_width="172dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/bordercancelar"
+                    android:text="CANCELAR"
+                    android:textColor="#FF0000"
+                    android:textSize="7pt" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -7,7 +7,9 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_margin="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/borderetangular"
@@ -15,8 +17,8 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/labelText"
-            android:layout_width="77dp"
+            android:id="@+id/labelTextPonto"
+            android:layout_width="58dp"
             android:layout_height="match_parent"
             android:background="@drawable/borderetangular"
             android:gravity="center"
@@ -31,72 +33,72 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="313dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="92dp"
+                    android:layout_width="113dp"
                     android:layout_height="wrap_content"
-                    android:text="TIPO"
+                    android:text="P. DE FIXAÇÃO "
                     android:textColor="#FFFFFF"
                     android:textSize="15dp" />
 
                 <TextView
-                    android:textAlignment="center"
-                    android:id="@+id/tipo_cruzeta_view"
-                    android:layout_width="161dp"
+                    android:id="@+id/pontofixacao_pontofixacao_view"
+                    android:layout_width="99dp"
                     android:layout_height="wrap_content"
+                    android:textAlignment="center"
                     android:textColor="#FFFFFF"
                     android:textSize="15dp" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="313dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="92dp"
+                    android:layout_width="113dp"
                     android:layout_height="wrap_content"
-                    android:text="AEREA TIPO"
+                    android:text="T. DE CABO"
                     android:textColor="#FFFFFF"
                     android:textSize="15dp" />
 
                 <TextView
+                    android:id="@+id/tipocabo_pontofixacao_view"
+                    android:layout_width="101dp"
+                    android:layout_height="match_parent"
                     android:textAlignment="center"
-                    android:id="@+id/aerea_cruzeta_view"
-                    android:layout_width="161dp"
-                    android:layout_height="wrap_content"
                     android:textColor="#FFFFFF"
                     android:textSize="15dp" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="313dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="94dp"
+                    android:layout_width="113dp"
                     android:layout_height="wrap_content"
-                    android:text="REDE MEDIA"
+                    android:text="BITOLA"
                     android:textColor="#FFFFFF"
                     android:textSize="15dp" />
 
                 <TextView
+                    android:id="@+id/bitola_pontofixacao_view"
+                    android:layout_width="106dp"
+                    android:layout_height="match_parent"
                     android:textAlignment="center"
-                    android:id="@+id/redemedia_cruzeta_view"
-                    android:layout_width="161dp"
-                    android:layout_height="wrap_content"
                     android:textColor="#FFFFFF"
                     android:textSize="15dp" />
 

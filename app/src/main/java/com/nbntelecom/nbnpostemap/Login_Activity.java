@@ -49,11 +49,14 @@ public class Login_Activity extends Activity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if (response.contains("1")) {
-                            startActivity(new Intent(Login_Activity.this, Tela2Menu_Activity.class));
+                        if (response.contains("2")) {
+                            Toast.makeText(getApplicationContext(),"Erro usuario ou senha", Toast.LENGTH_SHORT).show();
 
                         }else{
-                            Toast.makeText(getApplicationContext(),"Erro usuario ou senha", Toast.LENGTH_SHORT).show();
+                            String var_name_user = (String) response;
+                            Intent intentEnviar = new Intent(Login_Activity.this, Tela2Menu_Activity.class);
+                            intentEnviar.putExtra("var_name_user",var_name_user);
+                            startActivity(intentEnviar);
                         }
                     }
                 }, new Response.ErrorListener() {

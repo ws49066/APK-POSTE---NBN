@@ -1,9 +1,270 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Atributos_poste">
+    android:background="@color/colormenu"
+    android:gravity="center"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/layout_atributos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colormenu"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+
+            <TextView
+                android:id="@+id/text_atributos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:inputType="text"
+                android:text="-- ATRIBUTOS --"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            //-------------------SUPORTE CRUZERA LAYOUT ------------------------
+
+
+            //----------------PONTO DE FIXACAO LAYOUT ------------------------------------------
+
+
+            <LinearLayout
+                android:id="@+id/parent_linear_suporte_cruzeta"
+                android:layout_width="286dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelcruzeta"
+                    android:layout_width="176dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="SUPORTE/CRUZETA"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15dp" />
+
+
+                <Button
+                    android:id="@+id/add_field_suporte_cruzeta"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:backgroundTint="#00b034"
+                    android:background="@drawable/borderadicionar"
+                    android:text="Adicionar"
+                    android:textColor="#FFFFFF" />
+
+
+            </LinearLayout>
+
+
+            ----------------------------Layout Rack -------------------------------------
+
+            <LinearLayout
+                android:id="@+id/parent_linear_ponto_fixacao"
+                android:layout_width="286dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="40dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/labelfixacao"
+                    android:layout_width="176dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:text="PONTO DE FIXAÇÃO"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15dp" />
+
+                <Button
+                    android:id="@+id/add_field_ponto_fixacao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:background="@drawable/borderadicionar"
+                    android:backgroundTint="#00b034"
+                    android:text="Adicionar"
+                    android:textColor="#FFF" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="286dp"
+                android:layout_marginBottom="40dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/labelrack"
+                        android:layout_width="176dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingRight="95dp"
+                        android:text="RACK"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:background="@drawable/borderadicionar"
+                        android:backgroundTint="#00b034"
+                        android:onClick="adicionar_rack"
+                        android:text="Adicionar"
+                        android:textColor="#FFF" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/parent_linear_rack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/border"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            ------------------------Layout RESERVA TÉCNICA ------------------------------------------------
+
+            <LinearLayout
+                android:layout_width="286dp"
+                android:layout_marginBottom="40dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/ReserTecnica"
+                        android:layout_width="176dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="RESERVA TÉCNICA"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:onClick="adicionar_reservatecnica"
+                        android:background="@drawable/borderadicionar"
+                        android:backgroundTint="#00b034"
+                        android:text="Adicionar"
+                        android:textColor="#FFF" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/parent_linear_reserva"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/border"
+                    android:orientation="vertical"></LinearLayout>
+
+            </LinearLayout>
+
+
+
+            ------------------------Layout CAIXA ATENDIMENTO ------------------------------------------------
+
+            <LinearLayout
+                android:layout_width="286dp"
+                android:layout_marginBottom="40dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/CaixaAtendimento"
+                        android:layout_width="176dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="CAIXA ATENDIMENTO"
+                        android:textAlignment="center"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15dp" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:onClick="adicionar_caixa_atendimento"
+                        android:background="@drawable/borderadicionar"
+                        android:backgroundTint="#00b034"
+                        android:text="Adicionar"
+                        android:textColor="#FFF" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/parent_linear_caixa_atendimento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@drawable/border"
+                    android:orientation="vertical"></LinearLayout>
+
+            </LinearLayout>
+
+
+            --
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="96dp"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btn_atributos"
+                    android:layout_width="307dp"
+                    android:layout_height="61dp"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/borderconfirmar"
+                    android:text="PROXIMO"
+                    android:textColor="#00b034"
+                    android:textSize="7pt" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

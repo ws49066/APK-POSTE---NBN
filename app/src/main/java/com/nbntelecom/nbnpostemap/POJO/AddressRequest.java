@@ -3,14 +3,14 @@ package com.nbntelecom.nbnpostemap.POJO;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
-import com.nbntelecom.nbnpostemap.Cadastro_Activity;
+import com.nbntelecom.nbnpostemap.endereco_Activity;
 
 import java.lang.ref.WeakReference;
 
 public class AddressRequest extends AsyncTask<Void, Void, Address> {
-    private WeakReference<Cadastro_Activity> activity;
+    private WeakReference<endereco_Activity> activity;
 
-    public AddressRequest( Cadastro_Activity activity ){
+    public AddressRequest( endereco_Activity activity ){
         this.activity = new WeakReference<>( activity );
     }
 

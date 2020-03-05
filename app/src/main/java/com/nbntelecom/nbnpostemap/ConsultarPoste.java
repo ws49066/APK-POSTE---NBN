@@ -33,7 +33,9 @@ public class ConsultarPoste extends AppCompatActivity {
     private ListView listView;
 
 
+
     List<Provinsi> provinsiList;
+
 
 
     @Override
@@ -48,10 +50,6 @@ public class ConsultarPoste extends AppCompatActivity {
 
 
     }
-
-
-
-
 
 
     public void showList(){

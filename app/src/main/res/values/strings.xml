@@ -3,11 +3,11 @@
     <string name="usuario">USUÁRIO</string>
     <string name="password">SENHA</string>
     <string name="nbntelecom">NBN TELECOM ONLINE</string>
-    <string name="CadastroNovo">NOVO</string>
+    <string name="CadastroNovo">CADASTRAR</string>
     <string name="editar">EDITAR</string>
     <string name="consultar">CONSULTAR</string>
     <string name="excluir">excluir</string>
-    <string name="NumeroPoste">NUMERO DO POSTE</string>
+    <string name="NumeroPoste">DIGITE O NÚMERO DO POSTE</string>
     <string name="TipoPoste">TIPO POSTE:</string>
     <string name="EspeciePoste">ESPECIE</string>
     <string name="PosteRetangula">RETANGULAR</string>

@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 
 import com.nbntelecom.nbnpostemap.Cadastro_Activity;
+import com.nbntelecom.nbnpostemap.endereco_Activity;
 
 public class ZipCodeListener implements TextWatcher {
     private Context context;
@@ -25,7 +26,7 @@ public class ZipCodeListener implements TextWatcher {
     public void afterTextChanged(Editable editable) {
         String zipCode = editable.toString();
         if (zipCode.length()==8) {
-            new AddressRequest((Cadastro_Activity) context).execute();
+            new AddressRequest((endereco_Activity) context).execute();
         }
     }
 }

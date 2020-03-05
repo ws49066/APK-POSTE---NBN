@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -25,6 +26,9 @@ public class Tela2Menu_Activity extends AppCompatActivity {
     Button btn_editar;
     Button btn_consultar;
     Button btn_excluir;
+    TextView textUserName;
+
+    String var_name_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,13 @@ public class Tela2Menu_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_tela2_menu);
 
         btn_novo = findViewById(R.id.btn_novo);
+        textUserName = findViewById(R.id.textUserName);
+
+        Bundle extras = getIntent().getExtras();
+        if(extras != null){
+            var_name_user = (String) extras.get("var_name_user");
+            textUserName.setText("Usuário: "+var_name_user);
+        }
 
         btn_novo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,13 +74,13 @@ public class Tela2Menu_Activity extends AppCompatActivity {
             }
         });
 
-        btn_editar = findViewById(R.id.btn_editar);
+         /*btn_editar = findViewById(R.id.btn_editar);
         btn_editar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),"Contate o Admin.",Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
         btn_consultar = findViewById(R.id.btn_consultar);
         btn_consultar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,14 +88,14 @@ public class Tela2Menu_Activity extends AppCompatActivity {
                 startActivity(new Intent(Tela2Menu_Activity.this, ConsultarPoste.class));
             }
         });
-        btn_excluir = findViewById(R.id.btn_excluir);
+        /*btn_excluir = findViewById(R.id.btn_excluir);
         btn_excluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),"Contate o Admin..",Toast.LENGTH_SHORT).show();
             }
         });
-
+        */
 
 
     }

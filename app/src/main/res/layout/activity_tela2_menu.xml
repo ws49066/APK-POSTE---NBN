@@ -4,94 +4,70 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:focusable="true"
     android:background="@color/colormenu"
     tools:context=".Tela2Menu_Activity">
 
-
-    <Button
-        android:id="@+id/btn_novo"
-        android:layout_width="135dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginLeft="48dp"
-        android:text="@string/CadastroNovo"
-        android:textSize="19dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.457" />
-
-    <Button
-        android:id="@+id/btn_excluir"
-        android:layout_width="135dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="13dp"
-        android:layout_marginLeft="13dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginRight="48dp"
-        android:text="@string/excluir"
-        android:textSize="19dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.906"
-        app:layout_constraintStart_toEndOf="@+id/btn_consultar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.651" />
-
-    <Button
-        android:id="@+id/btn_consultar"
-        android:layout_width="135dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginLeft="48dp"
-        android:text="@string/consultar"
-        android:textSize="19dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.651" />
-
-    <Button
-        android:id="@+id/btn_editar"
-        android:layout_width="135dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="13dp"
-        android:layout_marginLeft="13dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginRight="48dp"
-        android:text="@string/editar"
-        android:textSize="19dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.897"
-        app:layout_constraintStart_toEndOf="@+id/btn_novo"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.457" />
-
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="210dp"
-        android:layout_height="161dp"
+        android:layout_width="214dp"
+        android:layout_height="166dp"
         android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/nbnlogoapp" />
+        app:srcCompat="@drawable/nbnlogoapp2" />
+
+
+    <Button
+        android:id="@+id/btn_novo"
+        android:background="@drawable/selector_button"
+        android:layout_width="288dp"
+        android:layout_height="73dp"
+        android:text="@string/CadastroNovo"
+        android:textSize="19dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.457" />
+
+    <Button
+        android:id="@+id/btn_consultar"
+        android:background="@drawable/selector_button"
+        android:layout_width="288dp"
+        android:layout_height="73dp"
+        android:text="@string/consultar"
+        android:textSize="19dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.651" />
+
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="296dp"
-        android:layout_height="17dp"
+        android:layout_width="289dp"
+        android:layout_height="30dp"
         android:layout_marginBottom="4dp"
         android:text="Todos os direitos reservados ₢ NBN Telecom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="7pt"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.874" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,9 +8,11 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -27,10 +29,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Detalhes_poste_consulta extends AppCompatActivity {
+
+
 
     TextView id,camera,caixaatendimento ;
     TextView numero_post ;
@@ -39,13 +44,18 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
     TextView dimensao ;
     TextView iluminacao ;
     TextView redebaixa ;
+    TextView labelisolada;
     TextView chavefusivel ;
     TextView transformador;
 
-    TextView text_cruzeta;
-    TextView text_ponto_fixacao;
-    TextView text_rack;
-    TextView text_RESERVA;
+    TextView tipo_cruzeta,aerea_cruzeta,rede_cruzeta,labelText;
+    TextView labelTextPonto,bitola_pontofixacao_view,tipocabo_pontofixacao_view,pontofixacao_pontofixacao_view;
+
+    TextView labelTextrack,rack_view;
+
+    TextView labelTextReservaTecnica,reservatecnica_view;
+
+    TextView labelTextCaixaAtendimento,caixaatendimento_view;
 
     TextView text_estado;
     TextView text_cidade;
@@ -61,7 +71,16 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
     String SCAN_PATH;
     File[] allFiles ;
 
+    int contadorCruzeta;
+    int contadorRack;
+    int contadorPonto;
+    int contadorCaixa;
+    int contadorReserva;
+
+
     Button pasta;
+
+    LinearLayout LinearLayoutcruzeta,LinearLayoutPontoFixacao,LinearLayoutRack,LinearLayoutReservaTecnica,LinearLayoutCaixaAtendimento;
 
 
 
@@ -70,25 +89,11 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhes_poste_consulta);
 
-        File foldes = new File(Environment.getDataDirectory().getParent()+"/sdcard/Android/data/com.nbntelecom.nbnpostemap/files/Pictures");
-
-        allFiles = foldes.listFiles();
-
-
-
-        pasta = ((Button) findViewById(R.id.button1));
-                pasta.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        for (int i = 0;i<2;i++){
-                            new SingleMediaScanner(Detalhes_poste_consulta.this,allFiles[i]);
-                        }
-
-                    }
-                });
-
-
-
+        LinearLayoutcruzeta = (LinearLayout) findViewById(R.id.LinearLayoutCruzeta);
+        LinearLayoutPontoFixacao = ( LinearLayout) findViewById(R.id.LinearLayoutPontoFixacao);
+        LinearLayoutRack = (LinearLayout) findViewById(R.id.LinearLayoutRack);
+        LinearLayoutReservaTecnica = (LinearLayout) findViewById(R.id.LinearLayoutReservaTecnica);
+        LinearLayoutCaixaAtendimento = (LinearLayout) findViewById(R.id.LinearLayoutCaixaAtendimento);
 
 
         Bundle extras = getIntent().getExtras();
@@ -104,12 +109,11 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
         dimensao = (TextView) findViewById(R.id.text_dimensao);
         iluminacao = (TextView) findViewById(R.id.textilumina);
         redebaixa = (TextView) findViewById(R.id.labelbaixa);
+        labelisolada = (TextView) findViewById(R.id.labelisolada);
         chavefusivel = (TextView) findViewById(R.id.labelfusivel);
         transformador = (TextView) findViewById(R.id.labeltrans);
-        text_cruzeta = (TextView) findViewById(R.id.texto_cruzeta);
-        text_ponto_fixacao= (TextView) findViewById(R.id.texto_ponto_fixacao);
-        text_rack= (TextView) findViewById(R.id.text_rack);
-        text_RESERVA= (TextView) findViewById(R.id.text_RESERVA);
+
+
         text_estado= (TextView) findViewById(R.id.texto_estado);
         text_cidade= (TextView) findViewById(R.id.texto_cidade);
         text_bairro= (TextView) findViewById(R.id.text_bairro);
@@ -119,7 +123,7 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
         text_area= (TextView) findViewById(R.id.text_area);
         text_localizacao= (TextView) findViewById(R.id.text_localizacao);
         camera = (TextView) findViewById((R.id.text_camera));
-        caixaatendimento = (TextView) findViewById(R.id.text_caixaatendimento);
+
 
 
 
@@ -129,50 +133,173 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
 
     public void showList(){
 
+
         final String post_id;
+
+
 
         StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/Consultar_id.php",
                 new Response.Listener<String>() {
 
+
                     @Override
                     public void onResponse(String response) {
+
                         try {
+
                             JSONObject obj = new JSONObject(response);
-                            JSONArray array = obj.getJSONArray("data");
+                            JSONObject objend = new JSONObject(response);
 
-                            for (int i = 0; i < array.length(); i++){
+                            JSONArray arrayPoste = obj.getJSONArray("data-poste");
+                            JSONArray arrayEnd = objend.getJSONArray("data-end");
+                            JSONArray arrayCruzeta = obj.getJSONArray("data-cruzeta");
+                            JSONArray arrayPonto = obj.getJSONArray("data-ponto");
+                            JSONArray arrayrRack = obj.getJSONArray("data-rack");
+                            JSONArray arrayReserva = obj.getJSONArray("data-reserva");
+                            JSONArray arrayCaixa = obj.getJSONArray("data-caixa");
 
-                                JSONObject provObj = array.getJSONObject(i);
 
-                                id.setText("ID: "+id_selecionado);
-                                numero_post.setText("N. POSTE :   " + provObj.getString("numero_poste"));
-                                tipo_poste.setText(provObj.getString("tipo_poste"));
-                                especie.setText(provObj.getString("secao_poste"));
-                                dimensao.setText(provObj.getString("dimensoes_poste"));
-                                iluminacao.setText(provObj.getString("iluminacao"));
-                                redebaixa.setText(provObj.getString("rede_baixa"));
-                                chavefusivel.setText(provObj.getString("chave_fusivel"));
-                                transformador.setText(provObj.getString("transformador"));
-                                camera.setText(provObj.getString(("cameraposte")));
+                            JSONObject provObjPoste = arrayPoste.getJSONObject(0);
+                            JSONObject provObjEnd = arrayEnd.getJSONObject(0);
+                            JSONObject provObjCruzeta = arrayCruzeta.getJSONObject(0);
+                            JSONObject provObjPonto = arrayPonto.getJSONObject(0);
+                            JSONObject provObjRack = arrayrRack.getJSONObject(0);
+                            JSONObject provObjReserva = arrayReserva.getJSONObject(0);
+                            JSONObject provObjCaixa = arrayCaixa.getJSONObject(0);
 
-                                text_cruzeta.setText(provObj.getString("cruz_atributo"));
-                                text_ponto_fixacao.setText(provObj.getString("ponto_atributo"));
-                                text_rack.setText(provObj.getString("rack_atributo"));
-                                text_RESERVA.setText(provObj.getString("reserva_atributo"));
-                                caixaatendimento.setText(provObj.getString("caixa_atributo"));
+                            id.setText("ID: "+id_selecionado);
+                            numero_post.setText("N. POSTE :   " + provObjPoste.getString("numero_poste"));
+                            tipo_poste.setText(provObjPoste.getString("tipo_poste"));
+                            especie.setText(provObjPoste.getString("secao_poste"));
+                            dimensao.setText(provObjPoste.getString("dimensoes_poste"));
+                            iluminacao.setText(provObjPoste.getString("iluminacao"));
+                            redebaixa.setText(provObjPoste.getString("rede_baixa"));
+                            labelisolada.setText(provObjPoste.getString("rede_isolada"));
+                            chavefusivel.setText(provObjPoste.getString("chave_fusivel"));
+                            transformador.setText(provObjPoste.getString("transformador"));
+                            camera.setText(provObjPoste.getString(("cameraposte")));
 
-                                text_estado.setText(provObj.getString("estado"));
-                                text_cidade.setText(provObj.getString("municipio"));
-                                text_bairro.setText(provObj.getString("bairro"));
-                                text_rua.setText(provObj.getString("rua"));
-                                text_proximo.setText(provObj.getString("num_proximo"));
-                                text_cep.setText(provObj.getString("cep"));
-                                text_area.setText(provObj.getString("perimetro"));
-                                text_localizacao.setText(provObj.getString("localizacao"));
+                            text_rua.setText(provObjEnd.getString("rua"));
+                            text_estado.setText(provObjEnd.getString("estado"));
+                            text_cidade.setText(provObjEnd.getString("cidade"));
+                            text_bairro.setText(provObjEnd.getString("bairro"));
+                            text_proximo.setText(provObjEnd.getString("numero"));
+                            text_cep.setText(provObjEnd.getString("cep"));
+                            text_area.setText(provObjEnd.getString("perimetro"));
+                            text_localizacao.setText(provObjEnd.getString("localizacao"));
+
+
+                            // REPETIÇÃO DA CRUZETA
+                            for (int i = 0; i < arrayCruzeta.length(); i++) {
+
+
+                                provObjCruzeta = arrayCruzeta.getJSONObject(i);
+
+
+                                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+
+                                final View rowView = inflater.inflate(R.layout.consulta_cruzeta_adapter, null);
+                                String tipocruzeta = provObjCruzeta.getString("tipocruzeta");
+                                String aereatipo = provObjCruzeta.getString("aereatipo");
+                                String redemedia = provObjCruzeta.getString("redemedia");
+
+                                labelText = (TextView) rowView.findViewById(R.id.labelText);
+                                tipo_cruzeta = (TextView) rowView.findViewById(R.id.tipo_cruzeta_view);
+                                aerea_cruzeta = (TextView) rowView.findViewById(R.id.aerea_cruzeta_view);
+                                rede_cruzeta = (TextView) rowView.findViewById(R.id.redemedia_cruzeta_view);
+
+                                labelText.setText(String.valueOf(i + 1));
+                                tipo_cruzeta.setText(tipocruzeta);
+                                aerea_cruzeta.setText(aereatipo);
+                                rede_cruzeta.setText(redemedia);
+
+                                LinearLayoutcruzeta.addView(rowView, i);
 
 
                             }
 
+                            // REPETICAO PONTO
+                            for (int i = 0; i < arrayPonto.length(); i++) {
+
+                                provObjPonto = arrayPonto.getJSONObject(i);
+
+
+                                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+
+                                final View rowView = inflater.inflate(R.layout.consulta_pontofixacao_adapter, null);
+
+
+                                String donoponto = provObjPonto.getString("donoponto");
+                                String tipoponto = provObjPonto.getString("tipoponto");
+                                String subtipoponto = provObjPonto.getString("subtipoponto");
+
+                                labelTextPonto = (TextView) rowView.findViewById(R.id.labelTextPonto);
+                                bitola_pontofixacao_view = (TextView) rowView.findViewById(R.id.bitola_pontofixacao_view);
+                                pontofixacao_pontofixacao_view = (TextView) rowView.findViewById(R.id.pontofixacao_pontofixacao_view);
+                                tipocabo_pontofixacao_view = (TextView) rowView.findViewById(R.id.tipocabo_pontofixacao_view);
+
+                                labelTextPonto.setText(String.valueOf(i+1));
+                                bitola_pontofixacao_view.setText(subtipoponto);
+                                pontofixacao_pontofixacao_view.setText(donoponto);
+                                tipocabo_pontofixacao_view.setText(tipoponto);
+
+                                LinearLayoutPontoFixacao.addView(rowView,i);
+
+                            }
+
+                            for (int i = 0; i < arrayrRack.length(); i++) {
+
+                                provObjRack = arrayrRack.getJSONObject(i);
+
+
+                                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+                                final View rowView = inflater.inflate(R.layout.consulta_rack_adapter, null);
+
+                                String rack_atributo = provObjRack.getString("rack_atributo");
+                                labelTextrack = (TextView) rowView.findViewById(R.id.labelTextrack);
+                                rack_view = (TextView) rowView.findViewById(R.id.rack_view);
+                                labelTextrack.setText(String.valueOf(i+1));
+                                rack_view.setText(rack_atributo);
+                                LinearLayoutRack.addView(rowView,i);
+
+                            }
+
+                            for (int i = 0; i < arrayReserva.length(); i++) {
+
+                                provObjReserva = arrayReserva.getJSONObject(i);
+
+
+                                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+                                final View rowView = inflater.inflate(R.layout.consulta_reservatecnica_adapter, null);
+                                String reserva_atributo = provObjReserva.getString("reserva_atributo");
+                                labelTextReservaTecnica = (TextView) rowView.findViewById(R.id.labelTextReservaTecnica);
+                                reservatecnica_view = (TextView) rowView.findViewById(R.id.reservatecnica_view);
+                                labelTextReservaTecnica.setText(String.valueOf(i+1));
+                                reservatecnica_view.setText(reserva_atributo);
+                                LinearLayoutReservaTecnica.addView(rowView,i);
+
+                            }
+
+                            for (int i = 0; i < arrayCaixa.length(); i++) {
+
+                                provObjCaixa = arrayCaixa.getJSONObject(i);
+
+
+                                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+                                final View rowView = inflater.inflate(R.layout.consulta_caixaatendimento_adapter, null);
+                                String caixa_atributo = provObjCaixa.getString("caixa_atributo");
+                                labelTextCaixaAtendimento = (TextView) rowView.findViewById(R.id.labelTextCaixaAtendimento);
+                                caixaatendimento_view = (TextView) rowView.findViewById(R.id.caixaatendimento_view);
+                                labelTextCaixaAtendimento.setText(String.valueOf(i+1));
+                                caixaatendimento_view.setText(caixa_atributo);
+                                LinearLayoutCaixaAtendimento.addView(rowView);
+
+                            }
 
                         }catch (JSONException e){
                             e.printStackTrace();

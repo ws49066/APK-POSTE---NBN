@@ -15,7 +15,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/labelTextPonto"
+            android:id="@+id/labelTextReservaTecnica"
             android:layout_width="77dp"
             android:layout_height="match_parent"
             android:background="@drawable/borderetangular"
@@ -38,70 +38,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="92dp"
-                    android:layout_height="wrap_content"
-                    android:text="PONTO FIXAÇÃO "
-                    android:textColor="#FFFFFF"
-                    android:textSize="15dp" />
-
-                <TextView
                     android:textAlignment="center"
-                    android:id="@+id/pontofixacao_pontofixacao_view"
-                    android:layout_width="161dp"
+                    android:id="@+id/reservatecnica_view"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:textColor="#FFFFFF"
                     android:textSize="15dp" />
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="92dp"
-                    android:layout_height="wrap_content"
-                    android:text="TIPO DE CABO"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15dp" />
-
-                <TextView
-                    android:textAlignment="center"
-                    android:id="@+id/tipocabo_pontofixacao_view"
-                    android:layout_width="161dp"
-                    android:layout_height="match_parent"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15dp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="94dp"
-                    android:layout_height="wrap_content"
-                    android:text="BITOLA"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15dp" />
-
-                <TextView
-                    android:textAlignment="center"
-                    android:id="@+id/bitola_pontofixacao_view"
-                    android:layout_width="161dp"
-                    android:layout_height="match_parent"
-                    android:textColor="#FFFFFF"
-                    android:textSize="15dp" />
-
-            </LinearLayout>
-
 
         </LinearLayout>
 
