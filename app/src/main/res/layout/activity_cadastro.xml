@@ -359,18 +359,34 @@
 
                     </LinearLayout>
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="382dp"
+                    android:layout_height="85dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/btn_parte1"
-                    android:layout_width="307dp"
-                    android:layout_height="61dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/borderconfirmar"
-                    android:gravity="center"
-                    android:text="PROXIMO"
-                    android:textColor="#00b034"
-                    android:textSize="7pt" />
+                    <Button
+                        android:id="@+id/btn_cancelar_cadastro"
+                        android:layout_width="172dp"
+                        android:layout_height="69dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/bordercancelar"
+                        android:text="CANCELAR"
+                        android:textColor="#FF0000"
+                        android:textSize="7pt" />
+
+                    <Button
+                        android:id="@+id/btn_parte1"
+                        android:layout_width="172dp"
+                        android:layout_height="69dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/borderconfirmar"
+                        android:text="PROXIMO"
+                        android:textColor="#00b034"
+                        android:textSize="7pt" />
+                </LinearLayout>
+
 
             </LinearLayout>
 

@@ -130,15 +130,7 @@
                 android:layout_marginTop="100dp"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/btn_cadastrar_cruzeta"
-                    android:layout_width="172dp"
-                    android:layout_height="69dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/borderconfirmar"
-                    android:text="CADASTRAR"
-                    android:textColor="#00b034"
-                    android:textSize="7pt" />
+
 
                 <Button
                     android:id="@+id/btn_cancelar_cruzeta"
@@ -148,6 +140,16 @@
                     android:background="@drawable/bordercancelar"
                     android:text="CANCELAR"
                     android:textColor="#FF0000"
+                    android:textSize="7pt" />
+
+                <Button
+                    android:id="@+id/btn_cadastrar_cruzeta"
+                    android:layout_width="172dp"
+                    android:layout_height="69dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/borderconfirmar"
+                    android:text="CADASTRAR"
+                    android:textColor="#00b034"
                     android:textSize="7pt" />
 
             </LinearLayout>

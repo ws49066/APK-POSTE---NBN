@@ -57,6 +57,7 @@ public class ponto_fixacao_add extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ponto_fixacao_add.this,Atributos_poste.class);
+                intent.putExtra("var_id_poste",var_id_poste);
                 startActivity(intent);
             }
         });

@@ -29,6 +29,7 @@ public class Login_Activity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         btn_login = findViewById(R.id.btn_login);
@@ -49,13 +50,18 @@ public class Login_Activity extends Activity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        if (response.contains("2")) {
-                            Toast.makeText(getApplicationContext(),"Erro usuario ou senha", Toast.LENGTH_SHORT).show();
+                        if (response.contains("erro")) {
+                            Toast.makeText(getApplicationContext(),"Erro usuario ou senha"+response, Toast.LENGTH_SHORT).show();
 
                         }else{
-                            String var_name_user = (String) response;
+                            String Array[] = new String[2];
+                            Array = response.split(",");
+
+                            String var_name_user = Array[0];
+                            String id_login_user = Array[1];
                             Intent intentEnviar = new Intent(Login_Activity.this, Tela2Menu_Activity.class);
                             intentEnviar.putExtra("var_name_user",var_name_user);
+                            intentEnviar.putExtra("id_login_user",id_login_user);
                             startActivity(intentEnviar);
                         }
                     }

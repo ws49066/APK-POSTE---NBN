@@ -2,7 +2,9 @@ package com.nbntelecom.nbnpostemap;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -37,7 +39,7 @@ public class Atributos_poste extends AppCompatActivity {
     List<String> Reserva_tecnica_list = new ArrayList<String>();
     List<String> Caixa_atendimento_list = new ArrayList<String>();
 
-
+    private long backPressedTime;
 
 
 
@@ -45,6 +47,7 @@ public class Atributos_poste extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atributos_poste);
+
 
 
         btn_salvaratributos = findViewById(R.id.btn_atributos);
@@ -205,6 +208,70 @@ public class Atributos_poste extends AppCompatActivity {
                 params.put("caixaatendimento",Caixa_atendimento_list.toString());
                 params.put("reservaposte",Reserva_tecnica_list.toString());
                 params.put("rackposte",Rack_lisy.toString());
+                return  params;
+            }
+        };
+        RequestQueue cadastro = Volley.newRequestQueue(this);
+        cadastro.add(request);
+    }
+    public void exibirConfirmacao(){
+        AlertDialog.Builder msgbox = new AlertDialog.Builder(this);
+        msgbox.setTitle("Excluindo....");
+        msgbox.setIcon(android.R.drawable.ic_menu_delete);
+        msgbox.setMessage("Tem certeza que deseja cancelar o cadastro?");
+
+        msgbox.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                RemoverPoste();
+            }
+
+        });
+
+        msgbox.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        msgbox.show();
+    }
+
+    public void onBackPressed(){
+            exibirConfirmacao();
+
+    }
+
+    public void RemoverPoste(){
+        StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/removerPoste.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.contains("erro")) {
+                            Toast.makeText(getApplicationContext(),"Erro usuario ou senha"+response, Toast.LENGTH_SHORT).show();
+
+                        }else{
+                            String Array[] = new String[2];
+                            Array = response.split(",");
+                            String var_name_user = Array[0];
+                            String id_login_user = Array[1];
+                            Intent intentEnviar = new Intent(Atributos_poste.this, Tela2Menu_Activity.class);
+                            intentEnviar.putExtra("var_name_user",var_name_user);
+                            intentEnviar.putExtra("id_login_user",id_login_user);
+                            startActivity(intentEnviar);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String>  params = new HashMap<>();
+                params.put("var_id_poste",var_id_poste);
                 return  params;
             }
         };

@@ -59,6 +59,7 @@ public class cruzeta_suporte_add extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(cruzeta_suporte_add.this,Atributos_poste.class);
+                intent.putExtra("var_id_poste",var_id_poste);
                 startActivity(intent);
             }
         });

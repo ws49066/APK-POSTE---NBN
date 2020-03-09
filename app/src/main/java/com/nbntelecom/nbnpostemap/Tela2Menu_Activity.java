@@ -2,6 +2,8 @@ package com.nbntelecom.nbnpostemap;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -28,7 +30,9 @@ public class Tela2Menu_Activity extends AppCompatActivity {
     Button btn_excluir;
     TextView textUserName;
 
-    String var_name_user;
+    private long backPressedTime;
+
+    String var_name_user,id_login_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,7 @@ public class Tela2Menu_Activity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if(extras != null){
             var_name_user = (String) extras.get("var_name_user");
+            id_login_user = (String) extras.get("id_login_user") ;
             textUserName.setText("Usuário: "+var_name_user);
         }
 
@@ -65,6 +70,7 @@ public class Tela2Menu_Activity extends AppCompatActivity {
                     @Override
                     protected Map<String, String> getParams() throws AuthFailureError {
                         Map<String,String>  params = new HashMap<>();
+                        params.put("id_login_user",id_login_user.toString());
                         return  params;
                     }
                 };
@@ -85,7 +91,9 @@ public class Tela2Menu_Activity extends AppCompatActivity {
         btn_consultar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Tela2Menu_Activity.this, ConsultarPoste.class));
+                Intent intentEnviar = new Intent(Tela2Menu_Activity.this, ConsultarPoste.class);
+                intentEnviar.putExtra("id_login_user",id_login_user);
+                startActivity(intentEnviar);
             }
         });
         /*btn_excluir = findViewById(R.id.btn_excluir);
@@ -99,4 +107,34 @@ public class Tela2Menu_Activity extends AppCompatActivity {
 
 
     }
+
+    public void exibirConfirmacao(){
+        AlertDialog.Builder msgbox = new AlertDialog.Builder(this);
+        msgbox.setTitle("Sair da aplicação....");
+        msgbox.setIcon(android.R.drawable.ic_menu_delete);
+        msgbox.setMessage("Tem certeza que deseja sair do aplicativo?");
+
+        msgbox.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+               finishAffinity();
+               System.exit(0);
+            }
+        });
+        msgbox.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        msgbox.show();
+    }
+
+    public void onBackPressed(){
+        exibirConfirmacao();
+
+    }
+
+
 }

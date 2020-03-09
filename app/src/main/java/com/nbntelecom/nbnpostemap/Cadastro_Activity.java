@@ -9,8 +9,10 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -79,7 +81,7 @@ import static com.nbntelecom.nbnpostemap.R.layout.spinner_dropdown_layout;
 public class Cadastro_Activity extends  FragmentActivity  {
 
 
-
+    private long backPressedTime;
 
     //Variaveis do formulario
     TextView id_post_text;
@@ -90,7 +92,7 @@ public class Cadastro_Activity extends  FragmentActivity  {
     Spinner tipoposte,espposte,dimposte,transposte,baixaposte;
 
 
-    Button btn_parte1;
+    Button btn_parte1,btn_cancelar;
 
 
     LinearLayout layout_parte1,layout_fotos;
@@ -99,6 +101,7 @@ public class Cadastro_Activity extends  FragmentActivity  {
 
     LinearLayout parentLinearLayout,LinearLayoutSuporte,LinearLayoutPontoF,LinearLayoutRack,LinearLayoutResevaT, LinearLayoutCaixaAtendimento;
 
+    String var_name_user,id_login_user;
 
     int cont=0;
 
@@ -114,12 +117,13 @@ public class Cadastro_Activity extends  FragmentActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
+
         //Instancias dos RadioGruop e RadioButton
         chaveGroup = findViewById(R.id.chaveGroup);
         iluminacaoGroup = findViewById(R.id.iluminacaoGroup);
         cameraGroup = findViewById(R.id.cameraGroup);
         isoladaGroup = findViewById(R.id.isoladaGroup);
-
+        btn_cancelar = findViewById(R.id.btn_cancelar_cadastro);
 
 
         //hide action bar
@@ -148,6 +152,13 @@ public class Cadastro_Activity extends  FragmentActivity  {
             @Override
             public void onClick(View v) {
                 parte1();
+            }
+        });
+
+        btn_cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exibirConfirmacao();
             }
         });
 
@@ -226,6 +237,73 @@ public class Cadastro_Activity extends  FragmentActivity  {
             cadastro.add(request);
 
         }
+    }
+
+
+    public void exibirConfirmacao(){
+        AlertDialog.Builder msgbox = new AlertDialog.Builder(this);
+        msgbox.setTitle("Excluindo....");
+        msgbox.setIcon(android.R.drawable.ic_menu_delete);
+        msgbox.setMessage("Tem certeza que deseja cancelar o cadastro?");
+
+        msgbox.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                RemoverPoste();
+            }
+
+        });
+
+        msgbox.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        msgbox.show();
+    }
+
+    public void onBackPressed(){
+
+            exibirConfirmacao();
+    }
+
+    public void RemoverPoste(){
+        StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/removerPoste.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.contains("erro")) {
+                            Toast.makeText(getApplicationContext(),"Erro usuario ou senha"+response, Toast.LENGTH_SHORT).show();
+
+                        }else{
+                            String Array[] = new String[2];
+                            Array = response.split(",");
+
+                            String var_name_user = Array[0];
+                            String id_login_user = Array[1];
+                            Intent intentEnviar = new Intent(Cadastro_Activity.this, Tela2Menu_Activity.class);
+                            intentEnviar.putExtra("var_name_user",var_name_user);
+                            intentEnviar.putExtra("id_login_user",id_login_user);
+                            startActivity(intentEnviar);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String>  params = new HashMap<>();
+                params.put("var_id_poste",var_id_poste);
+                return  params;
+            }
+        };
+        RequestQueue cadastro = Volley.newRequestQueue(this);
+        cadastro.add(request);
     }
 
 

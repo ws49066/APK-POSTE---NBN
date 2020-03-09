@@ -109,10 +109,10 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:gravity="center"
-                    android:layout_marginBottom="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="32dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
@@ -159,16 +159,16 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:gravity="center"
-                    android:layout_marginBottom="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="32dp"
+                    android:layout_height="39dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/ReserTecnica"
                         android:layout_width="176dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="55dp"
                         android:gravity="center"
                         android:text="RESERVA TÉCNICA"
                         android:textAlignment="center"
@@ -178,9 +178,9 @@
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="36dp"
-                        android:onClick="adicionar_reservatecnica"
                         android:background="@drawable/borderadicionar"
                         android:backgroundTint="#00b034"
+                        android:onClick="adicionar_reservatecnica"
                         android:text="Adicionar"
                         android:textColor="#FFF" />
 
@@ -207,16 +207,16 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:gravity="center"
-                    android:layout_marginBottom="10dp"
                     android:layout_width="match_parent"
-                    android:layout_height="32dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/CaixaAtendimento"
                         android:layout_width="176dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="32dp"
                         android:gravity="center"
                         android:text="CAIXA ATENDIMENTO"
                         android:textAlignment="center"
@@ -226,9 +226,9 @@
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="36dp"
-                        android:onClick="adicionar_caixa_atendimento"
                         android:background="@drawable/borderadicionar"
                         android:backgroundTint="#00b034"
+                        android:onClick="adicionar_caixa_atendimento"
                         android:text="Adicionar"
                         android:textColor="#FFF" />
 

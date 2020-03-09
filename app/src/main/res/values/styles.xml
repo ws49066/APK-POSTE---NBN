@@ -22,4 +22,12 @@
 
     </style>
 
+    <style name="fullViewTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colormenu</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
 </resources>

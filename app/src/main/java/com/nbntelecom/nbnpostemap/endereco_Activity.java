@@ -7,7 +7,10 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -21,10 +24,12 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -64,20 +69,22 @@ import java.util.Map;
 public class endereco_Activity extends FragmentActivity implements OnMapReadyCallback {
 
 
-
+    private long backPressedTime;
     //BitmapFactory.Options option = new BitmapFactory.Options();
 
     Bitmap bitimagem ;
     ArrayList<String> imageToString = new ArrayList<String>();
     List<String> ImagensStringList = new ArrayList<String>();
+    List<String> ImagensEncodedString = new ArrayList<>();
 
+    List<File> CaminhosFotos = new ArrayList<File>();
     Button btn_salvar_endereco,mTypeBtn,mTypeNormal;
     GoogleMap mMap;
     LinearLayout layoutMap,layoutgridimg;
 
     TextView Geolocalizacao;
 
-    String var_id_poste,NomeFotoTirada,mCurrentPhotoPath,encoded_string;
+    String var_id_poste,NomeFotoTirada,mCurrentPhotoPath,encoded_string,Nomefoto;
     EditText municipio,bairro,rua,naproximado,cep,et_complement;
 
     Spinner areaposte,estado;
@@ -135,6 +142,15 @@ public class endereco_Activity extends FragmentActivity implements OnMapReadyCal
             }
         });
 
+        imageGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                File caminho_img = CaminhosFotos.get(position);
+                Intent intent = new Intent(endereco_Activity.this,FullView.class);
+                intent.putExtra("caminho_img", caminho_img);
+                startActivity(intent);
+            }
+        });
 
         etZipCode = (EditText) findViewById(R.id.et_zip_code);
         etZipCode.addTextChangedListener( new ZipCodeListener(this));
@@ -161,6 +177,8 @@ public class endereco_Activity extends FragmentActivity implements OnMapReadyCal
 
         fetchLastLocation();
     }
+
+
     private void fetchLastLocation(){
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE);
@@ -242,6 +260,9 @@ public class endereco_Activity extends FragmentActivity implements OnMapReadyCal
     }
 
     public void endereco(){
+
+
+
         estado = findViewById(R.id.sp_state);
         municipio = findViewById(R.id.et_city);
         et_complement = findViewById(R.id.et_complement);
@@ -258,17 +279,32 @@ public class endereco_Activity extends FragmentActivity implements OnMapReadyCal
 
         }
         else{
+            for(int i = 0; i < BitmapListmg.size();i++){
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                BitmapListmg.get(i).compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+                byte[] imgBytes = byteArrayOutputStream.toByteArray();
+                encoded_string =  Base64.encodeToString(imgBytes,Base64.DEFAULT);
+                Nomefoto = ImagensStringList.get(i);
+                makeRequest();
+            }
 
             StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/endereco.php",
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            if (response.contains("1")) {
-                                Toast.makeText(getApplicationContext(),"Poste Cadastrado com sucesso!!!",Toast.LENGTH_LONG).show();
-                                startActivity(new Intent(endereco_Activity.this, Tela2Menu_Activity.class));
+                            if (response.contains("erro")) {
+                                Toast.makeText(getApplicationContext(),"ERRO NA INSERÇÃO NO BANCO", Toast.LENGTH_SHORT). show();
 
                             }else{
-                                Toast.makeText(getApplicationContext(),"ERRO NA INSERÇÃO NO BANCO", Toast.LENGTH_SHORT). show();
+                                String Array[] = new String[2];
+                                Array = response.split(",");
+                                String var_name_user = Array[0];
+                                String id_login_user = Array[1];
+                                Intent intentEnviar = new Intent(endereco_Activity.this, Tela2Menu_Activity.class);
+                                intentEnviar.putExtra("var_name_user",var_name_user);
+                                intentEnviar.putExtra("id_login_user",id_login_user);
+                                Toast.makeText(getApplicationContext(),"Poste Cadastrado com sucesso!!!",Toast.LENGTH_LONG).show();
+                                startActivity(intentEnviar);
                             }
                         }
                     }, new Response.ErrorListener() {
@@ -307,6 +343,7 @@ public class endereco_Activity extends FragmentActivity implements OnMapReadyCal
         try{
             if (resultCode == RESULT_OK){
                 File file = new File(mCurrentPhotoPath);
+                CaminhosFotos.add(file);
                 bitimagem  = MediaStore.Images.Media.getBitmap(getContentResolver(),Uri.fromFile(file));
                 if(bitimagem  != null) {
                     ImagensStringList.add(NomeFotoTirada);
@@ -315,13 +352,12 @@ public class endereco_Activity extends FragmentActivity implements OnMapReadyCal
                     quantfotos++;
                     if(quantfotos == 1){
                         layoutgridimg.setVisibility(View.VISIBLE);
-                        layoutgridimg.setLayoutParams(new LinearLayout.LayoutParams(600,1000));
+                        layoutgridimg.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,500));
                     }
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    bitimagem.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
-                    byte[] imgBytes = byteArrayOutputStream.toByteArray();
-                    encoded_string =  Base64.encodeToString(imgBytes,Base64.DEFAULT);
-                    makeRequest();
+                    if(quantfotos == 4){
+                        layoutgridimg.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,1000));
+                    }
+
                 }
             }
         }catch (Exception error){
@@ -331,7 +367,6 @@ public class endereco_Activity extends FragmentActivity implements OnMapReadyCal
 
 
     private void makeRequest() {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/fotos.php",
                 new Response.Listener<String>() {
                     @Override
@@ -349,10 +384,11 @@ public class endereco_Activity extends FragmentActivity implements OnMapReadyCal
                 HashMap<String,String> map = new HashMap<>();
                 map.put("var_id_poste",var_id_poste);
                 map.put("encoded_string",encoded_string);
-                map.put("image_name",NomeFotoTirada);
+                map.put("image_name",Nomefoto);
                 return map;
             }
         };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
     }
 
@@ -382,7 +418,6 @@ public class endereco_Activity extends FragmentActivity implements OnMapReadyCal
             Toast.makeText(getApplicationContext(),"Limite de fotos atingido",Toast.LENGTH_SHORT).show();
         }
 
-
     }
 
 
@@ -401,7 +436,71 @@ public class endereco_Activity extends FragmentActivity implements OnMapReadyCal
         return image;
     }
 
+    public void exibirConfirmacao(){
+        AlertDialog.Builder msgbox = new AlertDialog.Builder(this);
+        msgbox.setTitle("Excluindo....");
+        msgbox.setIcon(android.R.drawable.ic_menu_delete);
+        msgbox.setMessage("Tem certeza que deseja cancelar o cadastro?");
 
+        msgbox.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                RemoverPoste();
+            }
+
+        });
+
+        msgbox.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        msgbox.show();
+    }
+
+    public void onBackPressed(){
+            exibirConfirmacao();
+
+    }
+
+    public void RemoverPoste(){
+        StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/removerPoste.php",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.contains("erro")) {
+                            Toast.makeText(getApplicationContext(),"Erro usuario ou senha"+response, Toast.LENGTH_SHORT).show();
+
+                        }else{
+                            String Array[] = new String[2];
+                            Array = response.split(",");
+
+                            String var_name_user = Array[0];
+                            String id_login_user = Array[1];
+                            Intent intentEnviar = new Intent(endereco_Activity.this, Tela2Menu_Activity.class);
+                            intentEnviar.putExtra("var_name_user",var_name_user);
+                            intentEnviar.putExtra("id_login_user",id_login_user);
+                            startActivity(intentEnviar);
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String>  params = new HashMap<>();
+                params.put("var_id_poste",var_id_poste);
+                return  params;
+            }
+        };
+        RequestQueue cadastro = Volley.newRequestQueue(this);
+        cadastro.add(request);
+    }
 
 
 }

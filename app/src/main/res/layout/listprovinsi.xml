@@ -1,29 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:background="#111B31"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        android:gravity="center"
-        android:background="#111B31"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:background="#111B31"
+    android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tvIDProv"
-            android:layout_width="52dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#FFF" />
 
-        <TextView
-            android:id="@+id/tvNameProv"
-            android:layout_width="116dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#FFF" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tvIDProv"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:text="121313321"
+        android:textAlignment="center"
+        android:textColor="#FFF"
+        android:textSize="8pt" />
+
+    <TextView
+        android:textAlignment="center"
+        android:textSize="8pt"
+        android:id="@+id/tvNameProv"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:text="VOVS"
+        android:textColor="#FFF" />
+
 
 </LinearLayout>

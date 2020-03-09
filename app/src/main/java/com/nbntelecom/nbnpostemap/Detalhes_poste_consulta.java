@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -29,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -145,27 +147,58 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
 
+
                         try {
 
                             JSONObject obj = new JSONObject(response);
                             JSONObject objend = new JSONObject(response);
+                            JSONObject objcruzeta = new JSONObject(response);
+                            JSONObject objponto = new JSONObject(response);
+                            JSONObject objrack = new JSONObject(response);
+                            JSONObject objreserva = new JSONObject(response);
+                            JSONObject objcaixa = new JSONObject(response);
+
 
                             JSONArray arrayPoste = obj.getJSONArray("data-poste");
                             JSONArray arrayEnd = objend.getJSONArray("data-end");
-                            JSONArray arrayCruzeta = obj.getJSONArray("data-cruzeta");
-                            JSONArray arrayPonto = obj.getJSONArray("data-ponto");
-                            JSONArray arrayrRack = obj.getJSONArray("data-rack");
-                            JSONArray arrayReserva = obj.getJSONArray("data-reserva");
-                            JSONArray arrayCaixa = obj.getJSONArray("data-caixa");
+
+
+                            JSONArray arrayCruzeta = new JSONArray();
+
+                            JSONArray arrayPonto = new JSONArray();
+                            JSONArray arrayrRack = new JSONArray();
+                            JSONArray arrayReserva = new JSONArray();
+                            JSONArray arrayCaixa = new JSONArray();
+
+                            JSONObject provObjCruzeta,provObjPonto,provObjRack,provObjReserva,provObjCaixa;
+
+                            if(objcruzeta.isNull("data-cruzeta")){
+
+                            }else{
+                                 arrayCruzeta = objcruzeta.getJSONArray("data-cruzeta");
+
+                            }
+
+                            if(objponto.isNull("data-ponto")){
+
+                            }else{
+                                arrayPonto = objponto.getJSONArray("data-ponto");
+                            }
+                            if(!objrack.isNull("data-rack")){
+                                arrayrRack = objrack.getJSONArray("data-rack");
+                            }
+                            if(!objreserva.isNull("data-reserva")){
+                                arrayReserva = objreserva.getJSONArray("data-reserva");
+                            }
+                            if(! objcaixa.isNull("data-caixa")){
+                                arrayCaixa = objcaixa.getJSONArray("data-caixa");
+                            }
+
 
 
                             JSONObject provObjPoste = arrayPoste.getJSONObject(0);
                             JSONObject provObjEnd = arrayEnd.getJSONObject(0);
-                            JSONObject provObjCruzeta = arrayCruzeta.getJSONObject(0);
-                            JSONObject provObjPonto = arrayPonto.getJSONObject(0);
-                            JSONObject provObjRack = arrayrRack.getJSONObject(0);
-                            JSONObject provObjReserva = arrayReserva.getJSONObject(0);
-                            JSONObject provObjCaixa = arrayCaixa.getJSONObject(0);
+
 
                             id.setText("ID: "+id_selecionado);
                             numero_post.setText("N. POSTE :   " + provObjPoste.getString("numero_poste"));
