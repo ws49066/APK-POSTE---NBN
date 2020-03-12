@@ -165,5 +165,67 @@
         <item>"Sergipe (SE)"</item>
         <item>"Tocantins (TO)"</item>
     </string-array>
+    <string-array name="tipodeIluminicao">
+        <item>SIMPLES</item>
+        <item>DUPLA</item>
+        <item>TRIPLA</item>
+        <item>QUADRUPLA</item>
+    </string-array>
+    <string-array name="donoilumincao">
+        <item>NBN</item>
+        <item>OI</item>
+        <item>VIVO</item>
+        <item>EMBRATEL/CLARO</item>
+        <item>TIM</item>
+        <item>AXES</item>
+        <item>LOGIC PRO</item>
+        <item>AMAZONET</item>
+        <item>EYES N WHERE</item>
+        <item>DESCONHECIDO</item>
+    </string-array>
 
+    <string-array name="tipodono">
+        <item>REDE PUBLICA</item>
+        <item>PARTICULAR</item>
+    </string-array>
+
+    <string-array name="tipodelampada">
+        <item>LED</item>
+        <item>HALOGENEA</item>
+        <item>ENCADECENTE</item>
+        <item>VAPOR DE MERCURIO</item>
+        <item>VAPOR DE SODIO</item>
+        <item>IODEDOS METALICOS</item>
+    </string-array>
+
+    <string-array name="potencialuz">
+        <item>40W</item>
+        <item>50W</item>
+        <item>60W</item>
+        <item>70W</item>
+        <item>80W</item>
+        <item>90W</item>
+        <item>100W</item>
+        <item>150W</item>
+        <item>180W</item>
+        <item>200W</item>
+        <item>250W</item>
+        <item>300W</item>
+        <item>350W</item>
+        <item>400W</item>
+        <item>450W</item>
+        <item>500W</item>
+        <item>550W</item>
+        <item>1000W</item>
+    </string-array>
+    <string-array name="aereatipo">
+        <item>NÃO</item>
+        <item>CONVECIONAL</item>
+        <item>COMPACTA</item>
+        <item>ISOLADA</item>
+    </string-array>
+    <string-array name="redemedia">
+        <item>SIM</item>
+        <item>NÃO</item>
+    </string-array>
 </resources>

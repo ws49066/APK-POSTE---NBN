@@ -18,14 +18,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FullView" android:theme="@style/fullViewTheme"/>
+        <activity android:name=".MapPoste"></activity>
+        <activity
+            android:name=".iluminacao_add"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".ConsultarImagemFull" />
+        <activity
+            android:name=".FullView"
+            android:theme="@style/fullViewTheme" />
         <activity
             android:name=".endereco_Activity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" >
-            
-        </activity>
-        <activity android:name=".ponto_fixacao_add" />
-        <activity android:name=".cruzeta_suporte_add" />
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".ponto_fixacao_add"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".cruzeta_suporte_add"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".Atributos_poste"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

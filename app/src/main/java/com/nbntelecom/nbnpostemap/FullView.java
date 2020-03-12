@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -34,13 +35,12 @@ public class FullView extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if(extras != null){
             caminho_img = (File) extras.get("caminho_img");
+            Toast.makeText(getApplicationContext(),caminho_img.toString(),Toast.LENGTH_SHORT).show();
 
         }
 
 
-        bit_img = BitmapFactory.decodeFile(caminho_img.getAbsolutePath());
 
-        imageView.setImageBitmap(bit_img);
 
 
     }

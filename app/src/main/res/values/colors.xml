@@ -5,4 +5,6 @@
     <color name="colorAccent">#D81B60</color>
     <color name="colormenu">#111b31</color>
     <color name="my_spinner_text_color">#888ddd</color>
+    <color name="MapNormal">#000000</color>
+    <color name="MapSatelite">#ffffff</color>
 </resources>

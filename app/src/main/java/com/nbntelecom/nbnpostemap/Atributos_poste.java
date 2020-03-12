@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class Atributos_poste extends AppCompatActivity {
 
-    Button btn_cruzeta_add,btn_ponto_add,btn_salvaratributos;
+    Button btn_cruzeta_add,btn_ponto_add,btn_salvaratributos,btn_cancelar,btn_iluminacao_add;
 
     String var_id_poste;
 
@@ -52,7 +52,9 @@ public class Atributos_poste extends AppCompatActivity {
 
         btn_salvaratributos = findViewById(R.id.btn_atributos);
         btn_cruzeta_add = findViewById(R.id.add_field_suporte_cruzeta);
+        btn_iluminacao_add = findViewById(R.id.add_field_iluminacao);
         btn_ponto_add = findViewById(R.id.add_field_ponto_fixacao);
+        btn_cancelar = findViewById(R.id.btn_cancelar_cadastro);
 
 
         LinearLayoutRack = (LinearLayout) findViewById(R.id.parent_linear_rack);
@@ -82,10 +84,24 @@ public class Atributos_poste extends AppCompatActivity {
             }
         });
 
+        btn_iluminacao_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cadastrarIluminacao();
+            }
+        });
+
         btn_salvaratributos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 atributos(v);
+            }
+        });
+
+        btn_cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exibirConfirmacao();
             }
         });
 
@@ -104,6 +120,15 @@ public class Atributos_poste extends AppCompatActivity {
          Intent intentEnviar = new Intent(Atributos_poste.this, ponto_fixacao_add.class);
          intentEnviar.putExtra("var_id_poste",var_id_poste);
          startActivity(intentEnviar);
+        LinearLayoutCaixaAtendimento.removeAllViews();
+        LinearLayoutResevaT.removeAllViews();
+        LinearLayoutRack.removeAllViews();
+    }
+
+    public void cadastrarIluminacao (){
+        Intent intentEnviar = new Intent(Atributos_poste.this, iluminacao_add.class);
+        intentEnviar.putExtra("var_id_poste",var_id_poste);
+        startActivity(intentEnviar);
         LinearLayoutCaixaAtendimento.removeAllViews();
         LinearLayoutResevaT.removeAllViews();
         LinearLayoutRack.removeAllViews();
@@ -278,4 +303,5 @@ public class Atributos_poste extends AppCompatActivity {
         RequestQueue cadastro = Volley.newRequestQueue(this);
         cadastro.add(request);
     }
+
 }

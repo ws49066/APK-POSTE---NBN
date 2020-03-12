@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.location.Location;
 import android.media.Image;
 import android.net.Uri;
@@ -66,7 +67,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class endereco_Activity extends FragmentActivity implements OnMapReadyCallback {
+public class endereco_Activity extends AppCompatActivity {
 
 
     private long backPressedTime;
@@ -78,11 +79,10 @@ public class endereco_Activity extends FragmentActivity implements OnMapReadyCal
     List<String> ImagensEncodedString = new ArrayList<>();
 
     List<File> CaminhosFotos = new ArrayList<File>();
-    Button btn_salvar_endereco,mTypeBtn,mTypeNormal;
+    Button btn_salvar_endereco,btn_cancelar;
     GoogleMap mMap;
-    LinearLayout layoutMap,layoutgridimg;
+    LinearLayout layoutgridimg;
 
-    TextView Geolocalizacao;
 
     String var_id_poste,NomeFotoTirada,mCurrentPhotoPath,encoded_string,Nomefoto;
     EditText municipio,bairro,rua,naproximado,cep,et_complement;
@@ -92,9 +92,6 @@ public class endereco_Activity extends FragmentActivity implements OnMapReadyCal
 
 
 
-    Location localizacaoAtual;
-    FusedLocationProviderClient fusedLocationProviderClient;
-    private static final int REQUEST_CODE = 101;
     private  EditText etZipCode;
     private Util util;
     private GridView imageGrid;
@@ -111,11 +108,18 @@ public class endereco_Activity extends FragmentActivity implements OnMapReadyCal
         imageGrid = (GridView) findViewById(R.id.gridview);
         BitmapListmg = new ArrayList<Bitmap>();
 
+
         btn_salvar_endereco = findViewById(R.id.btn_salvar_endereco);
-        Geolocalizacao = findViewById(R.id.Geolocalizacao);
-        mTypeBtn = findViewById(R.id.btnSatelite);
-        mTypeNormal = findViewById(R.id.btnNormal);
         layoutgridimg = (LinearLayout) findViewById(R.id.layout_gridmig);
+
+        btn_cancelar = findViewById(R.id.btn_cancelar_cadastro);
+
+        btn_cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exibirConfirmacao();
+            }
+        });
 
 
 
@@ -128,19 +132,7 @@ public class endereco_Activity extends FragmentActivity implements OnMapReadyCal
         }
 
 
-        mTypeNormal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-            }
-        });
 
-        mTypeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-            }
-        });
 
         imageGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -172,53 +164,9 @@ public class endereco_Activity extends FragmentActivity implements OnMapReadyCal
             }
         });
 
-        layoutMap = (LinearLayout) findViewById(R.id.layoutMap);
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        fetchLastLocation();
     }
 
-
-    private void fetchLastLocation(){
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE);
-            return;
-
-        }
-        Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null){
-                    localizacaoAtual = location;
-                    Geolocalizacao.setText(localizacaoAtual.getLatitude()+""+localizacaoAtual.getLongitude());
-                    SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
-                    supportMapFragment.getMapAsync(endereco_Activity.this);
-                }
-            }
-        });
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        LatLng latLng = new LatLng(localizacaoAtual.getLatitude(),localizacaoAtual.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("POSTE ID: "+var_id_poste);
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 19));
-        mMap.addMarker(markerOptions);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
-            case REQUEST_CODE:
-                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    fetchLastLocation();
-                }
-                break;
-        }
-    }
 
 
     public  String getUriZipCode(){
@@ -260,8 +208,6 @@ public class endereco_Activity extends FragmentActivity implements OnMapReadyCal
     }
 
     public void endereco(){
-
-
 
         estado = findViewById(R.id.sp_state);
         municipio = findViewById(R.id.et_city);
@@ -318,7 +264,6 @@ public class endereco_Activity extends FragmentActivity implements OnMapReadyCal
                     Map<String,String>  params = new HashMap<>();
                     params.put("var_id_poste",var_id_poste);
                     params.put("areaposte",areaposte.getSelectedItem().toString());
-                    params.put("localizacao",(localizacaoAtual.getLatitude()+","+ localizacaoAtual.getLongitude()).toString());
                     params.put("estado",estado.getSelectedItem().toString());
                     params.put("municipio",municipio.getText().toString());
                     params.put("complemento",et_complement.getText().toString());
@@ -347,7 +292,11 @@ public class endereco_Activity extends FragmentActivity implements OnMapReadyCal
                 bitimagem  = MediaStore.Images.Media.getBitmap(getContentResolver(),Uri.fromFile(file));
                 if(bitimagem  != null) {
                     ImagensStringList.add(NomeFotoTirada);
-                    BitmapListmg.add(bitimagem);
+                    float graus = 90;
+                    Matrix matrix = new Matrix();
+                    matrix.setRotate(graus);
+                    Bitmap newBitmapRotate = Bitmap.createBitmap(bitimagem, 0,0, bitimagem.getWidth(),bitimagem.getHeight(),matrix,true);
+                    BitmapListmg.add(newBitmapRotate);
                     imageGrid.setAdapter(new ImageAdapter(this, this.BitmapListmg));
                     quantfotos++;
                     if(quantfotos == 1){

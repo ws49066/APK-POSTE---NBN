@@ -109,8 +109,8 @@ public class Cadastro_Activity extends  FragmentActivity  {
 
 
     // Variaveis do RadioGroup
-    RadioGroup chaveGroup,iluminacaoGroup,cameraGroup,isoladaGroup;
-    RadioButton chaveButton,iluminacaoButton,cameraButton,isoladaButton;
+    RadioGroup chaveGroup,cameraGroup,isoladaGroup;
+    RadioButton chaveButton,cameraButton,isoladaButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +120,6 @@ public class Cadastro_Activity extends  FragmentActivity  {
 
         //Instancias dos RadioGruop e RadioButton
         chaveGroup = findViewById(R.id.chaveGroup);
-        iluminacaoGroup = findViewById(R.id.iluminacaoGroup);
         cameraGroup = findViewById(R.id.cameraGroup);
         isoladaGroup = findViewById(R.id.isoladaGroup);
         btn_cancelar = findViewById(R.id.btn_cancelar_cadastro);
@@ -162,11 +161,11 @@ public class Cadastro_Activity extends  FragmentActivity  {
             }
         });
 
-        Spinner AdapterTipoPoste = (Spinner) findViewById(R.id.tipoposte);
+       /* Spinner AdapterTipoPoste = (Spinner) findViewById(R.id.tipoposte);
         ArrayAdapter<String> adapterTipoposte = new ArrayAdapter<String>(Cadastro_Activity.this, color_spinner,
                 getResources().getStringArray(R.array.tipoposte));
         AdapterTipoPoste.setAdapter(adapterTipoposte);
-
+       */
 
     }
 
@@ -176,12 +175,10 @@ public class Cadastro_Activity extends  FragmentActivity  {
         et_numPoste1 = findViewById(R.id.et_numPoste);
         int chaveRadioId,iluminacaoRadioId,isoladoRadioId,cameraRadioId;
         chaveRadioId = chaveGroup.getCheckedRadioButtonId();
-        iluminacaoRadioId = iluminacaoGroup.getCheckedRadioButtonId();
         isoladoRadioId = isoladaGroup.getCheckedRadioButtonId();
         cameraRadioId = cameraGroup.getCheckedRadioButtonId();
 
         chaveButton = findViewById(chaveRadioId);
-        iluminacaoButton = findViewById(iluminacaoRadioId);
         isoladaButton = findViewById(isoladoRadioId);
         cameraButton = findViewById(cameraRadioId);
 
@@ -203,7 +200,7 @@ public class Cadastro_Activity extends  FragmentActivity  {
                         @Override
                         public void onResponse(String response) {
                             if (response.contains("1")) {
-                                Intent intentEnviar = new Intent(Cadastro_Activity.this, Atributos_poste.class);
+                                Intent intentEnviar = new Intent(Cadastro_Activity.this, MapPoste.class);
                                 intentEnviar.putExtra("var_id_poste",var_id_poste);
                                 startActivity(intentEnviar);
                             }else{
@@ -223,7 +220,6 @@ public class Cadastro_Activity extends  FragmentActivity  {
                     params.put("baixaposte",baixaposte.getSelectedItem().toString());
                     params.put("transposte",transposte.getSelectedItem().toString());
                     params.put("chaveposte",chaveButton.getText().toString());
-                    params.put("iluminaposte",iluminacaoButton.getText().toString());
                     params.put("dimposte",dimposte.getSelectedItem().toString());
                     params.put("espposte",espposte.getSelectedItem().toString());
                     params.put("numeroposte",et_numPoste1.getText().toString());

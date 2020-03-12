@@ -2,16 +2,23 @@ package com.nbntelecom.nbnpostemap;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,10 +40,13 @@ import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Detalhes_poste_consulta extends AppCompatActivity {
 
+
+    List<String> ListStringBit ;
 
 
     TextView id,camera,caixaatendimento ;
@@ -68,10 +78,15 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
     TextView text_area;
     TextView text_localizacao;
 
+    TextView texto_tipoIluminacao;
+    TextView texto_luzproprietario;
+    TextView text_luztipoproprietario;
+    TextView tipodelampada;
+    TextView luzpotencia;
+
     String id_selecionado;
 
-    String SCAN_PATH;
-    File[] allFiles ;
+    private GridView imageGride;
 
     int contadorCruzeta;
     int contadorRack;
@@ -79,10 +94,15 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
     int contadorCaixa;
     int contadorReserva;
 
+    public ArrayList<Bitmap> BitmapListmg;
+    ArrayList<String> ListStringBitmap;
 
     Button pasta;
 
     LinearLayout LinearLayoutcruzeta,LinearLayoutPontoFixacao,LinearLayoutRack,LinearLayoutReservaTecnica,LinearLayoutCaixaAtendimento;
+
+
+
 
 
 
@@ -96,6 +116,10 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
         LinearLayoutRack = (LinearLayout) findViewById(R.id.LinearLayoutRack);
         LinearLayoutReservaTecnica = (LinearLayout) findViewById(R.id.LinearLayoutReservaTecnica);
         LinearLayoutCaixaAtendimento = (LinearLayout) findViewById(R.id.LinearLayoutCaixaAtendimento);
+        imageGride = (GridView) findViewById(R.id.gridviewa);
+
+        BitmapListmg = new ArrayList<Bitmap>();
+        ListStringBit = new ArrayList<String>();
 
 
         Bundle extras = getIntent().getExtras();
@@ -109,7 +133,6 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
         tipo_poste = (TextView) findViewById(R.id.texto_tipoPoste);
         especie = (TextView) findViewById(R.id.texto_especie);
         dimensao = (TextView) findViewById(R.id.text_dimensao);
-        iluminacao = (TextView) findViewById(R.id.textilumina);
         redebaixa = (TextView) findViewById(R.id.labelbaixa);
         labelisolada = (TextView) findViewById(R.id.labelisolada);
         chavefusivel = (TextView) findViewById(R.id.labelfusivel);
@@ -127,9 +150,36 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
         camera = (TextView) findViewById((R.id.text_camera));
 
 
+        texto_tipoIluminacao = (TextView) findViewById((R.id.texto_tipoIluminacao));
+        texto_luzproprietario = (TextView) findViewById((R.id.texto_luzproprietario));
+        text_luztipoproprietario = (TextView) findViewById((R.id.text_luztipoproprietario));
+        tipodelampada = (TextView) findViewById((R.id.tipodelampada));
+        luzpotencia = (TextView) findViewById((R.id.luzpotencia));
 
 
         showList();
+
+
+        imageGride.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+              Bitmap item_bitmap = BitmapListmg.get(position);
+                ShowDialoBox(item_bitmap);
+            }
+        });
+
+
+
+    }
+
+    public  void ShowDialoBox(Bitmap item_pos){
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.custom_dialog);
+
+        ImageView image = dialog.findViewById(R.id.img);
+
+        image.setImageBitmap(item_pos);
+
 
     }
 
@@ -142,6 +192,8 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
 
         StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/Consultar_id.php",
                 new Response.Listener<String>() {
+
+
 
 
                     @Override
@@ -157,11 +209,15 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
                             JSONObject objrack = new JSONObject(response);
                             JSONObject objreserva = new JSONObject(response);
                             JSONObject objcaixa = new JSONObject(response);
+                            JSONObject objfoto = new JSONObject(response);
+                            JSONObject objluz = new JSONObject(response);
 
 
                             JSONArray arrayPoste = obj.getJSONArray("data-poste");
                             JSONArray arrayEnd = objend.getJSONArray("data-end");
+                            JSONArray arrayLuz = new JSONArray();
 
+                            JSONArray arrayfotos = new JSONArray();
 
                             JSONArray arrayCruzeta = new JSONArray();
 
@@ -170,7 +226,22 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
                             JSONArray arrayReserva = new JSONArray();
                             JSONArray arrayCaixa = new JSONArray();
 
-                            JSONObject provObjCruzeta,provObjPonto,provObjRack,provObjReserva,provObjCaixa;
+                            JSONObject provObjCruzeta,provObjPonto,provObjRack,provObjReserva,provObjCaixa,provObjfotos;
+
+                            if(!objfoto.isNull("data-img")){
+                                arrayfotos = objrack.getJSONArray("data-img");
+                            }
+
+                            if(!objluz.isNull("data-luz")){
+                                arrayLuz = objrack.getJSONArray("data-luz");
+                                JSONObject provObjLuz = arrayLuz.getJSONObject(0);
+                                texto_tipoIluminacao.setText(provObjLuz.getString("luz_tipo"));
+                                texto_luzproprietario.setText(provObjLuz.getString("luz_dono"));
+                                text_luztipoproprietario.setText(provObjLuz.getString("luz_tipodono"));
+                                tipodelampada.setText(provObjLuz.getString("luz_tipolamp"));
+                                luzpotencia.setText(provObjLuz.getString("luz_potencia"));
+
+                            }
 
                             if(objcruzeta.isNull("data-cruzeta")){
 
@@ -205,13 +276,11 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
                             tipo_poste.setText(provObjPoste.getString("tipo_poste"));
                             especie.setText(provObjPoste.getString("secao_poste"));
                             dimensao.setText(provObjPoste.getString("dimensoes_poste"));
-                            iluminacao.setText(provObjPoste.getString("iluminacao"));
                             redebaixa.setText(provObjPoste.getString("rede_baixa"));
                             labelisolada.setText(provObjPoste.getString("rede_isolada"));
                             chavefusivel.setText(provObjPoste.getString("chave_fusivel"));
                             transformador.setText(provObjPoste.getString("transformador"));
                             camera.setText(provObjPoste.getString(("cameraposte")));
-
                             text_rua.setText(provObjEnd.getString("rua"));
                             text_estado.setText(provObjEnd.getString("estado"));
                             text_cidade.setText(provObjEnd.getString("cidade"));
@@ -220,6 +289,38 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
                             text_cep.setText(provObjEnd.getString("cep"));
                             text_area.setText(provObjEnd.getString("perimetro"));
                             text_localizacao.setText(provObjEnd.getString("localizacao"));
+
+
+
+                            //FOTOS LISTAS
+
+
+                            for (int i = 0; i < arrayfotos.length(); i++) {
+
+
+
+                                provObjfotos = arrayfotos.getJSONObject(i);
+
+
+                                String fotoString = provObjfotos.getString("chave");
+
+                                ListStringBit.add(fotoString);
+
+                                byte[] imgRecebida = Base64.decode(fotoString,Base64.DEFAULT);
+
+                                Bitmap img = BitmapFactory.decodeByteArray(imgRecebida,0,imgRecebida.length);
+
+                                BitmapListmg.add(img);
+                                imageGride.setAdapter(new ImageAdapter(Detalhes_poste_consulta.this, BitmapListmg));
+                                //float graus = 90;
+                                //Matrix matrix = new Matrix();
+                                //matrix.setRotate(graus);
+                                //Bitmap newBitmapRotate = Bitmap.createBitmap(bitimagem, 0,0, bitimagem.getWidth(),bitimagem.getHeight(),matrix,true);
+
+
+                            }
+
+
 
 
                             // REPETIÇÃO DA CRUZETA
@@ -334,6 +435,8 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
 
                             }
 
+
+
                         }catch (JSONException e){
                             e.printStackTrace();
                         }
@@ -354,27 +457,5 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
         Handler.getInstance(getApplicationContext()).addToRequesteQue(request);
     }
 
-    public class SingleMediaScanner implements MediaScannerConnection.MediaScannerConnectionClient {
 
-        private MediaScannerConnection mMs;
-        private File mFile;
-
-        public SingleMediaScanner(Context context, File f) {
-            mFile = f;
-            mMs = new MediaScannerConnection(context, this);
-            mMs.connect();
-        }
-
-        public void onMediaScannerConnected() {
-            mMs.scanFile(mFile.getAbsolutePath(), null);
-        }
-
-        public void onScanCompleted(String path, Uri uri) {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(uri);
-            startActivity(intent);
-            mMs.disconnect();
-        }
-
-    }
 }

@@ -67,7 +67,7 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="40dp"
                     android:backgroundTint="#FFF44336"
-                    android:entries="@array/tipoposte"
+                    android:entries="@array/suporteposte"
                     android:selectAllOnFocus="true"
                     android:textAlignment="center" />
 
@@ -94,7 +94,7 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="40dp"
                     android:backgroundTint="#FFF44336"
-                    android:entries="@array/espposte"
+                    android:entries="@array/aereatipo"
                     android:textAlignment="center" />
 
                 <LinearLayout
@@ -119,7 +119,7 @@
                     android:layout_height="43dp"
                     android:layout_gravity="center"
                     android:backgroundTint="#FFF44336"
-                    android:entries="@array/dimposte"
+                    android:entries="@array/redemedia"
                     android:textAlignment="center" />
             </LinearLayout>
 

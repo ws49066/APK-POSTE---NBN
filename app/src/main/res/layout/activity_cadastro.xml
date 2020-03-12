@@ -321,43 +321,6 @@
                         </RadioGroup>
 
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="208dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center_horizontal">
-
-                        <TextView
-                            android:id="@+id/labeliluminacao"
-                            android:layout_width="107dp"
-                            android:layout_height="wrap_content"
-                            android:text="ILUMINAÇÃO"
-                            android:textColor="#FFFFFF"
-                            android:textSize="15dp" />
-
-                        <RadioGroup
-                            android:id="@+id/iluminacaoGroup"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content">
-
-                            <RadioButton
-                                android:id="@+id/iluminacaoNao"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:checked="true"
-                                android:text="NÃO" />
-
-                            <RadioButton
-                                android:id="@+id/IluminacaoSim"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="SIM" />
-                        </RadioGroup>
-
-
-                    </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="382dp"
