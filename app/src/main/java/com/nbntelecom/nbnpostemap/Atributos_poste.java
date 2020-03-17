@@ -215,9 +215,9 @@ public class Atributos_poste extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         if (response.contains("1")) {
-                            Intent intent = new Intent(Atributos_poste.this,endereco_Activity.class);
-                            intent.putExtra("var_id_poste",var_id_poste);
-                            startActivity(intent);
+                            Intent intentEnviar = new Intent(Atributos_poste.this, fotosposte.class);
+                            intentEnviar.putExtra("var_id_poste",var_id_poste);
+                            startActivity(intentEnviar);
                         }
                     }
                 }, new Response.ErrorListener() {

@@ -1,9 +1,119 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fotosposte">
+    android:background="@color/colormenu"
+    android:gravity="center"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@color/colormenu"
+        android:scrollbars="none"
+        android:visibility="visible">
+
+
+        <LinearLayout
+            android:id="@+id/layout_endereco"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:inputType="text"
+                android:text="-- FOTOS --"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:layout_marginTop="100dp"
+                android:layout_width="62dp"
+                android:layout_height="60dp"
+                android:background="@android:drawable/ic_menu_camera"
+                android:onClick="tiraFoto"
+                android:visibility="visible" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+
+                <LinearLayout
+                    android:id="@+id/layout_gridmig"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/borderetangular"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="invisible">
+
+                    <GridView
+                        android:id="@+id/gridview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp"
+                        android:clickable="true"
+                        android:columnWidth="115dp"
+                        android:drawSelectorOnTop="true"
+                        android:numColumns="3"
+                        android:verticalSpacing="10dp" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="382dp"
+                android:layout_height="93dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="100dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_cancelar_cadastro"
+                    android:layout_width="172dp"
+                    android:layout_height="69dp"
+                    android:layout_margin="10dp"
+                    android:layout_toStartOf="@+id/btn_salvar_endereco"
+                    android:background="@drawable/bordercancelar"
+                    android:text="CANCELAR"
+                    android:textColor="#FF0000"
+                    android:textSize="7pt" />
+
+                <Button
+                    android:id="@+id/btn_salvar_fotos"
+                    android:layout_width="172dp"
+                    android:layout_height="69dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/borderconfirmar"
+                    android:gravity="center"
+                    android:text="FINALIZAR"
+                    android:textColor="#00b034"
+                    android:textSize="7pt" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+
+
+</RelativeLayout>

@@ -73,29 +73,22 @@ public class endereco_Activity extends AppCompatActivity {
     private long backPressedTime;
     //BitmapFactory.Options option = new BitmapFactory.Options();
 
-    Bitmap bitimagem ;
-    ArrayList<String> imageToString = new ArrayList<String>();
-    List<String> ImagensStringList = new ArrayList<String>();
-    List<String> ImagensEncodedString = new ArrayList<>();
+    TextView id_post_text;
+    EditText et_numPoste1;
 
-    List<File> CaminhosFotos = new ArrayList<File>();
+
     Button btn_salvar_endereco,btn_cancelar;
-    GoogleMap mMap;
-    LinearLayout layoutgridimg;
 
 
-    String var_id_poste,NomeFotoTirada,mCurrentPhotoPath,encoded_string,Nomefoto;
+    String var_id_poste;
     EditText municipio,bairro,rua,naproximado,cep,et_complement;
 
     Spinner areaposte,estado;
-    int quantfotos = 0;
 
 
 
     private  EditText etZipCode;
     private Util util;
-    private GridView imageGrid;
-    private ArrayList<Bitmap> BitmapListmg;
     private Context context;
 
 
@@ -105,12 +98,11 @@ public class endereco_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_endereco_);
 
         //VARIAVEIS INSTANSIDAS COM OS IDS
-        imageGrid = (GridView) findViewById(R.id.gridview);
-        BitmapListmg = new ArrayList<Bitmap>();
+
+        id_post_text = findViewById(R.id.idtext);
 
 
         btn_salvar_endereco = findViewById(R.id.btn_salvar_endereco);
-        layoutgridimg = (LinearLayout) findViewById(R.id.layout_gridmig);
 
         btn_cancelar = findViewById(R.id.btn_cancelar_cadastro);
 
@@ -124,26 +116,6 @@ public class endereco_Activity extends AppCompatActivity {
 
 
 
-        //Permissão de CAMERA
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.CAMERA
-            }, 0);
-        }
-
-
-
-
-        imageGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                File caminho_img = CaminhosFotos.get(position);
-                Intent intent = new Intent(endereco_Activity.this,FullView.class);
-                intent.putExtra("caminho_img", caminho_img);
-                startActivity(intent);
-            }
-        });
-
         etZipCode = (EditText) findViewById(R.id.et_zip_code);
         etZipCode.addTextChangedListener( new ZipCodeListener(this));
         util = new Util(this,R.id.et_zip_code,R.id.et_street,R.id.et_complement,R.id.et_neighbor,R.id.et_city,R.id.sp_state,R.id.et_number,R.id.tv_zip_code_search);
@@ -155,6 +127,7 @@ public class endereco_Activity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if(extras != null){
             var_id_poste = (String) extras.get("var_id_poste");
+            id_post_text.setText("ID: "+var_id_poste);
         }
 
         btn_salvar_endereco.setOnClickListener(new View.OnClickListener() {
@@ -208,7 +181,7 @@ public class endereco_Activity extends AppCompatActivity {
     }
 
     public void endereco(){
-
+        et_numPoste1 = findViewById(R.id.et_numPoste);
         estado = findViewById(R.id.sp_state);
         municipio = findViewById(R.id.et_city);
         et_complement = findViewById(R.id.et_complement);
@@ -218,22 +191,12 @@ public class endereco_Activity extends AppCompatActivity {
         cep = findViewById(R.id.et_zip_code);
         areaposte = findViewById(R.id.areaposte);
 
-        if(municipio.getText().length()==0 || bairro.getText().length() == 0 ||
+        if(et_numPoste1.getText().length()==0 || municipio.getText().length()==0 || bairro.getText().length() == 0 ||
                 rua.getText().length() == 0 || naproximado.getText().length() == 0 || cep.getText().length() == 0){
 
             Toast.makeText(getApplicationContext(),"Preencha todos os campos",Toast.LENGTH_SHORT).show();
 
-        }
-        else{
-            for(int i = 0; i < BitmapListmg.size();i++){
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                BitmapListmg.get(i).compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
-                byte[] imgBytes = byteArrayOutputStream.toByteArray();
-                encoded_string =  Base64.encodeToString(imgBytes,Base64.DEFAULT);
-                Nomefoto = ImagensStringList.get(i);
-                makeRequest();
-            }
-
+        }else{
             StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/endereco.php",
                     new Response.Listener<String>() {
                         @Override
@@ -242,14 +205,9 @@ public class endereco_Activity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(),"ERRO NA INSERÇÃO NO BANCO", Toast.LENGTH_SHORT). show();
 
                             }else{
-                                String Array[] = new String[2];
-                                Array = response.split(",");
-                                String var_name_user = Array[0];
-                                String id_login_user = Array[1];
-                                Intent intentEnviar = new Intent(endereco_Activity.this, Tela2Menu_Activity.class);
-                                intentEnviar.putExtra("var_name_user",var_name_user);
-                                intentEnviar.putExtra("id_login_user",id_login_user);
-                                Toast.makeText(getApplicationContext(),"Poste Cadastrado com sucesso!!!",Toast.LENGTH_LONG).show();
+
+                                Intent intentEnviar = new Intent(endereco_Activity.this, MapPoste.class);
+                                intentEnviar.putExtra("var_id_poste",var_id_poste);
                                 startActivity(intentEnviar);
                             }
                         }
@@ -263,6 +221,7 @@ public class endereco_Activity extends AppCompatActivity {
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String,String>  params = new HashMap<>();
                     params.put("var_id_poste",var_id_poste);
+                    params.put("numeroposte",et_numPoste1.getText().toString());
                     params.put("areaposte",areaposte.getSelectedItem().toString());
                     params.put("estado",estado.getSelectedItem().toString());
                     params.put("municipio",municipio.getText().toString());
@@ -276,8 +235,11 @@ public class endereco_Activity extends AppCompatActivity {
             };
             RequestQueue cadastro = Volley.newRequestQueue(this);
             cadastro.add(request);
-
         }
+
+
+
+
     }
     public void onActivityResult(int requestCode, int resultCode, Intent intent){
         super.onActivityResult(requestCode,resultCode,intent);
@@ -285,104 +247,6 @@ public class endereco_Activity extends AppCompatActivity {
                 && resultCode == RESULT_OK ){
             etZipCode.setText( intent.getStringExtra( Address.ZIP_CODE_KEY ) );
         }
-        try{
-            if (resultCode == RESULT_OK){
-                File file = new File(mCurrentPhotoPath);
-                CaminhosFotos.add(file);
-                bitimagem  = MediaStore.Images.Media.getBitmap(getContentResolver(),Uri.fromFile(file));
-                if(bitimagem  != null) {
-                    ImagensStringList.add(NomeFotoTirada);
-                    float graus = 90;
-                    Matrix matrix = new Matrix();
-                    matrix.setRotate(graus);
-                    Bitmap newBitmapRotate = Bitmap.createBitmap(bitimagem, 0,0, bitimagem.getWidth(),bitimagem.getHeight(),matrix,true);
-                    BitmapListmg.add(newBitmapRotate);
-                    imageGrid.setAdapter(new ImageAdapter(this, this.BitmapListmg));
-                    quantfotos++;
-                    if(quantfotos == 1){
-                        layoutgridimg.setVisibility(View.VISIBLE);
-                        layoutgridimg.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,500));
-                    }
-                    if(quantfotos == 4){
-                        layoutgridimg.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,1000));
-                    }
-
-                }
-            }
-        }catch (Exception error){
-            error.printStackTrace();
-        }
-    }
-
-
-    private void makeRequest() {
-        StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/fotos.php",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String,String> map = new HashMap<>();
-                map.put("var_id_poste",var_id_poste);
-                map.put("encoded_string",encoded_string);
-                map.put("image_name",Nomefoto);
-                return map;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(request);
-    }
-
-
-
-    // Abrir CAMERA
-    public void tiraFoto(View v){
-
-        File photoFile = null;
-        if(quantfotos<6){
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE );
-            if(intent.resolveActivity(getPackageManager())!= null) {
-                try {
-                    photoFile = criarImagem();
-                } catch (IOException ex) {
-                    //Error occurred while creating the file
-                }
-
-                if (photoFile != null) {
-                    Uri photoUri = FileProvider.getUriForFile(this, "com.nbntelecom.nbnpostemap", photoFile);
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-                    startActivityForResult(intent, 10);
-                }
-            }
-        }
-        else{
-            Toast.makeText(getApplicationContext(),"Limite de fotos atingido",Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
-
-    //
-
-
-    // Função que vai retornar o nome da foto com dataa e hora,junto com o diretorio pra salvar a imagem
-    public File criarImagem() throws IOException {
-        // criar arquivo de imagem
-        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date());
-        NomeFotoTirada = var_id_poste+"_"+timeStamp;
-        File storagedir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(NomeFotoTirada,".jpg",storagedir);
-
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
     }
 
     public void exibirConfirmacao(){

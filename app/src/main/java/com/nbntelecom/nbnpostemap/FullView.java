@@ -22,23 +22,30 @@ public class FullView extends AppCompatActivity {
 
 
     Bitmap bit_img;
-    File caminho_img;
+    File caminho;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_view);
 
-        PhotoView imageView = findViewById(R.id.img_full);
+        PhotoView imageView = findViewById(R.id.imgfull);
 
 
         Bundle extras = getIntent().getExtras();
         if(extras != null){
-            caminho_img = (File) extras.get("caminho_img");
-            Toast.makeText(getApplicationContext(),caminho_img.toString(),Toast.LENGTH_SHORT).show();
+            caminho = (File) extras.get("caminho");
+            bit_img = BitmapFactory.decodeFile(caminho.getAbsolutePath());
 
+            float graus = 90;
+            Matrix matrix = new Matrix();
+            matrix.setRotate(graus);
+
+            Bitmap newBitmapRotate = Bitmap.createBitmap(bit_img, 0,0, bit_img.getWidth(),bit_img.getHeight(),matrix,true);
+
+
+            imageView.setImageBitmap(newBitmapRotate);
         }
-
 
 
 

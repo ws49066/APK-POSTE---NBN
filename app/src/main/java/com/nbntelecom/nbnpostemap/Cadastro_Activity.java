@@ -84,11 +84,10 @@ public class Cadastro_Activity extends  FragmentActivity  {
     private long backPressedTime;
 
     //Variaveis do formulario
-    TextView id_post_text;
+
 
 
     String var_id_poste;
-    EditText et_numPoste1;
     Spinner tipoposte,espposte,dimposte,transposte,baixaposte;
 
 
@@ -128,7 +127,7 @@ public class Cadastro_Activity extends  FragmentActivity  {
         //hide action bar
 
 
-        id_post_text = findViewById(R.id.idtext);
+
         btn_parte1 = findViewById(R.id.btn_parte1);
         parentLinearLayout = (LinearLayout) findViewById(R.id.parent_linear_layout);
         LinearLayoutSuporte = (LinearLayout) findViewById(R.id.parent_linear_suporte_cruzeta);
@@ -143,7 +142,7 @@ public class Cadastro_Activity extends  FragmentActivity  {
         Bundle extras = getIntent().getExtras();
         if(extras != null){
             var_id_poste = (String) extras.get("var_id_poste");
-            id_post_text.setText("ID: "+var_id_poste);
+
         }
 
 
@@ -172,7 +171,7 @@ public class Cadastro_Activity extends  FragmentActivity  {
 
     public void parte1(){
 
-        et_numPoste1 = findViewById(R.id.et_numPoste);
+
         int chaveRadioId,iluminacaoRadioId,isoladoRadioId,cameraRadioId;
         chaveRadioId = chaveGroup.getCheckedRadioButtonId();
         isoladoRadioId = isoladaGroup.getCheckedRadioButtonId();
@@ -182,10 +181,7 @@ public class Cadastro_Activity extends  FragmentActivity  {
         isoladaButton = findViewById(isoladoRadioId);
         cameraButton = findViewById(cameraRadioId);
 
-        if(et_numPoste1.getText().length() == 0){
-            Toast.makeText(getApplicationContext(),"Informe o número do poste",Toast.LENGTH_SHORT).show();
 
-        }else{
             tipoposte = findViewById(R.id.tipoposte);
             espposte = findViewById(R.id.espposte);
             dimposte = findViewById(R.id.dimposte);
@@ -200,7 +196,7 @@ public class Cadastro_Activity extends  FragmentActivity  {
                         @Override
                         public void onResponse(String response) {
                             if (response.contains("1")) {
-                                Intent intentEnviar = new Intent(Cadastro_Activity.this, MapPoste.class);
+                                Intent intentEnviar = new Intent(Cadastro_Activity.this, Atributos_poste.class);
                                 intentEnviar.putExtra("var_id_poste",var_id_poste);
                                 startActivity(intentEnviar);
                             }else{
@@ -222,7 +218,6 @@ public class Cadastro_Activity extends  FragmentActivity  {
                     params.put("chaveposte",chaveButton.getText().toString());
                     params.put("dimposte",dimposte.getSelectedItem().toString());
                     params.put("espposte",espposte.getSelectedItem().toString());
-                    params.put("numeroposte",et_numPoste1.getText().toString());
                     params.put("tipoposte",tipoposte.getSelectedItem().toString());
                     params.put("cameraposte",cameraButton.getText().toString());
                     params.put("isoladaposte",isoladaButton.getText().toString());
@@ -231,8 +226,6 @@ public class Cadastro_Activity extends  FragmentActivity  {
             };
             RequestQueue cadastro = Volley.newRequestQueue(this);
             cadastro.add(request);
-
-        }
     }
 
 
@@ -276,7 +269,6 @@ public class Cadastro_Activity extends  FragmentActivity  {
                         }else{
                             String Array[] = new String[2];
                             Array = response.split(",");
-
                             String var_name_user = Array[0];
                             String id_login_user = Array[1];
                             Intent intentEnviar = new Intent(Cadastro_Activity.this, Tela2Menu_Activity.class);

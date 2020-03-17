@@ -1,6 +1,7 @@
 package com.nbntelecom.nbnpostemap;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -26,14 +27,19 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -44,7 +50,10 @@ import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MapPoste extends FragmentActivity implements OnMapReadyCallback {
+public class MapPoste extends FragmentActivity implements OnMapReadyCallback,
+GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, LocationListener,
+        GoogleMap.OnMarkerDragListener
+{
 
     Location localizacaoAtual;
     Button mTypeNormal,mTypeBtn;
@@ -54,12 +63,8 @@ public class MapPoste extends FragmentActivity implements OnMapReadyCallback {
     TextView Geolocalizacao,textgeolocalicao;
     private static final int REQUEST_CODE = 101;
     GoogleMap mMap;
-
-    GoogleApiClient client;
-    LatLng startLatLng,endLatlng;
+    String Local;
     LocationRequest request;
-    Marker currentMarker;
-    Marker destinationMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +98,7 @@ public class MapPoste extends FragmentActivity implements OnMapReadyCallback {
         mTypeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 Geolocalizacao.setTextColor(getResources().getColor(R.color.MapSatelite));
                 textgeolocalicao.setTextColor(getResources().getColor(R.color.MapSatelite));
             }
@@ -109,6 +114,12 @@ public class MapPoste extends FragmentActivity implements OnMapReadyCallback {
         });
 
         btn_salvar_localizacao = findViewById(R.id.btn_salvar_localizacao);
+        btn_salvar_localizacao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CadastrarLocalizacao();
+            }
+        });
     }
 
     private void fetchLastLocation(){
@@ -123,7 +134,8 @@ public class MapPoste extends FragmentActivity implements OnMapReadyCallback {
             public void onSuccess(Location location) {
                 if (location != null){
                     localizacaoAtual = location;
-                    Geolocalizacao.setText(localizacaoAtual.getLatitude()+""+localizacaoAtual.getLongitude());
+                    Local = (localizacaoAtual.getLatitude()+","+localizacaoAtual.getLongitude()).toString();
+                    Geolocalizacao.setText(localizacaoAtual.getLatitude()+","+localizacaoAtual.getLongitude());
                     SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
                     supportMapFragment.getMapAsync(MapPoste.this);
                 }
@@ -135,10 +147,41 @@ public class MapPoste extends FragmentActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         LatLng latLng = new LatLng(localizacaoAtual.getLatitude(),localizacaoAtual.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("POSTE ID: "+var_id_poste);
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 19));
+        MarkerOptions markerOptions = new MarkerOptions().position(latLng)
+                .title("POSTE ID: "+var_id_poste).draggable(true)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.icomap));
+        final CameraPosition position = new CameraPosition.Builder()
+                .target(latLng).bearing(45).tilt(90).zoom(17).build();
+        CameraUpdate update = CameraUpdateFactory.newCameraPosition(position);
+
+        //mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.animateCamera(update);
+        mMap.setMyLocationEnabled(true);
         mMap.addMarker(markerOptions);
+        mMap.setOnMarkerDragListener(this);
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+            LatLng position = marker.getPosition();
+            Local = position.latitude+","+position.longitude;
+            Geolocalizacao.setText(position.latitude+","+ position.longitude);
+
+        }
+
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+        LatLng position = marker.getPosition();
+        Local = position.latitude+","+position.longitude;
+        Geolocalizacao.setText(position.latitude+","+ position.longitude);
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        LatLng position = marker.getPosition();
+        Local = position.latitude+","+position.longitude;
+        Geolocalizacao.setText(position.latitude+","+ position.longitude);
     }
 
     @Override
@@ -152,6 +195,7 @@ public class MapPoste extends FragmentActivity implements OnMapReadyCallback {
         }
     }
 
+
     public void CadastrarLocalizacao(){
 
             StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/localizacao.php",
@@ -159,17 +203,12 @@ public class MapPoste extends FragmentActivity implements OnMapReadyCallback {
                         @Override
                         public void onResponse(String response) {
                             if (response.contains("erro")) {
+
                                 Toast.makeText(getApplicationContext(),"ERRO NA INSERÇÃO NO BANCO", Toast.LENGTH_SHORT). show();
 
                             }else{
-                                String Array[] = new String[2];
-                                Array = response.split(",");
-                                String var_name_user = Array[0];
-                                String id_login_user = Array[1];
-                                Intent intentEnviar = new Intent(MapPoste.this, MapPoste.class);
-                                intentEnviar.putExtra("var_name_user",var_name_user);
-                                intentEnviar.putExtra("id_login_user",id_login_user);
-                                Toast.makeText(getApplicationContext(),"Poste Cadastrado com sucesso!!!",Toast.LENGTH_LONG).show();
+                                Intent intentEnviar = new Intent(MapPoste.this,Cadastro_Activity.class);
+                                intentEnviar.putExtra("var_id_poste",var_id_poste);
                                 startActivity(intentEnviar);
                             }
                         }
@@ -183,6 +222,7 @@ public class MapPoste extends FragmentActivity implements OnMapReadyCallback {
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String,String>  params = new HashMap<>();
                     params.put("var_id_poste",var_id_poste);
+                    params.put("localizacao",Local);
                     return  params;
                 }
             };
@@ -219,6 +259,7 @@ public class MapPoste extends FragmentActivity implements OnMapReadyCallback {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String>  params = new HashMap<>();
                 params.put("var_id_poste",var_id_poste);
+
                 return  params;
             }
         };
@@ -254,4 +295,30 @@ public class MapPoste extends FragmentActivity implements OnMapReadyCallback {
 
     }
 
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
 }

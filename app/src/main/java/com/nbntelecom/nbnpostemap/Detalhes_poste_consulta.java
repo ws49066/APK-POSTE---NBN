@@ -163,24 +163,22 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
         imageGride.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-              Bitmap item_bitmap = BitmapListmg.get(position);
-                ShowDialoBox(item_bitmap);
+                ShowDialoBox(BitmapListmg.get(position));
             }
         });
-
-
 
     }
 
     public  void ShowDialoBox(Bitmap item_pos){
         Dialog dialog = new Dialog(this);
+
         dialog.setContentView(R.layout.custom_dialog);
 
         ImageView image = dialog.findViewById(R.id.img);
 
         image.setImageBitmap(item_pos);
 
-
+        dialog.show();
     }
 
     public void showList(){
@@ -188,20 +186,13 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
 
         final String post_id;
 
-
-
         StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/Consultar_id.php",
                 new Response.Listener<String>() {
-
-
-
 
                     @Override
                     public void onResponse(String response) {
 
-
                         try {
-
                             JSONObject obj = new JSONObject(response);
                             JSONObject objend = new JSONObject(response);
                             JSONObject objcruzeta = new JSONObject(response);
@@ -211,10 +202,12 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
                             JSONObject objcaixa = new JSONObject(response);
                             JSONObject objfoto = new JSONObject(response);
                             JSONObject objluz = new JSONObject(response);
+                            JSONObject objLocalizacao = new JSONObject(response);
 
 
                             JSONArray arrayPoste = obj.getJSONArray("data-poste");
                             JSONArray arrayEnd = objend.getJSONArray("data-end");
+                            JSONArray arraylocalizacao = objLocalizacao.getJSONArray("data-local");
                             JSONArray arrayLuz = new JSONArray();
 
                             JSONArray arrayfotos = new JSONArray();
@@ -269,6 +262,7 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
 
                             JSONObject provObjPoste = arrayPoste.getJSONObject(0);
                             JSONObject provObjEnd = arrayEnd.getJSONObject(0);
+                            JSONObject provObjlocal = arraylocalizacao.getJSONObject(0);
 
 
                             id.setText("ID: "+id_selecionado);
@@ -288,7 +282,7 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
                             text_proximo.setText(provObjEnd.getString("numero"));
                             text_cep.setText(provObjEnd.getString("cep"));
                             text_area.setText(provObjEnd.getString("perimetro"));
-                            text_localizacao.setText(provObjEnd.getString("localizacao"));
+                            text_localizacao.setText(provObjlocal.getString("local_gps"));
 
 
 

@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MapPoste"></activity>
+        <activity android:name=".fotosposte"></activity>
+        <activity android:name=".MapPoste" />
         <activity
             android:name=".iluminacao_add"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

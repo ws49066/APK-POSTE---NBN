@@ -2,11 +2,13 @@ package com.nbntelecom.nbnpostemap;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,6 +41,7 @@ public class Tela2Menu_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela2_menu);
 
+
         btn_novo = findViewById(R.id.btn_novo);
         textUserName = findViewById(R.id.textUserName);
 
@@ -57,7 +60,7 @@ public class Tela2Menu_Activity extends AppCompatActivity {
                             @Override
                             public void onResponse(String response) {
                                 String var_id_poste = (String) response;
-                                Intent intentEnviar = new Intent(Tela2Menu_Activity.this, Cadastro_Activity.class);
+                                Intent intentEnviar = new Intent(Tela2Menu_Activity.this, endereco_Activity.class);
                                 intentEnviar.putExtra("var_id_poste",var_id_poste);
                                 startActivity(intentEnviar);
                             }
@@ -111,7 +114,7 @@ public class Tela2Menu_Activity extends AppCompatActivity {
     public void exibirConfirmacao(){
         AlertDialog.Builder msgbox = new AlertDialog.Builder(this);
         msgbox.setTitle("Sair da aplicação....");
-        msgbox.setIcon(android.R.drawable.ic_menu_delete);
+        msgbox.setIcon(android.R.drawable.ic_lock_power_off);
         msgbox.setMessage("Tem certeza que deseja sair do aplicativo?");
 
         msgbox.setPositiveButton("Sim", new DialogInterface.OnClickListener() {

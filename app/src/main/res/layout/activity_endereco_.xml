@@ -2,10 +2,13 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/colormenu"
     android:gravity="center"
     android:orientation="vertical">
+
+
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,273 +18,265 @@
         android:scrollbars="none"
         android:visibility="visible">
 
+
+
         <LinearLayout
             android:id="@+id/layout_endereco"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colormenu"
-            android:gravity="center"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:visibility="visible">
 
-            <TextView
-                android:id="@+id/text_endereco"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
-                android:focusable="true"
-                android:inputType="text"
-                android:selectAllOnFocus="true"
-                android:text="-- ENDEREÇO --"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
             <LinearLayout
-                android:id="@+id/ll_fieldset_1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/sub_title_2"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:layout_height="158dp"
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_zip_code"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <EditText
-                        android:id="@+id/et_zip_code"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:ems="10"
-                        android:hint="*CEP"
-                        android:inputType="number"
-                        android:maxLength="8" />
-                </com.google.android.material.textfield.TextInputLayout>
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_zip_code_search"
-                    android:layout_width="0dp"
+                    android:id="@+id/idtext"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/borderid"
                     android:gravity="center"
-                    android:onClick="searchZipCode"
-                    android:paddingTop="15dp"
-                    android:text="Esqueci o CEP"
-                    android:textColor="#00b034"
-                    android:textSize="18sp" />
+                    android:text="ID: 34234"
+                    android:textAlignment="center"
+                    android:textColor="#00ffff"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/et_numPoste"
+                    android:layout_width="299dp"
+                    android:layout_height="59dp"
+                    android:layout_marginBottom="30dp"
+                    android:hint="@string/NumeroPoste"
+                    android:inputType="text"
+                    android:selectAllOnFocus="true"
+                    android:singleLine="true"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#3F3F3F" />
+
             </LinearLayout>
 
-
             <LinearLayout
-                android:id="@+id/ll_fieldset_2"
+                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_fieldset_1"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_street"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <EditText
-                        android:id="@+id/et_street"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:ems="10"
-                        android:hint="*Rua"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_complement"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <EditText
-                        android:id="@+id/et_complement"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:ems="10"
-                        android:hint="Complemento"
-                        android:inputType="text"
-                        android:maxLength="20" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/ll_fieldset_3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_fieldset_2"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_number"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <EditText
-                        android:id="@+id/et_number"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:ems="10"
-                        android:hint="*Nº"
-                        android:inputType="number" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_neighbor"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <EditText
-                        android:id="@+id/et_neighbor"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:ems="10"
-                        android:hint="*Bairro"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/ll_fieldset_4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ll_fieldset_3"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentLeft="true"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/til_city"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <EditText
-                        android:id="@+id/et_city"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:ems="10"
-                        android:hint="*Cidade"
-                        android:inputType="text" />
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <Spinner
-                    android:id="@+id/sp_state"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="388dp"
-                android:layout_height="59dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
-                android:orientation="horizontal">
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:background="@drawable/border"
+                android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="193dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/labelarea"
-                        android:layout_width="51dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="ÁREA "
-                        android:textAlignment="center"
-                        android:textColor="#FFFFFF"
-                        android:textSize="15dp" />
-
-                    <Spinner
-                        android:id="@+id/areaposte"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:backgroundTint="#FFF44336"
-                        android:entries="@array/areaposte"
-                        android:selectAllOnFocus="true"
-                        android:textAlignment="center" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <Button
-                android:layout_width="52dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="152dp"
-                android:layout_marginEnd="150dp"
-                android:layout_marginBottom="5dp"
-                android:background="@android:drawable/ic_menu_camera"
-                android:onClick="tiraFoto"
-                android:visibility="visible" />
-
-            <LinearLayout
-                android:id="@+id/layout_gridmig"
-                android:layout_margin="10dp"
-                android:layout_width="0dp"
-                android:visibility="invisible"
-                android:background="@drawable/borderetangular"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:layout_height="0dp">
-
-                <GridView
-                    android:id="@+id/gridview"
-                    android:layout_margin="20dp"
+                    android:id="@+id/ll_fieldset_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:columnWidth="115dp"
-                    android:drawSelectorOnTop="true"
-                    android:verticalSpacing="10dp"
-                    android:numColumns="3"
-                     />
+                    android:layout_below="@+id/sub_title_2"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_zip_code"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <EditText
+                            android:id="@+id/et_zip_code"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:ems="10"
+                            android:hint="*CEP"
+                            android:inputType="number"
+                            android:maxLength="8" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/tv_zip_code_search"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:onClick="searchZipCode"
+                        android:paddingTop="15dp"
+                        android:text="Esqueci o CEP"
+                        android:textColor="#00b034"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_fieldset_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_fieldset_1"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_street"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <EditText
+                            android:id="@+id/et_street"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:ems="10"
+                            android:hint="*Rua"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_complement"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <EditText
+                            android:id="@+id/et_complement"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:ems="10"
+                            android:hint="Complemento"
+                            android:inputType="text"
+                            android:maxLength="20" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_fieldset_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_fieldset_2"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <EditText
+                            android:id="@+id/et_number"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:ems="10"
+                            android:hint="*Nº"
+                            android:inputType="number" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_neighbor"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <EditText
+                            android:id="@+id/et_neighbor"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:ems="10"
+                            android:hint="*Bairro"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_fieldset_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ll_fieldset_3"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/til_city"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <EditText
+                            android:id="@+id/et_city"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:ems="10"
+                            android:hint="*Cidade"
+                            android:inputType="text" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Spinner
+                        android:id="@+id/sp_state"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="388dp"
+                    android:layout_height="59dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="193dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/labelarea"
+                            android:layout_width="51dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="ÁREA "
+                            android:textAlignment="center"
+                            android:textColor="#FFFFFF"
+                            android:textSize="15dp" />
+
+                        <Spinner
+                            android:id="@+id/areaposte"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:backgroundTint="#FFF44336"
+                            android:entries="@array/areaposte"
+                            android:selectAllOnFocus="true"
+                            android:textAlignment="center" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
 
             </LinearLayout>
-
-
-
 
             <LinearLayout
                 android:layout_width="382dp"
@@ -295,30 +290,28 @@
                     android:layout_width="172dp"
                     android:layout_height="69dp"
                     android:layout_margin="10dp"
+                    android:layout_toStartOf="@+id/btn_salvar_endereco"
                     android:background="@drawable/bordercancelar"
                     android:text="CANCELAR"
                     android:textColor="#FF0000"
                     android:textSize="7pt" />
 
                 <Button
-                    android:layout_marginTop="30dp"
                     android:id="@+id/btn_salvar_endereco"
                     android:layout_width="172dp"
                     android:layout_height="69dp"
                     android:layout_margin="10dp"
                     android:background="@drawable/borderconfirmar"
                     android:gravity="center"
-                    android:text="FINALIZAR"
+                    android:text="PROXIMO"
                     android:textColor="#00b034"
                     android:textSize="7pt" />
-
             </LinearLayout>
-
         </LinearLayout>
 
 
-
     </ScrollView>
+
 
 
 

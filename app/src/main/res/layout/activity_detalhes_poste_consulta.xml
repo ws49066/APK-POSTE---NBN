@@ -800,7 +800,6 @@
                             android:layout_height="match_parent"
                             android:gravity="left"
                             android:paddingLeft="20dp"
-                            android:text="-3.0590249,-60.0256968"
                             android:textColor="#FFFFFF"
                             android:textSize="13dp" />
                     </LinearLayout>

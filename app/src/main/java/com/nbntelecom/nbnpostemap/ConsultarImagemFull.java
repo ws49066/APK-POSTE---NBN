@@ -28,7 +28,7 @@ public class ConsultarImagemFull extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         if(extras != null){
-            ListStringBitmap = (String) extras.get("bitmap-img");
+            ListStringBitmap = (String) extras.get("imagemString");
 
             byte[] imgRecebida = Base64.decode(ListStringBitmap,Base64.DEFAULT);
 
