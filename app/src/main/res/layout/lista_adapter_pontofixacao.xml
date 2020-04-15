@@ -13,7 +13,7 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/Tipoposte_texto"
+            android:id="@+id/pontofixacao_texto"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:padding="2dp"
@@ -31,7 +31,7 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/tipoaerea_texto"
+            android:id="@+id/tipodecabo_texto"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:padding="2dp"
@@ -48,7 +48,7 @@
         android:gravity="center">
 
         <TextView
-            android:id="@+id/redemedia_texto"
+            android:id="@+id/bitola_texto"
             android:layout_width="131dp"
             android:layout_height="wrap_content"
             android:padding="2dp"

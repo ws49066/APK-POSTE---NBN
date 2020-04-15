@@ -15,10 +15,8 @@
         android:textAlignment="center" />
 
     <Button
-        android:id="@+id/add_field_ponto_fixacao"
         android:layout_width="22dp"
         android:layout_height="28dp"
-
         android:layout_marginBottom="30dp"
         android:background="@drawable/ic_remove_black_24dp"
         android:onClick="delete_rack"

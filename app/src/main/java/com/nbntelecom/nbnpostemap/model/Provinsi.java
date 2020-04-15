@@ -4,10 +4,6 @@ public class Provinsi {
     private String Id;
     private  String Nama;
 
-    public Provinsi(){
-
-    }
-
     public Provinsi(String id, String  nama){
         this.Id = id;
         this.Nama = nama;

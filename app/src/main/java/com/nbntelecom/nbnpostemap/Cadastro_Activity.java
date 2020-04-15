@@ -66,6 +66,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -88,6 +89,7 @@ public class Cadastro_Activity extends  FragmentActivity  {
 
 
     String var_id_poste;
+
     Spinner tipoposte,espposte,dimposte,transposte,baixaposte;
 
 
@@ -101,6 +103,18 @@ public class Cadastro_Activity extends  FragmentActivity  {
     LinearLayout parentLinearLayout,LinearLayoutSuporte,LinearLayoutPontoF,LinearLayoutRack,LinearLayoutResevaT, LinearLayoutCaixaAtendimento;
 
     String var_name_user,id_login_user;
+
+    List<String> TipoposteText = new ArrayList<String>();
+    List<String> AereaSuporte = new ArrayList<String>();
+    List<String> RedemediaPoste = new ArrayList<String>();
+    List<String> PontoFixacao = new ArrayList<String>();
+    List<String> TipodeCabo = new ArrayList<String>();
+    List<String> Bitola = new ArrayList<String>();
+    List<String> tipoluz = new ArrayList<String>();
+    List<String> prop = new ArrayList<String>();
+    List<String> t_prop = new ArrayList<String>();
+    List<String> tipolamp = new ArrayList<String>();
+    List<String> pot = new ArrayList<String>();
 
     int cont=0;
 
@@ -198,6 +212,17 @@ public class Cadastro_Activity extends  FragmentActivity  {
                             if (response.contains("1")) {
                                 Intent intentEnviar = new Intent(Cadastro_Activity.this, Atributos_poste.class);
                                 intentEnviar.putExtra("var_id_poste",var_id_poste);
+                                intentEnviar.putExtra("tipocruzeta",(Serializable) TipoposteText );
+                                intentEnviar.putExtra("aereatipo",(Serializable) AereaSuporte);
+                                intentEnviar.putExtra("redemedia",(Serializable) RedemediaPoste );
+                                intentEnviar.putExtra("pontofixacao",(Serializable) PontoFixacao );
+                                intentEnviar.putExtra("tipodecabo",(Serializable) TipodeCabo);
+                                intentEnviar.putExtra("bitola",(Serializable) Bitola );
+                                intentEnviar.putExtra("tipoiluminacao", (Serializable) tipoluz);
+                                intentEnviar.putExtra("proprietario",(Serializable) prop );
+                                intentEnviar.putExtra("t_proprietario", (Serializable) t_prop );
+                                intentEnviar.putExtra("tipolampada", (Serializable) tipolamp );
+                                intentEnviar.putExtra("potencia", (Serializable) pot );
                                 startActivity(intentEnviar);
                             }else{
                                 Toast.makeText(getApplicationContext(),"ERRO NA INSERÇÃO NO BANCO", Toast.LENGTH_SHORT).show();

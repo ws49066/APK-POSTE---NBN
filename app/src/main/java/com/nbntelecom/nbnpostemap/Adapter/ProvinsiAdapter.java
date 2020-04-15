@@ -18,11 +18,8 @@ import java.util.List;
 
 public class ProvinsiAdapter extends ArrayAdapter<Provinsi> {
 
-    public ListView listView;
-
     private List<Provinsi> provinsiList;
     private Context mCtx;
-
 
     public ProvinsiAdapter(List<Provinsi> P, Context c){
         super(c, R.layout.activity_consultar_poste,P);
@@ -31,9 +28,6 @@ public class ProvinsiAdapter extends ArrayAdapter<Provinsi> {
 
 
     }
-
-
-
 
     @Override
     public View getView(int position,  View convertView,  ViewGroup parent) {
@@ -50,6 +44,5 @@ public class ProvinsiAdapter extends ArrayAdapter<Provinsi> {
         return view;
 
     }
-
 
 }

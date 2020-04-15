@@ -469,6 +469,7 @@
                         android:textColor="#FFFFFF"
                         android:textSize="15dp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/LinearLayoutCruzeta"
                     android:layout_width="match_parent"

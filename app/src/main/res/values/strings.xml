@@ -42,6 +42,22 @@
         <item>20m</item>
     </string-array>
 
+
+    <string-array name="subtipo">
+        <item>Drop</item>
+        <item>12fo</item>
+        <item>24fo</item>
+        <item>36fo</item>
+        <item>64fo</item>
+        <item>128fo</item>
+    </string-array>
+
+    <string-array name="tipocabo">
+        <item>Coaxial</item>
+        <item>Fibra Optica</item>
+        <item>Telefonico</item>
+    </string-array>
+
     <string-array name="areaposte">
         <item>Urbana</item>
         <item>Rural</item>

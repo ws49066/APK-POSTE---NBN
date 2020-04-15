@@ -45,7 +45,6 @@ public class ZipCodeSearchActivity extends AppCompatActivity implements AdapterV
 
         util = new Util(this, R.id.et_street, R.id.et_city,R.id.sp_state);
 
-
     }
 
 

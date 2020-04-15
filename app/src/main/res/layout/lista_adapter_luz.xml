@@ -4,76 +4,158 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#111b31"
-    android:orientation="horizontal">
+    android:orientation="vertical">
+
 
     <LinearLayout
-        android:layout_width="117dp"
+        android:gravity="bottom"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/borderetangular"
-        android:gravity="center">
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/pontofixacao_texto"
-            android:layout_width="150dp"
+        <LinearLayout
+            android:layout_width="117dp"
             android:layout_height="wrap_content"
-            android:padding="2dp"
-            android:text="Aquariquara"
-            android:textAlignment="center"
-            android:textColor="#fff"
-            android:textSize="6pt" />
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="117dp"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="TIPO ILUMINAÇÃO"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="6pt" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="117dp"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="117dp"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="TIPO DE LAMPADA"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="6pt" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="117dp"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="117dp"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="POTENCIA"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="6pt" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="invisible"
+            android:background="@drawable/borderetangular"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_remove_black_24dp"
+                android:clickable="true"
+                android:onClick="delete_suporte"
+                android:textColor="#FFF" />
+        </LinearLayout>
 
     </LinearLayout>
+
 
     <LinearLayout
-        android:layout_width="117dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/borderetangular"
-        android:gravity="center">
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tipodecabo_texto"
-            android:layout_width="150dp"
+        <LinearLayout
+            android:layout_width="117dp"
             android:layout_height="wrap_content"
-            android:padding="2dp"
-            android:text="Aquariquara"
-            android:textAlignment="center"
-            android:textColor="#fff"
-            android:textSize="6pt" />
-    </LinearLayout>
+            android:background="@drawable/borderetangular"
+            android:gravity="center">
 
-    <LinearLayout
-        android:layout_width="117dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/borderetangular"
-        android:gravity="center">
+            <TextView
+                android:id="@+id/tipoiluminacao"
+                android:layout_width="117dp"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="TIPO ILUMINAÇÃO"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="6pt" />
 
-        <TextView
-            android:id="@+id/bitola_texto"
-            android:layout_width="131dp"
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="117dp"
             android:layout_height="wrap_content"
-            android:padding="2dp"
-            android:text="Aquariquara"
-            android:textAlignment="center"
-            android:textColor="#fff"
-            android:textSize="6pt" />
+            android:background="@drawable/borderetangular"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tipo_lampada_texto"
+                android:layout_width="117dp"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="Aquariquara"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="6pt" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="117dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/borderetangular"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/potencia_texto"
+                android:layout_width="117dp"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text="Aquariquara"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="6pt" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:visibility="invisible"
+            android:background="@drawable/borderetangular"
+            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/RemoveSuporte"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_remove_black_24dp"
+                android:clickable="true"
+                android:onClick="delete_suporte"
+                android:textColor="#FFF" />
+        </LinearLayout>
+
     </LinearLayout>
 
-  <LinearLayout
-      android:visibility="invisible"
-        android:background="@drawable/borderetangular"
-        android:layout_width="wrap_content"
-        android:gravity="center"
-        android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/RemoveSuporte"
-            android:layout_width="35dp"
-            android:layout_height="50dp"
-            android:background="@drawable/ic_remove_black_24dp"
-            android:clickable="true"
-            android:onClick="delete_suporte"
-            android:textColor="#FFF" />
-    </LinearLayout>
 
 
 
