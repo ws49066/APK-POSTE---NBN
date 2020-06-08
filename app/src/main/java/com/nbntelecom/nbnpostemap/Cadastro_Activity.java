@@ -1,44 +1,18 @@
 package com.nbntelecom.nbnpostemap;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.FragmentActivity;
-
-import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.location.Location;
-import android.net.Uri;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.Base64;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Button;
-import android.widget.SpinnerAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
-
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -46,80 +20,27 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.nbntelecom.nbnpostemap.POJO.Address;
-import com.nbntelecom.nbnpostemap.POJO.Util;
-import com.nbntelecom.nbnpostemap.POJO.ZipCodeListener;
-
-import org.w3c.dom.Text;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.nbntelecom.nbnpostemap.R.layout.color_spinner;
-
-import static com.nbntelecom.nbnpostemap.R.layout.ponto_fixacao_layout;
-import static com.nbntelecom.nbnpostemap.R.layout.spinner_dropdown_layout;
-
 public class Cadastro_Activity extends  FragmentActivity  {
 
+    ArrayList<SharedPreferences> preferences = new ArrayList<>();
 
-    private long backPressedTime;
 
     //Variaveis do formulario
-
-
-
     String var_id_poste;
-
     Spinner tipoposte,espposte,dimposte,transposte,baixaposte;
-
-
     Button btn_parte1,btn_cancelar;
-
-
     LinearLayout layout_parte1,layout_fotos;
-
-    //BitmapFactory.Options option = new BitmapFactory.Options();
 
     LinearLayout parentLinearLayout,LinearLayoutSuporte,LinearLayoutPontoF,LinearLayoutRack,LinearLayoutResevaT, LinearLayoutCaixaAtendimento;
 
-    String var_name_user,id_login_user;
 
-    List<String> TipoposteText = new ArrayList<String>();
-    List<String> AereaSuporte = new ArrayList<String>();
-    List<String> RedemediaPoste = new ArrayList<String>();
-    List<String> PontoFixacao = new ArrayList<String>();
-    List<String> TipodeCabo = new ArrayList<String>();
-    List<String> Bitola = new ArrayList<String>();
-    List<String> tipoluz = new ArrayList<String>();
-    List<String> prop = new ArrayList<String>();
-    List<String> t_prop = new ArrayList<String>();
-    List<String> tipolamp = new ArrayList<String>();
-    List<String> pot = new ArrayList<String>();
-
-    int cont=0;
-
-    private static final int REQUEST_CODE = 101;
-
+    private  final String DADOS_POSTE_HOMONEGEOS = "DADOS_POSTE_HOMONEGEOS";
 
     // Variaveis do RadioGroup
     RadioGroup chaveGroup,cameraGroup,isoladaGroup;
@@ -130,6 +51,13 @@ public class Cadastro_Activity extends  FragmentActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
 
+        SharedPreferences preferences_id = getSharedPreferences("Arquivo_id",0);
+
+        if (preferences_id.contains("id_poste")){
+            var_id_poste = preferences_id.getString("id_poste",null);
+        }
+
+
 
         //Instancias dos RadioGruop e RadioButton
         chaveGroup = findViewById(R.id.chaveGroup);
@@ -137,11 +65,7 @@ public class Cadastro_Activity extends  FragmentActivity  {
         isoladaGroup = findViewById(R.id.isoladaGroup);
         btn_cancelar = findViewById(R.id.btn_cancelar_cadastro);
 
-
         //hide action bar
-
-
-
         btn_parte1 = findViewById(R.id.btn_parte1);
         parentLinearLayout = (LinearLayout) findViewById(R.id.parent_linear_layout);
         LinearLayoutSuporte = (LinearLayout) findViewById(R.id.parent_linear_suporte_cruzeta);
@@ -152,13 +76,6 @@ public class Cadastro_Activity extends  FragmentActivity  {
         layout_parte1 = (LinearLayout) findViewById(R.id.layout_part1);
         layout_fotos = (LinearLayout) findViewById(R.id.layout_fotos);
 
-        // VARIAVEL ID POSTE PASSADA PARA ESSA PAGINA
-        Bundle extras = getIntent().getExtras();
-        if(extras != null){
-            var_id_poste = (String) extras.get("var_id_poste");
-
-        }
-
 
         btn_parte1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,27 +83,18 @@ public class Cadastro_Activity extends  FragmentActivity  {
                 parte1();
             }
         });
-
         btn_cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 exibirConfirmacao();
             }
         });
-
-       /* Spinner AdapterTipoPoste = (Spinner) findViewById(R.id.tipoposte);
-        ArrayAdapter<String> adapterTipoposte = new ArrayAdapter<String>(Cadastro_Activity.this, color_spinner,
-                getResources().getStringArray(R.array.tipoposte));
-        AdapterTipoPoste.setAdapter(adapterTipoposte);
-       */
-
     }
 
 
-    public void parte1(){
+    public void parte1() {
 
-
-        int chaveRadioId,iluminacaoRadioId,isoladoRadioId,cameraRadioId;
+        int chaveRadioId, isoladoRadioId, cameraRadioId;
         chaveRadioId = chaveGroup.getCheckedRadioButtonId();
         isoladoRadioId = isoladaGroup.getCheckedRadioButtonId();
         cameraRadioId = cameraGroup.getCheckedRadioButtonId();
@@ -196,61 +104,37 @@ public class Cadastro_Activity extends  FragmentActivity  {
         cameraButton = findViewById(cameraRadioId);
 
 
-            tipoposte = findViewById(R.id.tipoposte);
-            espposte = findViewById(R.id.espposte);
-            dimposte = findViewById(R.id.dimposte);
-            transposte = findViewById(R.id.transposte);
-            baixaposte = findViewById(R.id.baixaposte);
+        tipoposte = findViewById(R.id.tipoposte);
+        espposte = findViewById(R.id.espposte);
+        dimposte = findViewById(R.id.dimposte);
+        transposte = findViewById(R.id.transposte);
+        baixaposte = findViewById(R.id.baixaposte);
 
+        String tipo = tipoposte.getSelectedItem().toString();
+        String baixa = baixaposte.getSelectedItem().toString();
+        String trans = transposte.getSelectedItem().toString();
+        String chave = chaveButton.getText().toString();
+        String dimpo = dimposte.getSelectedItem().toString();
+        String esppo = espposte.getSelectedItem().toString();
+        String camera = cameraButton.getText().toString();
+        String isola = isoladaButton.getText().toString();
 
-            // conectando com o banco
-
-            StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/dados.php",
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            if (response.contains("1")) {
-                                Intent intentEnviar = new Intent(Cadastro_Activity.this, Atributos_poste.class);
-                                intentEnviar.putExtra("var_id_poste",var_id_poste);
-                                intentEnviar.putExtra("tipocruzeta",(Serializable) TipoposteText );
-                                intentEnviar.putExtra("aereatipo",(Serializable) AereaSuporte);
-                                intentEnviar.putExtra("redemedia",(Serializable) RedemediaPoste );
-                                intentEnviar.putExtra("pontofixacao",(Serializable) PontoFixacao );
-                                intentEnviar.putExtra("tipodecabo",(Serializable) TipodeCabo);
-                                intentEnviar.putExtra("bitola",(Serializable) Bitola );
-                                intentEnviar.putExtra("tipoiluminacao", (Serializable) tipoluz);
-                                intentEnviar.putExtra("proprietario",(Serializable) prop );
-                                intentEnviar.putExtra("t_proprietario", (Serializable) t_prop );
-                                intentEnviar.putExtra("tipolampada", (Serializable) tipolamp );
-                                intentEnviar.putExtra("potencia", (Serializable) pot );
-                                startActivity(intentEnviar);
-                            }else{
-                                Toast.makeText(getApplicationContext(),"ERRO NA INSERÇÃO NO BANCO", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-            }){
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String,String>  params = new HashMap<>();
-                    params.put("var_id_poste",var_id_poste);
-                    params.put("baixaposte",baixaposte.getSelectedItem().toString());
-                    params.put("transposte",transposte.getSelectedItem().toString());
-                    params.put("chaveposte",chaveButton.getText().toString());
-                    params.put("dimposte",dimposte.getSelectedItem().toString());
-                    params.put("espposte",espposte.getSelectedItem().toString());
-                    params.put("tipoposte",tipoposte.getSelectedItem().toString());
-                    params.put("cameraposte",cameraButton.getText().toString());
-                    params.put("isoladaposte",isoladaButton.getText().toString());
-                    return  params;
-                }
-            };
-            RequestQueue cadastro = Volley.newRequestQueue(this);
-            cadastro.add(request);
+        // conectando com o banco
+        System.out.println("TIPOS DO POSTE :" + tipo +" - "+ baixa +" - "+ trans +" - "+ chave +" - "+ dimpo +" - "+ esppo +" - "+ camera +" - "+ isola);
+        SharedPreferences preferences_poste = getSharedPreferences(DADOS_POSTE_HOMONEGEOS, 0);
+        SharedPreferences.Editor editor = preferences_poste.edit();
+        editor.putString("tipoposte", tipo);
+        editor.putString("baixaposte", baixa);
+        editor.putString("transposte", trans);
+        editor.putString("chaveposte", chave);
+        editor.putString("dimposte", dimpo);
+        editor.putString("espposte", esppo);
+        editor.putString("cameraposte", camera);
+        editor.putString("isoladaposte", isola);
+        editor.apply();
+        
+        Intent intent = new Intent(Cadastro_Activity.this, Atributos_poste.class);
+        startActivity(intent);
     }
 
 
@@ -289,16 +173,9 @@ public class Cadastro_Activity extends  FragmentActivity  {
                     @Override
                     public void onResponse(String response) {
                         if (response.contains("erro")) {
-                            Toast.makeText(getApplicationContext(),"Erro usuario ou senha"+response, Toast.LENGTH_SHORT).show();
 
                         }else{
-                            String Array[] = new String[2];
-                            Array = response.split(",");
-                            String var_name_user = Array[0];
-                            String id_login_user = Array[1];
                             Intent intentEnviar = new Intent(Cadastro_Activity.this, Tela2Menu_Activity.class);
-                            intentEnviar.putExtra("var_name_user",var_name_user);
-                            intentEnviar.putExtra("id_login_user",id_login_user);
                             startActivity(intentEnviar);
                         }
                     }

@@ -3,6 +3,7 @@ package com.nbntelecom.nbnpostemap;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.icu.text.Transliterator;
 import android.os.Bundle;
 import android.view.View;
@@ -38,7 +39,6 @@ public class ConsultarPoste extends AppCompatActivity {
     private ListView listView;
 
     String id_login_user;
-
     List<Provinsi> provinsiList;
 
 
@@ -47,10 +47,10 @@ public class ConsultarPoste extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consultar_poste);
 
+        SharedPreferences preferences = getSharedPreferences("ArquivoAutentica",0);
 
-        Bundle extras = getIntent().getExtras();
-        if(extras != null){
-            id_login_user = (String) extras.get("id_login_user") ;
+        if (preferences.contains("id")){
+            id_login_user = preferences.getString("id",null);
         }
 
         listView = (ListView) findViewById(R.id.list_prov);

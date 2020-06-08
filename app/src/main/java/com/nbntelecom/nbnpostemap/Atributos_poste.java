@@ -1,22 +1,19 @@
 package com.nbntelecom.nbnpostemap;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,154 +21,149 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.nbntelecom.nbnpostemap.Poste.CruzetaItems;
+import com.nbntelecom.nbnpostemap.Poste.Luz;
+import com.nbntelecom.nbnpostemap.Poste.PontoFixacao;
 
-import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Atributos_poste extends AppCompatActivity {
-
     private LinearLayout adapterSuporte,adapterPonto,adapterLuz;
-
     Button btn_cruzeta_add,btn_ponto_add,btn_salvaratributos,btn_cancelar,btn_iluminacao_add;
-
     String var_id_poste;
+    LinearLayout LinearLayoutRack,LinearLayoutResevaT,LinearLayoutCaixaAtendimento,TabelaSuporte,TabelaPonto;
 
+    //Lista
+    List<String> Rack_lisy = new ArrayList<>();
+    List<String> Reserva_tecnica_list = new ArrayList<>();
+    List<String> Caixa_atendimento_list = new ArrayList<>();
 
-
-    LinearLayout LinearLayoutRack,LinearLayoutResevaT,
-            LinearLayoutCaixaAtendimento,TabelaSuporte,TabelaPonto,TabelaLuz;
-
-    List<String> Rack_lisy = new ArrayList<String>();
-    List<String> Reserva_tecnica_list = new ArrayList<String>();
-    List<String> Caixa_atendimento_list = new ArrayList<String>();
-
-    //SUPORTE/CRUZETA
-    List<String> TipoposteText = new ArrayList<String>();
-    List<String> AereaSuporte = new ArrayList<String>();
-    List<String> RedemediaPoste = new ArrayList<String>();
-
-    //PONTO DE FIXAÇÃO
-    List<String> PontoFixacao = new ArrayList<String>();
-    List<String> TipodeCabo = new ArrayList<String>();
-    List<String> Bitola = new ArrayList<String>();
-
-    List<String> tipoluz = new ArrayList<String>();
-    List<String> prop = new ArrayList<String>();
-    List<String> t_prop = new ArrayList<String>();
-    List<String> tipolamp = new ArrayList<String>();
-    List<String> pot = new ArrayList<String>();
-
-
-    int index;
-
-    private long backPressedTime;
-
-
+    ArrayList<CruzetaItems> cruzetaItensList ;
+    ArrayList<PontoFixacao> pontoFixacaosList;
+    ArrayList<Luz> LuzList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atributos_poste);
+
+        adapterSuporte = (LinearLayout) findViewById(R.id.adapterSuporte);
+        adapterPonto = (LinearLayout) findViewById(R.id.adapterPonto);
+        adapterLuz = (LinearLayout) findViewById(R.id.adapterLuz);
+
+        TabelaSuporte = (LinearLayout) findViewById(R.id.TabelaSuporte);
+        TabelaPonto = (LinearLayout) findViewById(R.id.TabelaPonto);
+        //TabelaLuz = (LinearLayout) findViewById(R.id.TabelaIluminacao);
+
+        //ADAPTAR OS CADASTRO DE CRUZETAS
+        SharedPreferences Cruzeta_data = getSharedPreferences("Cruzeta-itens", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = Cruzeta_data.getString("cruzeta", null);
+        Type type = new TypeToken<ArrayList<CruzetaItems>>(){}.getType();
+        cruzetaItensList = gson.fromJson(json, type);
+        if (cruzetaItensList != null){
+            int cont = 0;
+            TabelaSuporte.setVisibility(View.VISIBLE);
+            TabelaSuporte.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+            for(CruzetaItems obj: cruzetaItensList){
+                final String tipoCruzeta = obj.getTipodeCruzeta();
+                final String aereaTipo = obj.getAereaTipo();
+                final String redemedia = obj.getRedeMedia();
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View rowView = inflater.inflate(R.layout.lista_adapter_atributo, null);
+                TextView tipoposte = (TextView) rowView.findViewById(R.id.Tipoposte_texto);
+                TextView aereatipo = (TextView) rowView.findViewById(R.id.tipoaerea_texto);
+                TextView redeme = (TextView) rowView.findViewById(R.id.redemedia_texto);
+                redeme.setText(redemedia);
+                tipoposte.setText(tipoCruzeta);
+                aereatipo.setText(aereaTipo);
+                adapterSuporte.addView(rowView,cont);
+                cont++;
+            }
+        }
+
+        //ADAPTAR O CADASTRO DE PONTO FIXAÇÃO
+        SharedPreferences ponto_fixacao_preference = getSharedPreferences("PontoFixacaoItem",MODE_PRIVATE);
+        gson = new Gson();
+        json = ponto_fixacao_preference.getString("Ponto-fixacao",null);
+        type = new TypeToken<ArrayList<PontoFixacao>>(){}.getType();
+        pontoFixacaosList = gson.fromJson(json, type);
+        if (pontoFixacaosList != null){
+            int cont = 0;
+            TabelaPonto.setVisibility(View.VISIBLE);
+            TabelaPonto.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
+            for(PontoFixacao obj: pontoFixacaosList){
+                final String pontofixacao = obj.getPonto();
+                final String tipo = obj.getTipoPonto();
+                final String bitola = obj.getSubtipo();
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View rowView = inflater.inflate(R.layout.lista_adapter_pontofixacao, null);
+                TextView pontoFixacao = (TextView) rowView.findViewById(R.id.pontofixacao_texto);
+                TextView TipodeCab = (TextView) rowView.findViewById(R.id.tipodecabo_texto);
+                TextView bitolapino = (TextView) rowView.findViewById(R.id.bitola_texto);
+                TipodeCab.setText(tipo);
+                pontoFixacao.setText(pontofixacao);
+                bitolapino.setText(bitola);
+                adapterPonto.addView(rowView,cont);
+                cont++;
+            }
+        }
+
+        //ADAPTAR OS CADASTRO DE LUZ
+
+        SharedPreferences luz_preferences = getSharedPreferences("LuzItems", MODE_PRIVATE);
+        gson = new Gson();
+        json = luz_preferences.getString("Luz",null);
+        type = new TypeToken<ArrayList<Luz>>(){}.getType();
+        LuzList = gson.fromJson(json,type);
+        if(LuzList != null) {
+            for (Luz obj : LuzList) {
+                final String tipoilumina = obj.getTipoLuz();
+                final String tipodono = obj.getTipoPropri();
+                final String dono = obj.getProprietatio();
+                final String tipolampada = obj.getTipoLuz();
+                final String potencia = obj.getPotencia();
+                LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                final View rowView = inflater.inflate(R.layout.lista_adapter_luz, null);
+                TextView tipo_iluminacao = (TextView) rowView.findViewById(R.id.tipoiluminacao);
+                //TextView proprietario = (TextView) rowView.findViewById(R.id.proprietario_texto);
+                //TextView t_proprietario = (TextView) rowView.findViewById(R.id.t_prop_texto);
+                TextView tipolam = (TextView) rowView.findViewById(R.id.tipo_lampada_texto);
+                TextView poten = (TextView) rowView.findViewById(R.id.potencia_texto);
+                tipo_iluminacao.setText(tipoilumina);
+                //proprietario.setText(prop.get(0));
+                //t_proprietario.setText(t_prop.get(0));
+                tipolam.setText(tipolampada);
+                poten.setText(potencia);
+                adapterLuz.addView(rowView,0);
+            }
+        }
+
+
+
+        SharedPreferences preferences_id = getSharedPreferences("Arquivo_id",0);
+
+        if (preferences_id.contains("id_poste")){
+            var_id_poste = preferences_id.getString("id_poste",null);
+        }
+
         btn_salvaratributos = findViewById(R.id.btn_atributos);
         btn_cruzeta_add = findViewById(R.id.add_field_suporte_cruzeta);
         btn_iluminacao_add = findViewById(R.id.add_field_iluminacao);
         btn_ponto_add = findViewById(R.id.add_field_ponto_fixacao);
         btn_cancelar = findViewById(R.id.btn_cancelar_cadastro);
         LinearLayoutRack = (LinearLayout) findViewById(R.id.parent_linear_rack);
-
         TabelaSuporte = (LinearLayout) findViewById(R.id.TabelaSuporte);
         TabelaPonto = (LinearLayout) findViewById(R.id.TabelaPonto);
-        //TabelaLuz = (LinearLayout) findViewById(R.id.TabelaIluminacao);
-
         LinearLayoutResevaT = (LinearLayout) findViewById(R.id.parent_linear_reserva);
         LinearLayoutCaixaAtendimento = (LinearLayout) findViewById(R.id.parent_linear_caixa_atendimento);
-
         adapterSuporte = (LinearLayout) findViewById(R.id.adapterSuporte);
-        adapterPonto = (LinearLayout) findViewById(R.id.adapterPonto);
-        adapterLuz = (LinearLayout) findViewById(R.id.adapterLuz);
-
-
-        // VARIAVEL ID POSTE PASSADA PARA ESSA PAGINA
-        final Bundle extras = getIntent().getExtras();
-
-
-
-        if(extras != null){
-            var_id_poste = (String) extras.get("var_id_poste");
-            TipoposteText = (List<String>) extras.getSerializable("tipocruzeta");
-            AereaSuporte = (List<String>) extras.getSerializable("aereatipo");
-            RedemediaPoste = (List<String>) extras.getSerializable("redemedia");
-
-            PontoFixacao = (List<String>) extras.getSerializable("pontofixacao");
-            TipodeCabo = (List<String>) extras.getSerializable("tipodecabo");
-            Bitola = (List<String>) extras.getSerializable("bitola");
-
-            tipoluz = (List<String>) extras.getSerializable ("tipoiluminacao");
-            prop = (List<String>) extras.getSerializable ("proprietario");
-            t_prop = (List<String>) extras.getSerializable ("t_proprietario");
-            tipolamp = (List<String>) extras.getSerializable ("tipolampada");
-            pot = (List<String>) extras.getSerializable ("potencia");
-
-
-
-
-            if(!tipoluz.isEmpty()){
-                //TabelaLuz.setVisibility(View.VISIBLE);
-                btn_iluminacao_add.setVisibility(View.INVISIBLE);
-                btn_iluminacao_add.setLayoutParams(new LinearLayout.LayoutParams(0,0));
-                //TabelaLuz.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    final View rowView = inflater.inflate(R.layout.lista_adapter_luz, null);
-                    TextView tipo_iluminacao = (TextView) rowView.findViewById(R.id.tipoiluminacao);
-                    //TextView proprietario = (TextView) rowView.findViewById(R.id.proprietario_texto);
-                    //TextView t_proprietario = (TextView) rowView.findViewById(R.id.t_prop_texto);
-                    TextView tipolampada = (TextView) rowView.findViewById(R.id.tipo_lampada_texto);
-                    TextView potencia = (TextView) rowView.findViewById(R.id.potencia_texto);
-                    tipo_iluminacao.setText(tipoluz.get(0));
-                    //proprietario.setText(prop.get(0));
-                    //t_proprietario.setText(t_prop.get(0));
-                    tipolampada.setText(tipolamp.get(0));
-                    potencia.setText(pot.get(0));
-                    adapterLuz.addView(rowView,0);
-            }
-
-            if(!PontoFixacao.isEmpty()){
-                TabelaPonto.setVisibility(View.VISIBLE);
-                TabelaPonto.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-                for (int i=0;i< PontoFixacao.size();i++){
-                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    final View rowView = inflater.inflate(R.layout.lista_adapter_pontofixacao, null);
-                    TextView pontoFixacao = (TextView) rowView.findViewById(R.id.pontofixacao_texto);
-                    TextView TipodeCab = (TextView) rowView.findViewById(R.id.tipodecabo_texto);
-                    TextView bitola = (TextView) rowView.findViewById(R.id.bitola_texto);
-                    TipodeCab.setText(TipodeCabo.get(i));
-                    pontoFixacao.setText(PontoFixacao.get(i));
-                    bitola.setText(Bitola.get(i));
-                    adapterPonto.addView(rowView,i);
-                }
-            }
-
-            if(!TipoposteText.isEmpty()){
-                TabelaSuporte.setVisibility(View.VISIBLE);
-                TabelaSuporte.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT));
-                for (int i=0;i< TipoposteText.size();i++){
-                    LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    final View rowView = inflater.inflate(R.layout.lista_adapter_atributo, null);
-                    TextView tipoposte = (TextView) rowView.findViewById(R.id.Tipoposte_texto);
-                    TextView aereatipo = (TextView) rowView.findViewById(R.id.tipoaerea_texto);
-                    TextView redemedia = (TextView) rowView.findViewById(R.id.redemedia_texto);
-                    redemedia.setText(RedemediaPoste.get(i));
-                    tipoposte.setText(TipoposteText.get(i));
-                    aereatipo.setText(AereaSuporte.get(i));
-                    adapterSuporte.addView(rowView,i);
-                }
-            }
-
-        }
-
 
         btn_cruzeta_add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,99 +172,45 @@ public class Atributos_poste extends AppCompatActivity {
 
             }
         });
-
-
         btn_ponto_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cadastrarPonto();
             }
         });
-
         btn_iluminacao_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cadastrarIluminacao();
             }
         });
-
         btn_salvaratributos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 atributos(v);
             }
         });
-
         btn_cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 exibirConfirmacao();
             }
         });
-
-
-
     }
 
     public void cadastrarCruzeta(){
         Intent intentEnviar = new Intent(Atributos_poste.this, cruzeta_suporte_add.class);
-        intentEnviar.putExtra("var_id_poste", var_id_poste);
-        intentEnviar.putExtra("tipocruzeta",(Serializable) TipoposteText );
-        intentEnviar.putExtra("aereatipo",(Serializable) AereaSuporte);
-        intentEnviar.putExtra("redemedia",(Serializable) RedemediaPoste );
-        intentEnviar.putExtra("pontofixacao",(Serializable) PontoFixacao );
-        intentEnviar.putExtra("tipodecabo",(Serializable) TipodeCabo);
-        intentEnviar.putExtra("bitola",(Serializable) Bitola );
-        intentEnviar.putExtra("tipoiluminacao",(Serializable) tipoluz );
-        intentEnviar.putExtra("proprietario",(Serializable)prop );
-        intentEnviar.putExtra("t_proprietario",(Serializable) t_prop );
-        intentEnviar.putExtra("tipolampada",(Serializable) tipolamp );
-        intentEnviar.putExtra("potencia",(Serializable) pot );
         startActivity(intentEnviar);
-        LinearLayoutCaixaAtendimento.removeAllViews();
-        LinearLayoutResevaT.removeAllViews();
-        LinearLayoutRack.removeAllViews();
-
     }
 
     public void cadastrarPonto (){
          Intent intentEnviar = new Intent(Atributos_poste.this, ponto_fixacao_add.class);
-         intentEnviar.putExtra("var_id_poste",var_id_poste);
-         intentEnviar.putExtra("tipocruzeta",(Serializable) TipoposteText );
-        intentEnviar.putExtra("aereatipo",(Serializable) AereaSuporte);
-        intentEnviar.putExtra("redemedia",(Serializable) RedemediaPoste );
-         intentEnviar.putExtra("pontofixacao",(Serializable) PontoFixacao );
-         intentEnviar.putExtra("tipodecabo",(Serializable) TipodeCabo);
-         intentEnviar.putExtra("bitola",(Serializable) Bitola );
-        intentEnviar.putExtra("tipoiluminacao",(Serializable) tipoluz );
-        intentEnviar.putExtra("proprietario",(Serializable)prop );
-        intentEnviar.putExtra("t_proprietario",(Serializable) t_prop );
-        intentEnviar.putExtra("tipolampada",(Serializable) tipolamp );
-        intentEnviar.putExtra("potencia",(Serializable) pot );
          startActivity(intentEnviar);
-        LinearLayoutCaixaAtendimento.removeAllViews();
-        LinearLayoutResevaT.removeAllViews();
-        LinearLayoutRack.removeAllViews();
     }
 
     public void cadastrarIluminacao (){
         Intent intentEnviar = new Intent(Atributos_poste.this, iluminacao_add.class);
-        intentEnviar.putExtra("var_id_poste",var_id_poste);
-        intentEnviar.putExtra("tipocruzeta",(Serializable) TipoposteText );
-        intentEnviar.putExtra("aereatipo",(Serializable) AereaSuporte);
-        intentEnviar.putExtra("redemedia",(Serializable) RedemediaPoste );
-        intentEnviar.putExtra("pontofixacao",(Serializable) PontoFixacao );
-        intentEnviar.putExtra("tipodecabo",(Serializable) TipodeCabo);
-        intentEnviar.putExtra("bitola",(Serializable) Bitola );
-        intentEnviar.putExtra("tipoiluminacao",(Serializable) tipoluz );
-        intentEnviar.putExtra("proprietario",(Serializable)prop );
-        intentEnviar.putExtra("t_proprietario",(Serializable) t_prop );
-        intentEnviar.putExtra("tipolampada",(Serializable) tipolamp );
-        intentEnviar.putExtra("potencia",(Serializable) pot );
         startActivity(intentEnviar);
-        LinearLayoutCaixaAtendimento.removeAllViews();
-        LinearLayoutResevaT.removeAllViews();
-        LinearLayoutRack.removeAllViews();
     }
 
 
@@ -324,66 +262,56 @@ public class Atributos_poste extends AppCompatActivity {
     }
 
 
+    public void atributos(View v) {
+        System.out.println("CAIXA = "+LinearLayoutCaixaAtendimento.getChildCount());
+        System.out.println("RESERVA = "+LinearLayoutResevaT.getChildCount());
+        System.out.println("RACK = "+LinearLayoutRack.getChildCount());
 
-    public void atributos(View v){
-
-       int contador = 0 ;
-
-
-        while (contador<(LinearLayoutCaixaAtendimento.getChildCount())){
-            LinearLayout RackLinearLayout = (LinearLayout) LinearLayoutCaixaAtendimento.getChildAt(contador);
+        for(int i=0; i<(LinearLayoutCaixaAtendimento.getChildCount()); i++){
+            LinearLayout RackLinearLayout = (LinearLayout) LinearLayoutCaixaAtendimento.getChildAt(i);
             Spinner Cadastrar_Rack = RackLinearLayout.findViewById(R.id.caixa_atendimento);
             Caixa_atendimento_list.add(Cadastrar_Rack.getSelectedItem().toString());
-            contador++;
         }
 
-        contador = 0 ;
-        while (contador<(LinearLayoutResevaT.getChildCount())){
-            LinearLayout ReservaLinearLayout = (LinearLayout) LinearLayoutResevaT.getChildAt(contador);
+        for(int i= 0 ; i<(LinearLayoutResevaT.getChildCount()); i++){
+            LinearLayout ReservaLinearLayout = (LinearLayout) LinearLayoutResevaT.getChildAt(i);
             Spinner Cadastrasr_Reserva = ReservaLinearLayout.findViewById(R.id.reservapostes);
             Reserva_tecnica_list.add(Cadastrasr_Reserva.getSelectedItem().toString());
-            contador++;
         }
 
-        contador = 0;
-        while(contador<(LinearLayoutRack.getChildCount())){
-            LinearLayout RackLinearLayout = (LinearLayout) LinearLayoutRack.getChildAt(contador);
+        for (int i=0; i<(LinearLayoutRack.getChildCount());i++){
+            LinearLayout RackLinearLayout = (LinearLayout) LinearLayoutRack.getChildAt(i);
             Spinner Cadastrar_Rack = RackLinearLayout.findViewById(R.id.rackposte_drop);
             Rack_lisy.add(Cadastrar_Rack.getSelectedItem().toString());
-            contador++;
         }
 
+        Gson gson = new Gson();
+        String JsonCaixa = gson.toJson(Caixa_atendimento_list);
+        String JsonReserva = gson.toJson(Reserva_tecnica_list);
+        String JsonRack = gson.toJson(Rack_lisy);
 
+        SharedPreferences rack_list = getSharedPreferences("RackItems",MODE_PRIVATE);
+        SharedPreferences.Editor editorRack = rack_list.edit();
 
-        StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/atributos_add.php",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        if (response.contains("1")) {
-                            Intent intentEnviar = new Intent(Atributos_poste.this, fotosposte.class);
-                            intentEnviar.putExtra("var_id_poste",var_id_poste);
-                            startActivity(intentEnviar);
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+        SharedPreferences reserva_tecnica_list = getSharedPreferences("ReservaItems",MODE_PRIVATE);
+        SharedPreferences.Editor editorReserva = reserva_tecnica_list.edit();
 
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String>  params = new HashMap<>();
-                params.put("var_id_poste",var_id_poste);
-                params.put("caixaatendimento",Caixa_atendimento_list.toString());
-                params.put("reservaposte",Reserva_tecnica_list.toString());
-                params.put("rackposte",Rack_lisy.toString());
-                return  params;
-            }
-        };
-        RequestQueue cadastro = Volley.newRequestQueue(this);
-        cadastro.add(request);
+        SharedPreferences caixa_atendimento_list = getSharedPreferences("CaixaItems",MODE_PRIVATE);
+        SharedPreferences.Editor editorCaixa = caixa_atendimento_list.edit();
+
+        editorCaixa.putString("Caixa",JsonCaixa);
+        editorRack.putString("Rack",JsonRack);
+        editorReserva.putString("Reserva", JsonReserva);
+
+        editorReserva.apply();
+        editorRack.apply();
+        editorCaixa.apply();
+
+        Intent intentEnviar = new Intent(Atributos_poste.this, fotosposte.class);
+        startActivity(intentEnviar);
     }
+
+
     public void exibirConfirmacao(){
         AlertDialog.Builder msgbox = new AlertDialog.Builder(this);
         msgbox.setTitle("Excluindo....");
@@ -409,8 +337,8 @@ public class Atributos_poste extends AppCompatActivity {
     }
 
     public void onBackPressed(){
-            exibirConfirmacao();
 
+        exibirConfirmacao();
     }
 
     public void RemoverPoste(){
@@ -419,16 +347,9 @@ public class Atributos_poste extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         if (response.contains("erro")) {
-                            Toast.makeText(getApplicationContext(),"Erro usuario ou senha"+response, Toast.LENGTH_SHORT).show();
 
                         }else{
-                            String Array[] = new String[2];
-                            Array = response.split(",");
-                            String var_name_user = Array[0];
-                            String id_login_user = Array[1];
                             Intent intentEnviar = new Intent(Atributos_poste.this, Tela2Menu_Activity.class);
-                            intentEnviar.putExtra("var_name_user",var_name_user);
-                            intentEnviar.putExtra("id_login_user",id_login_user);
                             startActivity(intentEnviar);
                         }
                     }

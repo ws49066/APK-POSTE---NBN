@@ -2,7 +2,6 @@ package com.nbntelecom.nbnpostemap;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
@@ -10,15 +9,13 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -46,15 +43,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MapPoste extends FragmentActivity implements OnMapReadyCallback,
-GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, LocationListener,
+public class MapPoste extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, LocationListener,
         GoogleMap.OnMarkerDragListener
 {
 
+    private static final String ARQUIVO_GEOLOCALIZACAO  = "Arquivo_geolocalizacao";
     Location localizacaoAtual;
     Button mTypeNormal,mTypeBtn;
     Button btn_salvar_localizacao,btn_cancelar;
@@ -64,6 +60,8 @@ GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, 
     private static final int REQUEST_CODE = 101;
     GoogleMap mMap;
     String Local;
+    String lat;
+    String  lng;
     LocationRequest request;
 
     @Override
@@ -76,9 +74,11 @@ GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, 
         Geolocalizacao = findViewById(R.id.Geolocalizacao);
         textgeolocalicao = findViewById(R.id.textGeolocalizacao);
 
-        Bundle extras = getIntent().getExtras();
-        if(extras != null){
-            var_id_poste = (String) extras.get("var_id_poste");
+        SharedPreferences preferences_id = getSharedPreferences("Arquivo_id",0);
+
+        if (preferences_id.contains("id_poste")){
+            var_id_poste = preferences_id.getString("id_poste",null);
+            System.out.println("ID POSTE = "+var_id_poste);
         }
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -147,6 +147,8 @@ GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         LatLng latLng = new LatLng(localizacaoAtual.getLatitude(),localizacaoAtual.getLongitude());
+        lat = localizacaoAtual.getLatitude()+"";
+        lng = localizacaoAtual.getLongitude()+"";
         MarkerOptions markerOptions = new MarkerOptions().position(latLng)
                 .title("POSTE ID: "+var_id_poste).draggable(true)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.icomap));
@@ -156,7 +158,7 @@ GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, 
 
         //mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
         mMap.animateCamera(update);
-        mMap.setMyLocationEnabled(true);
+        //mMap.setMyLocationEnabled(true);
         mMap.addMarker(markerOptions);
         mMap.setOnMarkerDragListener(this);
     }
@@ -164,6 +166,8 @@ GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, 
     @Override
     public void onMarkerDragStart(Marker marker) {
             LatLng position = marker.getPosition();
+            lat = position.latitude+"";
+            lng = position.longitude+"";
             Local = position.latitude+","+position.longitude;
             Geolocalizacao.setText(position.latitude+","+ position.longitude);
 
@@ -173,6 +177,8 @@ GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, 
     @Override
     public void onMarkerDrag(Marker marker) {
         LatLng position = marker.getPosition();
+        lat = position.latitude+"";
+        lng = position.longitude+"";
         Local = position.latitude+","+position.longitude;
         Geolocalizacao.setText(position.latitude+","+ position.longitude);
     }
@@ -181,6 +187,8 @@ GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, 
     public void onMarkerDragEnd(Marker marker) {
         LatLng position = marker.getPosition();
         Local = position.latitude+","+position.longitude;
+        lat = position.latitude+"";
+        lng = position.longitude+"";
         Geolocalizacao.setText(position.latitude+","+ position.longitude);
     }
 
@@ -196,56 +204,26 @@ GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, 
     }
 
 
-    public void CadastrarLocalizacao(){
-
-            StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/localizacao.php",
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            if (response.contains("erro")) {
-
-                                Toast.makeText(getApplicationContext(),"ERRO NA INSERÇÃO NO BANCO", Toast.LENGTH_SHORT). show();
-
-                            }else{
-                                Intent intentEnviar = new Intent(MapPoste.this,Cadastro_Activity.class);
-                                intentEnviar.putExtra("var_id_poste",var_id_poste);
-                                startActivity(intentEnviar);
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-
-                }
-            }){
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String,String>  params = new HashMap<>();
-                    params.put("var_id_poste",var_id_poste);
-                    params.put("localizacao",Local);
-                    return  params;
-                }
-            };
-            RequestQueue cadastro = Volley.newRequestQueue(this);
-            cadastro.add(request);
-
+    public void CadastrarLocalizacao() {
+        SharedPreferences preferences_geolocalizacao = getSharedPreferences(ARQUIVO_GEOLOCALIZACAO, 0);
+        SharedPreferences.Editor editor_geolocalizaco = preferences_geolocalizacao.edit();
+        editor_geolocalizaco.putString("latitude", lat);
+        editor_geolocalizaco.putString("longitute",lng);
+        editor_geolocalizaco.apply();
+        Intent intentEnviar = new Intent(MapPoste.this, Cadastro_Activity.class);
+        startActivity(intentEnviar);
     }
+
+
     public void RemoverPoste(){
         StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/removerPoste.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         if (response.contains("erro")) {
-                            Toast.makeText(getApplicationContext(),"Erro usuario ou senha"+response, Toast.LENGTH_SHORT).show();
 
                         }else{
-                            String Array[] = new String[2];
-                            Array = response.split(",");
-                            String var_name_user = Array[0];
-                            String id_login_user = Array[1];
                             Intent intentEnviar = new Intent(MapPoste.this, Tela2Menu_Activity.class);
-                            intentEnviar.putExtra("var_name_user",var_name_user);
-                            intentEnviar.putExtra("id_login_user",id_login_user);
                             startActivity(intentEnviar);
                         }
                     }
@@ -259,13 +237,14 @@ GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener, 
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String>  params = new HashMap<>();
                 params.put("var_id_poste",var_id_poste);
-
                 return  params;
             }
         };
         RequestQueue cadastro = Volley.newRequestQueue(this);
         cadastro.add(request);
     }
+
+
     public void exibirConfirmacao(){
         AlertDialog.Builder msgbox = new AlertDialog.Builder(this);
         msgbox.setTitle("Excluindo....");

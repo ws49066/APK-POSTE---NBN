@@ -49,12 +49,11 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
     List<String> ListStringBit ;
 
 
-    TextView id,camera,caixaatendimento ;
+    TextView id,camera ;
     TextView numero_post ;
     TextView  tipo_poste ;
     TextView especie ;
     TextView dimensao ;
-    TextView iluminacao ;
     TextView redebaixa ;
     TextView labelisolada;
     TextView chavefusivel ;
@@ -207,7 +206,7 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
 
                             JSONArray arrayPoste = obj.getJSONArray("data-poste");
                             JSONArray arrayEnd = objend.getJSONArray("data-end");
-                            JSONArray arraylocalizacao = objLocalizacao.getJSONArray("data-local");
+                            JSONArray arraylocalizacao = objLocalizacao.getJSONArray("data-geolocal");
                             JSONArray arrayLuz = new JSONArray();
 
                             JSONArray arrayfotos = new JSONArray();
@@ -282,10 +281,10 @@ public class Detalhes_poste_consulta extends AppCompatActivity {
                             text_proximo.setText(provObjEnd.getString("numero"));
                             text_cep.setText(provObjEnd.getString("cep"));
                             text_area.setText(provObjEnd.getString("perimetro"));
-                            text_localizacao.setText(provObjlocal.getString("local_gps"));
-
-
-
+                            String lat = provObjlocal.getString("lat");
+                            String longi = provObjlocal.getString("longi");
+                            System.out.println(lat+","+longi);
+                            text_localizacao.setText(lat+","+longi);
                             //FOTOS LISTAS
 
 
