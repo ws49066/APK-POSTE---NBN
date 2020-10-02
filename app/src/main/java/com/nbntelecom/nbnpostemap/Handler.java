@@ -11,7 +11,7 @@ public class Handler {
     private RequestQueue requestQueue;
     private static Context mCtx;
 
-    private Handler(Context context){
+    Handler(Context context){
         mCtx = context;
         requestQueue = getRequestQueue();
     }

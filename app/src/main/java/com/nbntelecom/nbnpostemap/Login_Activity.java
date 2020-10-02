@@ -36,11 +36,10 @@ public class Login_Activity extends Activity {
 
 
         SharedPreferences preferences = getSharedPreferences(ARQUIVO_AUTENTICACAO,0);
-        
+
         if (preferences.contains("user") && preferences.contains("pass")){
             user = preferences.getString("user",null);
             pass = preferences.getString("pass",null);
-            autenticado();
         }
 
         setContentView(R.layout.activity_main);
@@ -68,38 +67,6 @@ public class Login_Activity extends Activity {
 
 
     }
-
-    public void autenticado(){
-
-        StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/login.php",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        if (response.contains("erro")) {
-
-                        }else{
-                            Intent intentEnviar = new Intent(Login_Activity.this, Tela2Menu_Activity.class);
-                            startActivity(intentEnviar);
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String>  params = new HashMap<>();
-                params.put("username",user);
-                params.put("password",pass);
-                return  params;
-            }
-        };
-        RequestQueue fila = Volley.newRequestQueue(this);
-        fila.add(request);
-    }
-
 
     // Função sera chamado caso o Sqlite não retorne usuario True
     public void login(){
