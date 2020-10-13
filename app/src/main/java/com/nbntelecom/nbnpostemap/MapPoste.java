@@ -225,6 +225,7 @@ public class MapPoste extends FragmentActivity implements OnMapReadyCallback, Go
                         }else{
                             Intent intentEnviar = new Intent(MapPoste.this, Tela2Menu_Activity.class);
                             startActivity(intentEnviar);
+                            finish();
                         }
                     }
                 }, new Response.ErrorListener() {

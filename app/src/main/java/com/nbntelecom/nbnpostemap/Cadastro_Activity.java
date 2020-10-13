@@ -135,6 +135,7 @@ public class Cadastro_Activity extends  FragmentActivity  {
         
         Intent intent = new Intent(Cadastro_Activity.this, Atributos_poste.class);
         startActivity(intent);
+        finish();
     }
 
 
@@ -177,6 +178,7 @@ public class Cadastro_Activity extends  FragmentActivity  {
                         }else{
                             Intent intentEnviar = new Intent(Cadastro_Activity.this, Tela2Menu_Activity.class);
                             startActivity(intentEnviar);
+                            finish();
                         }
                     }
                 }, new Response.ErrorListener() {

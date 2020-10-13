@@ -18,6 +18,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
@@ -467,45 +468,60 @@ public class fotosposte extends AppCompatActivity {
     public void btn_salvar_fotos(){
             int QuantImagem = ImagensStringList.size();
             System.out.println("Imagem = "+ QuantImagem );
-            
-            Cadastro_endereco();
-            Cadastrar_localizacao();
-            Cadastro_part1();
-            Cadastro_Atributos();
-            Cadastra_cruzeta();
-            Cadastro_Ponto();
-            Cadastra_luz();
+
+
+                    Cadastro_endereco();
+                    Cadastrar_localizacao();
+                    Cadastro_part1();
+                    Cadastro_Atributos();
+                    Cadastra_cruzeta();
+                    Cadastro_Ponto();
+                    Cadastra_luz();
+
 
 
         for(int i = 0; i< quantfotos; i++){
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            BitmapListmg.get(i).compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
-            byte[] imgBytes = byteArrayOutputStream.toByteArray();
-            encoded_string =  Base64.encodeToString(imgBytes,Base64.DEFAULT);
-            Nomefoto = ImagensStringList.get(i);
-            StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/fotos.php",
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
+            try {
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                BitmapListmg.get(i).compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+                byte[] imgBytes = byteArrayOutputStream.toByteArray();
+                encoded_string =  Base64.encodeToString(imgBytes,Base64.DEFAULT);
+                Nomefoto = ImagensStringList.get(i);
+                byteArrayOutputStream.close();
 
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
+                StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/fotos.php",
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                if (response.equals("ok")){
+                                    try {
+                                        wait(1);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-                }
-            }) {
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    HashMap<String,String> map = new HashMap<>();
-                    map.put("var_id_poste",var_id_poste);
-                    map.put("encoded_string",encoded_string);
-                    map.put("image_name",Nomefoto);
-                    return map;
-                }
-            };
-            RequestQueue requestQueue = Volley.newRequestQueue(this);
-            requestQueue.add(request);
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String,String> map = new HashMap<>();
+                        map.put("var_id_poste",var_id_poste);
+                        map.put("encoded_string",encoded_string);
+                        map.put("image_name",Nomefoto);
+                        return map;
+                    }
+                };
+                RequestQueue requestQueue = Volley.newRequestQueue(this);
+                requestQueue.add(request);
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
         StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/finalizar.php",
@@ -518,6 +534,7 @@ public class fotosposte extends AppCompatActivity {
                             Intent intentEnviar = new Intent(fotosposte.this, Tela2Menu_Activity.class);
                             Toast.makeText(getApplicationContext(),"Poste Cadastrado com sucesso !",Toast.LENGTH_SHORT).show();
                             startActivity(intentEnviar);
+                            finish();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -540,7 +557,7 @@ public class fotosposte extends AppCompatActivity {
         public void tiraFoto(View v){
 
         File photoFile = null;
-        if(quantfotos<6){
+        if(quantfotos<3){
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE );
             if(intent.resolveActivity(getPackageManager())!= null) {
                 try {

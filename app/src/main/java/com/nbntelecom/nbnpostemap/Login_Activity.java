@@ -27,7 +27,6 @@ public class Login_Activity extends Activity {
     CheckBox salvarAutenticacao;
 
     public  String user,pass;
-
     private   final String ARQUIVO_AUTENTICACAO = "ArquivoAutentica";
 
     @Override

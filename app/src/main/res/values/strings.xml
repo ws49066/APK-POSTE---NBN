@@ -187,18 +187,6 @@
         <item>TRIPLA</item>
         <item>QUADRUPLA</item>
     </string-array>
-    <string-array name="donoilumincao">
-        <item>NBN</item>
-        <item>OI</item>
-        <item>VIVO</item>
-        <item>EMBRATEL/CLARO</item>
-        <item>TIM</item>
-        <item>AXES</item>
-        <item>LOGIC PRO</item>
-        <item>AMAZONET</item>
-        <item>EYES N WHERE</item>
-        <item>DESCONHECIDO</item>
-    </string-array>
 
     <string-array name="tipodono">
         <item>REDE PUBLICA</item>

@@ -27,9 +27,7 @@
         </activity>
         <activity android:name=".fotosposte" />
         <activity android:name=".MapPoste" />
-        <activity
-            android:name=".iluminacao_add"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".iluminacao_add" />
         <activity android:name=".ConsultarImagemFull" />
         <activity
             android:name=".FullView"
@@ -38,14 +36,13 @@
             android:name=".endereco_Activity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".ponto_fixacao_add"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:name=".ponto_fixacao_add"/>
         <activity
             android:name=".cruzeta_suporte_add"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".Atributos_poste"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:name=".Atributos_poste">
+        </activity>
         <activity
             android:name=".ZipCodeSearchActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />

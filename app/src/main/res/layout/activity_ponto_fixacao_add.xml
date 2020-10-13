@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colormenu"
-    android:layout_gravity="center"
     android:orientation="vertical">
 
     <ScrollView
@@ -17,110 +16,187 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colormenu"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/text_atributos"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="100dp"
-                android:inputType="text"
-                android:text="-- PONTOS DE FIXAÇÃO --"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="20dp"
-                android:textStyle="bold" />
-
-
+            <!-- Logo and Titule -->
             <LinearLayout
-                android:layout_width="359dp"
-                android:layout_height="369dp"
-                android:layout_gravity="center"
-                android:background="@drawable/border"
+                android:layout_width="fill_parent"
+                android:layout_height="186dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="sans-serif"
+                    android:text="-- PONTOS DE FIXAÇÃO --"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+
+            <!-- provedores -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:gravity="center_horizontal">
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="369dp"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/texto_tipoPoste"
-                        android:layout_width="131dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
+                        android:layout_width="158dp"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center_vertical|right"
                         android:text="PONTO FIXAÇÃO "
-                        android:textColor="#FFFFFF"
-                        android:textSize="15dp" />
+                        android:textColor="#1a8cce"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="40dp"
+                        android:layout_weight=".28"
+                        android:background="@drawable/backgroundspinner"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/pontofixacao"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:backgroundTint="@color/white"
+                            android:gravity="center"
+                            android:spinnerMode="dropdown" />
+
+                        <ImageView
+                            android:layout_width="72dp"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_gravity="right"
+                            android:layout_marginEnd="-1dp"
+                            android:layout_marginBottom="0dp"
+                            android:src="@drawable/dropdown" />
+                    </RelativeLayout>
                 </LinearLayout>
 
-                <Spinner
-                    android:id="@+id/pontofixacao"
-                    android:layout_width="174dp"
-                    android:layout_height="54dp"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="40dp"
-                    android:backgroundTint="#FFF44336"
-                    android:entries="@array/fixposte"
-                    android:selectAllOnFocus="true"
-                    android:textAlignment="center" />
-
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/LayoutTipoCabo"
+                    android:visibility="invisible"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:gravity="center_horizontal">
+                    android:layout_width="369dp"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textTipo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
+                        android:layout_width="158dp"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center_vertical|right"
                         android:text="TIPO DE CABO "
-                        android:textColor="#FFFFFF"
-                        android:textSize="15dp" />
-                </LinearLayout>
+                        android:textColor="#1a8cce"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
 
-                <Spinner
-                    android:id="@+id/tipoponto"
-                    android:layout_width="172dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="40dp"
-                    android:backgroundTint="#FFF44336"
-                    android:entries="@array/tipocabo"
-                    android:textAlignment="center" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="40dp"
+                        android:layout_weight=".28"
+                        android:background="@drawable/backgroundspinner"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/tipoponto"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:backgroundTint="@color/white"
+                            android:gravity="center"
+                            android:spinnerMode="dropdown" />
+
+                        <ImageView
+                            android:layout_width="72dp"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_gravity="right"
+                            android:layout_marginEnd="-1dp"
+                            android:layout_marginBottom="0dp"
+                            android:src="@drawable/dropdown" />
+                    </RelativeLayout>
+                </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/LayoutDinamico"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    android:gravity="center_horizontal">
+                    android:layout_width="369dp"
+                    android:layout_height="40dp"
+                    android:visibility="invisible"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textView3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
+                        android:layout_width="158dp"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center_vertical|right"
                         android:text="SUBTIPO"
-                        android:textColor="#FFFFFF"
-                        android:textSize="15dp" />
-                </LinearLayout>
+                        android:textColor="#1a8cce"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
 
-                <Spinner
-                    android:id="@+id/bitola"
-                    android:layout_width="172dp"
-                    android:layout_height="43dp"
-                    android:layout_gravity="center"
-                    android:backgroundTint="#FFF44336"
-                    android:entries="@array/subtipo"
-                    android:textAlignment="center" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginRight="40dp"
+                        android:layout_weight=".28"
+                        android:background="@drawable/backgroundspinner"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:id="@+id/bitola"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:background="@android:color/transparent"
+                            android:backgroundTint="@color/white"
+                            android:gravity="center"
+                            android:spinnerMode="dropdown" />
+
+                        <ImageView
+                            android:layout_width="72dp"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentBottom="true"
+                            android:layout_gravity="right"
+                            android:layout_marginEnd="-1dp"
+                            android:layout_marginBottom="0dp"
+                            android:src="@drawable/dropdown" />
+                    </RelativeLayout>
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout

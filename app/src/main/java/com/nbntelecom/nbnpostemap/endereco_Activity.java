@@ -20,12 +20,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 import com.nbntelecom.nbnpostemap.POJO.Address;
 import com.nbntelecom.nbnpostemap.POJO.Util;
 import com.nbntelecom.nbnpostemap.POJO.ZipCodeListener;
-import java.util.HashMap;
-import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 
 public class endereco_Activity extends AppCompatActivity {
@@ -37,15 +45,20 @@ public class endereco_Activity extends AppCompatActivity {
     String var_id_poste;
     private  EditText etZipCode;
     private Util util;
+    ArrayList<String> provedor = new ArrayList<String>();
+    ArrayList<String> cabo = new ArrayList<String>();
 
     private   final String ARQUIVO_ENDERECO_POSTE = "Arquivo_Endereco_Poste";
+    private   final String ARQUIVO_PROVEDORES = "Arquivo_Provedores";
+    private   final String ARQUIVO_Cabos = "Arquivo_Cabos";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_endereco_);
-
+        getProvedor();
+        getCabo();
         SharedPreferences preferences_id = getSharedPreferences("Arquivo_id",0);
 
         //VARIAVEIS INSTANSIDAS COM OS IDS
@@ -85,6 +98,97 @@ public class endereco_Activity extends AppCompatActivity {
                 endereco();
             }
         });
+    }
+
+    public void getProvedor() {
+        StringRequest request = new StringRequest(Request.Method.GET, "http://177.91.235.146/poste/getdados/getprovedor.php",
+                new Response.Listener<String>() {
+                    JSONArray arrayprovedor = new JSONArray();
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.isEmpty()) {
+                            Toast.makeText(getApplicationContext(),"VAZIO", Toast.LENGTH_SHORT).show();
+                        }else{
+                            provedor.add("");
+                            try {
+                                JSONObject obj = new JSONObject(response);
+
+                                if (obj.isNull("operadora")){
+
+                                }else{
+                                    arrayprovedor = obj.getJSONArray("operadora");
+                                    for (int i=0; i< arrayprovedor.length(); i++){
+                                        JSONObject jsonObject = arrayprovedor.getJSONObject(i);
+                                        String placa = jsonObject.getString("operadora");
+                                        provedor.add(placa);
+                                    }
+                                    Set<String> setProvedor = new HashSet<String>();
+                                    setProvedor.addAll(provedor);
+
+                                    SharedPreferences provedores = getSharedPreferences(ARQUIVO_PROVEDORES,0);
+                                    SharedPreferences.Editor editoProvedor = provedores.edit();
+                                    editoProvedor.putStringSet("provedores",setProvedor);
+                                    editoProvedor.commit();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+        };
+        RequestQueue fila = Volley.newRequestQueue(this);
+        fila.add(request);
+    }
+
+    public void getCabo() {
+        StringRequest request = new StringRequest(Request.Method.GET, "http://177.91.235.146/poste/getdados/getcabo.php",
+                new Response.Listener<String>() {
+                    JSONArray arraycabo = new JSONArray();
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.isEmpty()) {
+                            Toast.makeText(getApplicationContext(),"VAZIO", Toast.LENGTH_SHORT).show();
+                        }else{
+                            cabo.add("");
+                            try {
+                                JSONObject obj = new JSONObject(response);
+
+                                if (obj.isNull("cabo")){
+                                }else{
+                                    arraycabo = obj.getJSONArray("cabo");
+                                    for (int i=0; i< arraycabo.length(); i++){
+                                        JSONObject jsonObject = arraycabo.getJSONObject(i);
+                                        String placa = jsonObject.getString("cabo");
+                                        cabo.add(placa);
+                                    }
+                                    Set<String> setCabos = new HashSet<String>();
+                                    setCabos.addAll(cabo);
+                                    SharedPreferences cabo = getSharedPreferences(ARQUIVO_Cabos,0);
+                                    SharedPreferences.Editor editoProvedor = cabo.edit();
+                                    editoProvedor.putStringSet("cabos",setCabos);
+                                    editoProvedor.commit();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+
+        };
+        RequestQueue fila = Volley.newRequestQueue(this);
+        fila.add(request);
     }
 
     public  String getUriZipCode(){

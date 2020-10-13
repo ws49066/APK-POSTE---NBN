@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -27,11 +28,17 @@ import com.nbntelecom.nbnpostemap.Poste.CruzetaItems;
 import com.nbntelecom.nbnpostemap.Poste.Luz;
 import com.nbntelecom.nbnpostemap.Poste.PontoFixacao;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Atributos_poste extends AppCompatActivity {
     private LinearLayout adapterSuporte,adapterPonto,adapterLuz;
@@ -39,6 +46,7 @@ public class Atributos_poste extends AppCompatActivity {
     String var_id_poste;
     LinearLayout LinearLayoutRack,LinearLayoutResevaT,LinearLayoutCaixaAtendimento,TabelaSuporte,TabelaPonto;
 
+    Spinner rackposte_drop;
     //Lista
     List<String> Rack_lisy = new ArrayList<>();
     List<String> Reserva_tecnica_list = new ArrayList<>();
@@ -48,10 +56,19 @@ public class Atributos_poste extends AppCompatActivity {
     ArrayList<PontoFixacao> pontoFixacaosList;
     ArrayList<Luz> LuzList;
 
+    private   final String ARQUIVO_PROVEDORES = "Arquivo_Provedores";
+    ArrayList<String> provedor,provedoraux ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atributos_poste);
+
+        SharedPreferences provedores = getSharedPreferences(ARQUIVO_PROVEDORES,0);
+        Set<String> set =  provedores.getStringSet("provedores", null);
+        provedor = new ArrayList<String>(set);
+        provedoraux = provedor;
+        provedoraux.remove(0);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.spinner_text,provedor);
 
         adapterSuporte = (LinearLayout) findViewById(R.id.adapterSuporte);
         adapterPonto = (LinearLayout) findViewById(R.id.adapterPonto);
@@ -127,7 +144,7 @@ public class Atributos_poste extends AppCompatActivity {
                 final String tipoilumina = obj.getTipoLuz();
                 final String tipodono = obj.getTipoPropri();
                 final String dono = obj.getProprietatio();
-                final String tipolampada = obj.getTipoLuz();
+                final String tipolampada = obj.getTipoLampada();
                 final String potencia = obj.getPotencia();
                 LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 final View rowView = inflater.inflate(R.layout.lista_adapter_luz, null);
@@ -198,6 +215,7 @@ public class Atributos_poste extends AppCompatActivity {
         });
     }
 
+
     public void cadastrarCruzeta(){
         Intent intentEnviar = new Intent(Atributos_poste.this, cruzeta_suporte_add.class);
         startActivity(intentEnviar);
@@ -220,17 +238,16 @@ public class Atributos_poste extends AppCompatActivity {
 
         final View rowView = inflater.inflate(R.layout.rack_layout, null);
         // Add the new row before the add field button.
+        Spinner spinner = (Spinner) rowView.findViewById(R.id.rackposte_drop);
+        ArrayAdapter<String> adapterrack = new ArrayAdapter<String>(getApplicationContext(),R.layout.spinner_text,provedoraux);
+        spinner.setAdapter(adapterrack);
         LinearLayoutRack.addView(rowView, LinearLayoutRack.indexOfChild(v));
 
     }
     public void delete_rack(View v) {
         LinearLayoutRack.removeView((View) v.getParent());
+        System.out.println("Foi clicado aqui no RACK");
     }
-
-    public void delete_suporte(View v) {
-        adapterSuporte.removeView((View) v.getParent());
-    }
-
 
     //-------------------- SPINNER RESERVA ---------------------
     public  void adicionar_reservatecnica(View v){
@@ -238,6 +255,11 @@ public class Atributos_poste extends AppCompatActivity {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         final  View rowView = inflater.inflate(R.layout.reserva_tecnica_layout, null);
+
+        Spinner spinner = (Spinner) rowView.findViewById(R.id.reservapostes);
+        ArrayAdapter<String> adapterrack = new ArrayAdapter<String>(getApplicationContext(),R.layout.spinner_text,provedoraux);
+        spinner.setAdapter(adapterrack);
+
         // Add the new row before the add field button.
         LinearLayoutResevaT.addView(rowView,LinearLayoutResevaT.indexOfChild(v));
     }
@@ -253,6 +275,10 @@ public class Atributos_poste extends AppCompatActivity {
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final  View rowView = inflater.inflate(R.layout.caixa_atendimento_layout, null);
+
+        Spinner spinner = (Spinner) rowView.findViewById(R.id.caixa_atendimento);
+        ArrayAdapter<String> adapterrack = new ArrayAdapter<String>(getApplicationContext(),R.layout.spinner_text,provedoraux);
+        spinner.setAdapter(adapterrack);
         // Add the new row before the add field button.
         LinearLayoutCaixaAtendimento.addView(rowView,LinearLayoutCaixaAtendimento.indexOfChild( v));
     }
@@ -309,6 +335,7 @@ public class Atributos_poste extends AppCompatActivity {
 
         Intent intentEnviar = new Intent(Atributos_poste.this, fotosposte.class);
         startActivity(intentEnviar);
+        finish();
     }
 
 
@@ -351,6 +378,7 @@ public class Atributos_poste extends AppCompatActivity {
                         }else{
                             Intent intentEnviar = new Intent(Atributos_poste.this, Tela2Menu_Activity.class);
                             startActivity(intentEnviar);
+                            finish();
                         }
                     }
                 }, new Response.ErrorListener() {

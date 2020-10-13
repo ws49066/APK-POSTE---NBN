@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class iluminacao_add extends AppCompatActivity {
     Button btn_cadastrar_iluminacao,btn_cancelar_iluminacao;
@@ -34,6 +36,13 @@ public class iluminacao_add extends AppCompatActivity {
 
     //ArrayList luz
     ArrayList<Luz> LuzList;
+    ArrayList<String> provedor ;
+    private  final String ARQUIVO_PROVEDORES = "Arquivo_Provedores";
+    String[] arrayIluminacao = {"Simples","Dupla","Tripla","Quadrupla"};
+    String[] arrayITipoDono = {"Rede Publica","Particular"};
+    String[] arrayLampada = {"Led","Halogenea","Encadecente","Vapor de Mercurio","Vapor de Sodio","Iodedos Metalicos"};
+    String[] arrayPotencia = {"40W","5","60W","70W","80W","90W","100W","150W","180W","200W","250W","300W","350W","400W","450W","500W","550W","1000W"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +55,29 @@ public class iluminacao_add extends AppCompatActivity {
         dono = findViewById(R.id.tipoproprispinner);
         tipolampada = findViewById(R.id.tipolampada);
         potencia = findViewById(R.id.potenciaspinner);
+
+        SharedPreferences provedores = getSharedPreferences(ARQUIVO_PROVEDORES,0);
+        Set<String> set =  provedores.getStringSet("provedores", null);
+        provedor = new ArrayList<String>(set);
+        provedor.remove(0);
+        provedor.add(0,"Publica");
+
+        //-------------ADAPTER LIST SPINNER ---------------------
+        ArrayAdapter<String> adapteriluminacao = new ArrayAdapter<String>(getApplicationContext(),R.layout.spinner_text,arrayIluminacao);
+        tipoiluminacao.setAdapter(adapteriluminacao);
+
+        ArrayAdapter<String> adapterprovedor = new ArrayAdapter<String>(getApplicationContext(),R.layout.spinner_text,provedor);
+        tipodono.setAdapter(adapterprovedor);
+
+        ArrayAdapter<String> adapteProprietario = new ArrayAdapter<String>(getApplicationContext(),R.layout.spinner_text,arrayITipoDono);
+        dono.setAdapter(adapteProprietario);
+
+        ArrayAdapter<String> adapteLampada = new ArrayAdapter<String>(getApplicationContext(),R.layout.spinner_text,arrayLampada);
+        tipolampada.setAdapter(adapteLampada);
+
+        ArrayAdapter<String> adaptePotencia = new ArrayAdapter<String>(getApplicationContext(),R.layout.spinner_text,arrayPotencia);
+        potencia.setAdapter(adaptePotencia);
+
 
         loadData();
 
@@ -61,6 +93,7 @@ public class iluminacao_add extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(iluminacao_add.this,Atributos_poste.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -98,5 +131,6 @@ public class iluminacao_add extends AppCompatActivity {
 
         Intent intent = new Intent(iluminacao_add.this, Atributos_poste.class);
         startActivity(intent);
+        finish();
     }
 }
