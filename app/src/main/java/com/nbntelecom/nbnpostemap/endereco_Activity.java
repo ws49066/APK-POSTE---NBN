@@ -2,6 +2,7 @@ package com.nbntelecom.nbnpostemap;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -52,6 +53,7 @@ public class endereco_Activity extends AppCompatActivity {
     private   final String ARQUIVO_PROVEDORES = "Arquivo_Provedores";
     private   final String ARQUIVO_Cabos = "Arquivo_Cabos";
 
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -239,11 +241,15 @@ public class endereco_Activity extends AppCompatActivity {
         cep = findViewById(R.id.et_zip_code);
         areaposte = findViewById(R.id.areaposte);
 
+
         if (et_numPoste1.getText().length() == 0 || municipio.getText().length() == 0 || bairro.getText().length() == 0 ||
                 rua.getText().length() == 0 || naproximado.getText().length() == 0 || cep.getText().length() == 0) {
             Toast.makeText(getApplicationContext(), "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-
         } else {
+            progressDialog = new ProgressDialog(endereco_Activity.this);
+            progressDialog.show();
+            progressDialog.setContentView(R.layout.progress_dialog);
+            progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             SharedPreferences preferences_endereco = getSharedPreferences(ARQUIVO_ENDERECO_POSTE, 0);
             SharedPreferences.Editor editor_endereco = preferences_endereco.edit();
             editor_endereco.putString("numeroPoste", et_numPoste1.getText().toString());
@@ -258,6 +264,7 @@ public class endereco_Activity extends AppCompatActivity {
             editor_endereco.apply();
             Intent intentEnviar = new Intent(endereco_Activity.this, MapPoste.class);
             startActivity(intentEnviar);
+            finish();
         }
     }
 
@@ -301,6 +308,10 @@ public class endereco_Activity extends AppCompatActivity {
 
 
     public void RemoverPoste(){
+        progressDialog = new ProgressDialog(endereco_Activity.this);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/removerPoste.php",
                 new Response.Listener<String>() {
                     @Override

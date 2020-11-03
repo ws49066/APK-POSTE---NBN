@@ -11,6 +11,7 @@ public class ZipCodeListener implements TextWatcher {
     private Context context;
 
     public ZipCodeListener(Context context){
+
         this.context = context;
     }
 

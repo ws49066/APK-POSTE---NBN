@@ -2,6 +2,7 @@ package com.nbntelecom.nbnpostemap;
 
 import androidx.fragment.app.FragmentActivity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,7 +40,7 @@ public class Cadastro_Activity extends  FragmentActivity  {
 
     LinearLayout parentLinearLayout,LinearLayoutSuporte,LinearLayoutPontoF,LinearLayoutRack,LinearLayoutResevaT, LinearLayoutCaixaAtendimento;
 
-
+    ProgressDialog progressDialog;
     private  final String DADOS_POSTE_HOMONEGEOS = "DADOS_POSTE_HOMONEGEOS";
 
     // Variaveis do RadioGroup
@@ -132,6 +133,10 @@ public class Cadastro_Activity extends  FragmentActivity  {
         editor.putString("cameraposte", camera);
         editor.putString("isoladaposte", isola);
         editor.apply();
+        progressDialog = new ProgressDialog(Cadastro_Activity.this);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         
         Intent intent = new Intent(Cadastro_Activity.this, Atributos_poste.class);
         startActivity(intent);
@@ -169,6 +174,10 @@ public class Cadastro_Activity extends  FragmentActivity  {
     }
 
     public void RemoverPoste(){
+        progressDialog = new ProgressDialog(Cadastro_Activity.this);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/removerPoste.php",
                 new Response.Listener<String>() {
                     @Override

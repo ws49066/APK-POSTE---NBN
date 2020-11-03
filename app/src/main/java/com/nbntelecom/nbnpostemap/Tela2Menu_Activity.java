@@ -2,6 +2,7 @@ package com.nbntelecom.nbnpostemap;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,6 +39,8 @@ public class Tela2Menu_Activity extends AppCompatActivity {
     String var_name_user ;
     String id_login_user ;
 
+    ProgressDialog progressDialog;
+
     private   final String ARQUIVO_ID = "Arquivo_id";
 
 
@@ -66,6 +69,11 @@ public class Tela2Menu_Activity extends AppCompatActivity {
         btn_novo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog = new ProgressDialog(Tela2Menu_Activity.this);
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progress_dialog);
+                progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
                 ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo = cm.getActiveNetworkInfo();
                 if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
@@ -109,6 +117,7 @@ public class Tela2Menu_Activity extends AppCompatActivity {
 
                 }else {
                     Toast.makeText(getApplicationContext(),"Dispositivo não está conectado á Internet",Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
                 }
             }
         });

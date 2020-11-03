@@ -18,10 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".RemoverPontoFixacao"></activity>
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -35,13 +35,11 @@
         <activity
             android:name=".endereco_Activity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity
-            android:name=".ponto_fixacao_add"/>
+        <activity android:name=".ponto_fixacao_add" />
         <activity
             android:name=".cruzeta_suporte_add"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity
-            android:name=".Atributos_poste">
+        <activity android:name=".Atributos_poste">
         </activity>
         <activity
             android:name=".ZipCodeSearchActivity"
@@ -59,9 +57,7 @@
         <activity
             android:name=".Tela2Menu_Activity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".Login_Activity">
-
-        </activity>
+        <activity android:name=".Login_Activity"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

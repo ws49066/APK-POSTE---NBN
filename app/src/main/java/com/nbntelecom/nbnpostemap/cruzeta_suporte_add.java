@@ -2,6 +2,7 @@ package com.nbntelecom.nbnpostemap;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -36,6 +37,8 @@ public class cruzeta_suporte_add extends AppCompatActivity {
     Button btn_cadastrar_cruzeta,btn_cancelar_cruzeta;
     Spinner tipocruzeta,aereatipo,redemedia;
 
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,10 @@ public class cruzeta_suporte_add extends AppCompatActivity {
         btn_cadastrar_cruzeta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog = new ProgressDialog(cruzeta_suporte_add.this);
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progress_dialog);
+                progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 CadastrarCruzeta();
             }
         });
@@ -59,8 +66,13 @@ public class cruzeta_suporte_add extends AppCompatActivity {
         btn_cancelar_cruzeta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog = new ProgressDialog(cruzeta_suporte_add.this);
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progress_dialog);
+                progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 Intent intent = new Intent(cruzeta_suporte_add.this,Atributos_poste.class);
                 startActivity(intent);
+                finish();
             }
         });
     }
@@ -94,5 +106,16 @@ public class cruzeta_suporte_add extends AppCompatActivity {
         SaveData();
         Intent intent = new Intent(cruzeta_suporte_add.this, Atributos_poste.class);
         startActivity(intent);
+        finish();
+    }
+
+    public void onBackPressed(){
+        progressDialog = new ProgressDialog(cruzeta_suporte_add.this);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        Intent intent = new Intent(cruzeta_suporte_add.this,Atributos_poste.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -63,6 +64,7 @@ public class MapPoste extends FragmentActivity implements OnMapReadyCallback, Go
     String lat;
     String  lng;
     LocationRequest request;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,6 +207,10 @@ public class MapPoste extends FragmentActivity implements OnMapReadyCallback, Go
 
 
     public void CadastrarLocalizacao() {
+        progressDialog = new ProgressDialog(MapPoste.this);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         SharedPreferences preferences_geolocalizacao = getSharedPreferences(ARQUIVO_GEOLOCALIZACAO, 0);
         SharedPreferences.Editor editor_geolocalizaco = preferences_geolocalizacao.edit();
         editor_geolocalizaco.putString("latitude", lat);
@@ -212,10 +218,15 @@ public class MapPoste extends FragmentActivity implements OnMapReadyCallback, Go
         editor_geolocalizaco.apply();
         Intent intentEnviar = new Intent(MapPoste.this, Cadastro_Activity.class);
         startActivity(intentEnviar);
+        finish();
     }
 
 
     public void RemoverPoste(){
+        progressDialog = new ProgressDialog(MapPoste.this);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/removerPoste.php",
                 new Response.Listener<String>() {
                     @Override

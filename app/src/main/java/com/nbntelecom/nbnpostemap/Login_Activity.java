@@ -1,6 +1,7 @@
 package com.nbntelecom.nbnpostemap;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -25,6 +27,8 @@ public class Login_Activity extends Activity {
     Button btn_login;
     EditText et_cpf,et_senha;
     CheckBox salvarAutenticacao;
+
+    ProgressDialog progressDialog;
 
     public  String user,pass;
     private   final String ARQUIVO_AUTENTICACAO = "ArquivoAutentica";
@@ -69,13 +73,17 @@ public class Login_Activity extends Activity {
 
     // Função sera chamado caso o Sqlite não retorne usuario True
     public void login(){
+        progressDialog = new ProgressDialog(Login_Activity.this);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/login.php",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         if (response.contains("erro")) {
+                            progressDialog.dismiss();
                             Toast.makeText(getApplicationContext(),"Erro usuario ou senha"+response, Toast.LENGTH_SHORT).show();
-
                         }else{
                             String Array[] = new String[2];
                             Array = response.split(",");

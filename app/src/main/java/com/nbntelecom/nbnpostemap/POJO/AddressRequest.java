@@ -1,16 +1,25 @@
 package com.nbntelecom.nbnpostemap.POJO;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 
 import com.google.gson.Gson;
+import com.nbntelecom.nbnpostemap.R;
+import com.nbntelecom.nbnpostemap.Tela2Menu_Activity;
 import com.nbntelecom.nbnpostemap.endereco_Activity;
 
 import java.lang.ref.WeakReference;
 
 public class AddressRequest extends AsyncTask<Void, Void, Address> {
     private WeakReference<endereco_Activity> activity;
+    ProgressDialog progressDialog;
+
 
     public AddressRequest( endereco_Activity activity ){
+        progressDialog = new ProgressDialog(activity);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         this.activity = new WeakReference<>( activity );
     }
 
@@ -48,6 +57,7 @@ public class AddressRequest extends AsyncTask<Void, Void, Address> {
             if( address != null ){
                 activity.get().setDataViews(address);
             }
+            progressDialog.dismiss();
         }
     }
 }

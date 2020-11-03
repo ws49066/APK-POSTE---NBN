@@ -6,6 +6,7 @@ import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -71,6 +72,8 @@ public class fotosposte extends AppCompatActivity {
     private GridView imageGrid;
     private ArrayList<Bitmap> BitmapListmg;
 
+    ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,6 +119,10 @@ public class fotosposte extends AppCompatActivity {
                 ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo = cm.getActiveNetworkInfo();
                 if (networkInfo != null && networkInfo.isConnectedOrConnecting()) {
+                    progressDialog = new ProgressDialog(fotosposte.this);
+                    progressDialog.show();
+                    progressDialog.setContentView(R.layout.progress_dialog);
+                    progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                     btn_salvar_fotos();
                 }else {
                     Toast.makeText(getApplicationContext(),"Dispositivo não está conectado á Internet",Toast.LENGTH_LONG).show();
@@ -134,6 +141,10 @@ public class fotosposte extends AppCompatActivity {
                 bitimagem  = MediaStore.Images.Media.getBitmap(getContentResolver(), Uri.fromFile(file));
 
                 if(bitimagem  != null) {
+                    progressDialog = new ProgressDialog(fotosposte.this);
+                    progressDialog.show();
+                    progressDialog.setContentView(R.layout.progress_dialog);
+                    progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                     //====== FAZER O AJUSTE NA ORIENTAÇAO DA TELA ===//
                     ImagensStringList.add(NomeFotoTirada);
                     System.out.println("Nome da foto = "+NomeFotoTirada);
@@ -153,7 +164,9 @@ public class fotosposte extends AppCompatActivity {
                         layoutgridimg.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,1000));
                     }
 
+                    progressDialog.dismiss();
                 }
+
             }
         }catch (Exception error){
             error.printStackTrace();
@@ -468,11 +481,9 @@ public class fotosposte extends AppCompatActivity {
     public void btn_salvar_fotos(){
             int QuantImagem = ImagensStringList.size();
             System.out.println("Imagem = "+ QuantImagem );
-
-
                     Cadastro_endereco();
                     Cadastrar_localizacao();
-                    Cadastro_part1();
+                    Cadastro_part1(); 
                     Cadastro_Atributos();
                     Cadastra_cruzeta();
                     Cadastro_Ponto();
@@ -483,7 +494,7 @@ public class fotosposte extends AppCompatActivity {
         for(int i = 0; i< quantfotos; i++){
             try {
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                BitmapListmg.get(i).compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+                BitmapListmg.get(i).compress(Bitmap.CompressFormat.JPEG,20,byteArrayOutputStream);
                 byte[] imgBytes = byteArrayOutputStream.toByteArray();
                 encoded_string =  Base64.encodeToString(imgBytes,Base64.DEFAULT);
                 Nomefoto = ImagensStringList.get(i);
@@ -627,6 +638,10 @@ public class fotosposte extends AppCompatActivity {
     }
 
     public void RemoverPoste(){
+        progressDialog = new ProgressDialog(fotosposte.this);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/removerPoste.php",
                 new Response.Listener<String>() {
                     @Override
@@ -636,6 +651,7 @@ public class fotosposte extends AppCompatActivity {
                         }else{
                             Intent intentEnviar = new Intent(fotosposte.this, Tela2Menu_Activity.class);
                             startActivity(intentEnviar);
+                            finish();
                         }
                     }
                 }, new Response.ErrorListener() {

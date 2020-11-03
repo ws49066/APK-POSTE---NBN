@@ -2,12 +2,14 @@ package com.nbntelecom.nbnpostemap;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -43,6 +45,7 @@ public class iluminacao_add extends AppCompatActivity {
     String[] arrayLampada = {"Led","Halogenea","Encadecente","Vapor de Mercurio","Vapor de Sodio","Iodedos Metalicos"};
     String[] arrayPotencia = {"40W","5","60W","70W","80W","90W","100W","150W","180W","200W","250W","300W","350W","400W","450W","500W","550W","1000W"};
 
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +87,10 @@ public class iluminacao_add extends AppCompatActivity {
         btn_cadastrar_iluminacao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog = new ProgressDialog(iluminacao_add.this);
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progress_dialog);
+                progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 CadastrarIluminacao();
             }
         });
@@ -91,6 +98,10 @@ public class iluminacao_add extends AppCompatActivity {
         btn_cancelar_iluminacao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog = new ProgressDialog(iluminacao_add.this);
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progress_dialog);
+                progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 Intent intent = new Intent(iluminacao_add.this,Atributos_poste.class);
                 startActivity(intent);
                 finish();
@@ -130,6 +141,12 @@ public class iluminacao_add extends AppCompatActivity {
         SaveData();
 
         Intent intent = new Intent(iluminacao_add.this, Atributos_poste.class);
+        startActivity(intent);
+        finish();
+    }
+
+    public void onBackPressed(){
+        Intent intent = new Intent(iluminacao_add.this,Atributos_poste.class);
         startActivity(intent);
         finish();
     }

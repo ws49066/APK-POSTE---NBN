@@ -2,15 +2,19 @@ package com.nbntelecom.nbnpostemap;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -38,7 +42,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class ponto_fixacao_add extends AppCompatActivity {
-    Button btn_cadastrar_ponto,btn_cancelar_ponto;
+    Button btn_cadastrar_ponto,btn_cancelar_ponto,btn_download;
     LinearLayout dinamicoLayout,LayoutTipoCabo;
     Spinner tipopontofixacao,pontotipo,bitolaponto;
     ArrayList<PontoFixacao> pontoFixacaosList;
@@ -48,6 +52,7 @@ public class ponto_fixacao_add extends AppCompatActivity {
     private  final String ARQUIVO_PROVEDORES = "Arquivo_Provedores";
     private  final String ARQUIVO_Cabos = "Arquivo_Cabos";
 
+    ProgressDialog progressDialog;
 
 
     @Override
@@ -76,11 +81,25 @@ public class ponto_fixacao_add extends AppCompatActivity {
 
         btn_cadastrar_ponto = findViewById(R.id.btn_cadastrar_ponto);
         btn_cancelar_ponto = findViewById(R.id.btn_cancelar_ponto);
+        btn_download = findViewById(R.id.getAnteriores);
 
         dinamicoLayout = findViewById(R.id.LayoutDinamico);
         LayoutTipoCabo = findViewById(R.id.LayoutTipoCabo);
 
         loadData();
+
+        btn_download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressDialog = new ProgressDialog(ponto_fixacao_add.this);
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progress_dialog);
+                progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                getPontoAnteriores();
+            }
+        });
+
+
 
         tipopontofixacao.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -122,6 +141,10 @@ public class ponto_fixacao_add extends AppCompatActivity {
         btn_cadastrar_ponto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog = new ProgressDialog(ponto_fixacao_add.this);
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progress_dialog);
+                progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 CadastrarPonto();
             }
         });
@@ -129,6 +152,10 @@ public class ponto_fixacao_add extends AppCompatActivity {
         btn_cancelar_ponto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog = new ProgressDialog(ponto_fixacao_add.this);
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progress_dialog);
+                progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 Intent intent = new Intent(ponto_fixacao_add.this,Atributos_poste.class);
                 startActivity(intent);
                 finish();
@@ -149,10 +176,14 @@ public class ponto_fixacao_add extends AppCompatActivity {
 
     private void SaveData() {
         SharedPreferences ponto_fixacao_preference = getSharedPreferences("PontoFixacaoItem",MODE_PRIVATE);
+        SharedPreferences beforecopy = getSharedPreferences("beforecopy",MODE_PRIVATE);
+        SharedPreferences.Editor editorBefore = beforecopy.edit();
         SharedPreferences.Editor editor = ponto_fixacao_preference.edit();
         Gson gson = new Gson();
         String json = gson.toJson(pontoFixacaosList);
         editor.putString("Ponto-fixacao", json);
+        editorBefore.putString("Ponto-fixacao",json);
+        editorBefore.apply();
         editor.apply();
     }
 
@@ -164,9 +195,14 @@ public class ponto_fixacao_add extends AppCompatActivity {
              Bitola = bitolaponto.getSelectedItem().toString();
         }
 
+        if(PontoFixacao.equals("") || PontoFixacao.equals(null) ) {
+            System.out.println("Ponto de fixação encontra-se Vazio: " + PontoFixacao.toString());
+        }else if(TipodeCabo.equals("") || TipodeCabo.equals(null)){
+            System.out.println("Ponto de fixação encontra-se Vazio: " + PontoFixacao.toString());
+        } else{
+            pontoFixacaosList.add(new PontoFixacao(PontoFixacao, TipodeCabo, Bitola));
+        }
 
-
-        pontoFixacaosList.add(new PontoFixacao(PontoFixacao, TipodeCabo, Bitola));
         System.out.println("PONTO TAMANHO = "+pontoFixacaosList.size());
         SaveData();
 
@@ -175,6 +211,18 @@ public class ponto_fixacao_add extends AppCompatActivity {
         finish();
     }
 
+    public void getPontoAnteriores(){
+        SharedPreferences ponto_fixacao_preference = getSharedPreferences("PontoFixacaoItem",MODE_PRIVATE);
+        SharedPreferences.Editor editor = ponto_fixacao_preference.edit();
+        SharedPreferences beforecopy = getSharedPreferences("beforecopy",MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = beforecopy.getString("Ponto-fixacao",null);
+        editor.putString("Ponto-fixacao", json);
+        editor.apply();
+        Intent intent = new Intent(ponto_fixacao_add.this, Atributos_poste.class);
+        startActivity(intent);
+        finish();
+    }
 
     public void getSubtipo() {
         StringRequest request = new StringRequest(Request.Method.POST, "http://177.91.235.146/poste/getdados/getsubtipo.php",
@@ -225,6 +273,15 @@ public class ponto_fixacao_add extends AppCompatActivity {
         };
         RequestQueue fila = Volley.newRequestQueue(getApplicationContext());
         fila.add(request);
+    }
 
+    public void onBackPressed(){
+        progressDialog = new ProgressDialog(ponto_fixacao_add.this);
+        progressDialog.show();
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        Intent intent = new Intent(ponto_fixacao_add.this,Atributos_poste.class);
+        startActivity(intent);
+        finish();
     }
 }

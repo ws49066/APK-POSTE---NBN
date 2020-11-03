@@ -2,6 +2,7 @@ package com.nbntelecom.nbnpostemap;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -42,7 +43,7 @@ import java.util.Set;
 
 public class Atributos_poste extends AppCompatActivity {
     private LinearLayout adapterSuporte,adapterPonto,adapterLuz;
-    Button btn_cruzeta_add,btn_ponto_add,btn_salvaratributos,btn_cancelar,btn_iluminacao_add;
+    Button btn_cruzeta_add,btn_ponto_add,btn_salvaratributos,btn_cancelar,btn_iluminacao_add,removeponto;
     String var_id_poste;
     LinearLayout LinearLayoutRack,LinearLayoutResevaT,LinearLayoutCaixaAtendimento,TabelaSuporte,TabelaPonto;
 
@@ -53,8 +54,10 @@ public class Atributos_poste extends AppCompatActivity {
     List<String> Caixa_atendimento_list = new ArrayList<>();
 
     ArrayList<CruzetaItems> cruzetaItensList ;
-    ArrayList<PontoFixacao> pontoFixacaosList;
+    ArrayList<PontoFixacao> pontoFixacaosList = new ArrayList<PontoFixacao>();
     ArrayList<Luz> LuzList;
+
+    ProgressDialog progressDialog;
 
     private   final String ARQUIVO_PROVEDORES = "Arquivo_Provedores";
     ArrayList<String> provedor,provedoraux ;
@@ -75,7 +78,7 @@ public class Atributos_poste extends AppCompatActivity {
         adapterLuz = (LinearLayout) findViewById(R.id.adapterLuz);
 
         TabelaSuporte = (LinearLayout) findViewById(R.id.TabelaSuporte);
-        TabelaPonto = (LinearLayout) findViewById(R.id.TabelaPonto);
+        TabelaPonto = (LinearLayout) findViewById(R.id.TabelaPonto); 
         //TabelaLuz = (LinearLayout) findViewById(R.id.TabelaIluminacao);
 
         //ADAPTAR OS CADASTRO DE CRUZETAS
@@ -106,7 +109,7 @@ public class Atributos_poste extends AppCompatActivity {
         }
 
         //ADAPTAR O CADASTRO DE PONTO FIXAÇÃO
-        SharedPreferences ponto_fixacao_preference = getSharedPreferences("PontoFixacaoItem",MODE_PRIVATE);
+        final SharedPreferences ponto_fixacao_preference = getSharedPreferences("PontoFixacaoItem",MODE_PRIVATE);
         gson = new Gson();
         json = ponto_fixacao_preference.getString("Ponto-fixacao",null);
         type = new TypeToken<ArrayList<PontoFixacao>>(){}.getType();
@@ -129,8 +132,12 @@ public class Atributos_poste extends AppCompatActivity {
                 bitolapino.setText(bitola);
                 adapterPonto.addView(rowView,cont);
                 cont++;
+
             }
         }
+
+
+
 
         //ADAPTAR OS CADASTRO DE LUZ
 
@@ -170,6 +177,7 @@ public class Atributos_poste extends AppCompatActivity {
             var_id_poste = preferences_id.getString("id_poste",null);
         }
 
+        removeponto = findViewById(R.id.removeponto);
         btn_salvaratributos = findViewById(R.id.btn_atributos);
         btn_cruzeta_add = findViewById(R.id.add_field_suporte_cruzeta);
         btn_iluminacao_add = findViewById(R.id.add_field_iluminacao);
@@ -204,6 +212,10 @@ public class Atributos_poste extends AppCompatActivity {
         btn_salvaratributos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog = new ProgressDialog(Atributos_poste.this);
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progress_dialog);
+                progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 atributos(v);
             }
         });
@@ -213,22 +225,37 @@ public class Atributos_poste extends AppCompatActivity {
                 exibirConfirmacao();
             }
         });
+
+        removeponto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removerPonto();
+            }
+        });
     }
 
+    public void removerPonto(){
+        Intent intentEnviar = new Intent(Atributos_poste.this, RemoverPontoFixacao.class);
+        startActivity(intentEnviar);
+        finish();
+    }
 
     public void cadastrarCruzeta(){
         Intent intentEnviar = new Intent(Atributos_poste.this, cruzeta_suporte_add.class);
         startActivity(intentEnviar);
+        finish();
     }
 
     public void cadastrarPonto (){
          Intent intentEnviar = new Intent(Atributos_poste.this, ponto_fixacao_add.class);
          startActivity(intentEnviar);
+         finish();
     }
 
     public void cadastrarIluminacao (){
         Intent intentEnviar = new Intent(Atributos_poste.this, iluminacao_add.class);
         startActivity(intentEnviar);
+        finish();
     }
 
 
@@ -289,6 +316,7 @@ public class Atributos_poste extends AppCompatActivity {
 
 
     public void atributos(View v) {
+
         System.out.println("CAIXA = "+LinearLayoutCaixaAtendimento.getChildCount());
         System.out.println("RESERVA = "+LinearLayoutResevaT.getChildCount());
         System.out.println("RACK = "+LinearLayoutRack.getChildCount());
@@ -348,6 +376,10 @@ public class Atributos_poste extends AppCompatActivity {
         msgbox.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                progressDialog = new ProgressDialog(Atributos_poste.this);
+                progressDialog.show();
+                progressDialog.setContentView(R.layout.progress_dialog);
+                progressDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 RemoverPoste();
             }
 

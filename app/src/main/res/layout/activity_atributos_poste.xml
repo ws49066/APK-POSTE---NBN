@@ -158,20 +158,32 @@
 
                     <TextView
                         android:id="@+id/labelfixacao"
-                        android:layout_width="247dp"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:text="PONTO DE FIXAÇÃO"
                         android:textAlignment="center"
                         android:textColor="#FFFFFF"
                         android:textSize="15dp" />
 
+
                     <Button
                         android:id="@+id/add_field_ponto_fixacao"
-                        android:layout_width="121dp"
+                        android:layout_width="93dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
                         android:layout_height="36dp"
                         android:background="@drawable/borderconfirmar"
                         android:text="Adicionar"
                         android:textColor="#00b034" />
+
+                    <Button
+                        android:id="@+id/removeponto"
+                        android:layout_width="99dp"
+                        android:layout_height="36dp"
+                        android:background="@drawable/bordercancelar"
+                        android:text="REMOVE"
+                        android:textColor="#00b034" />
+
                 </LinearLayout>
 
                 <LinearLayout
