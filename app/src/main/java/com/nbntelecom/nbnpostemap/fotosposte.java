@@ -483,7 +483,7 @@ public class fotosposte extends AppCompatActivity {
             System.out.println("Imagem = "+ QuantImagem );
                     Cadastro_endereco();
                     Cadastrar_localizacao();
-                    Cadastro_part1(); 
+                    Cadastro_part1();
                     Cadastro_Atributos();
                     Cadastra_cruzeta();
                     Cadastro_Ponto();
